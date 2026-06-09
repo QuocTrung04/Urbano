@@ -30,7 +30,7 @@ class AppTextField extends StatelessWidget {
           Text(
             label!,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 13,
               color: AppColors.textMuted,
               fontWeight: FontWeight.w500,
               letterSpacing: 1.5,
@@ -42,7 +42,7 @@ class AppTextField extends StatelessWidget {
           controller: controller,
           keyboardType: keyboardType,
           obscureText: obscureText,
-          style: TextStyle(fontSize: 13, color: AppColors.white),
+          style: TextStyle(fontSize: 13, color: Colors.white),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(fontSize: 13, color: AppColors.textHint),

@@ -13,9 +13,9 @@ class AppColors {
   static const Color tealPrimary = Color(0xFF41B996);
   static const Color tealDark = Color(0xFF1E7A5C);
   static const Color borderSide = Color(0x8041B996);
+  static const Color borderButton = Color(0x1AFFFFFF);
 
   //màu chữ
-  static const Color white = Colors.white;
   static const Color textHint = Color(0x33FFFFFF);
   static const Color textMuted = Color(0x66FFFFFF);
 

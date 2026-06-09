@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
+import 'package:urbano/Views/auth/forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -41,13 +42,13 @@ class _StateLoginScreen extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [AppColors.bgDark, AppColors.bgMid, Color(0xFF08111B)],
+            colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             stops: [0.0, 0.5, 1.0],
           ),
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -90,7 +91,7 @@ class _StateLoginScreen extends State<LoginScreen> {
       children: [
         Text(
           'Chào mừng trở lại 👋',
-          style: TextStyle(color: AppColors.white, fontWeight: FontWeight.w500),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         Text(
           'Đăng nhập để quản lý căn hộ của bạn',
@@ -139,7 +140,10 @@ class _StateLoginScreen extends State<LoginScreen> {
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () {
-          // TODOL: sử lý sự kiện
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
+          );
         },
         style: TextButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
@@ -171,7 +175,7 @@ class _StateLoginScreen extends State<LoginScreen> {
           children: [
             TextSpan(
               text: 'Chưa có tài khoản? ',
-              style: TextStyle(color: Color(0x66FFFFFF)),
+              style: TextStyle(color: AppColors.textMuted),
             ),
             TextSpan(
               text: 'Liên hệ ban quản lý',

@@ -26,10 +26,11 @@ class AppButton extends StatelessWidget {
       height: height,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppColors.tealDark, AppColors.tealPrimary],
-          ),
+          // gradient: LinearGradient(
+          //   colors: [AppColors.tealDark, AppColors.tealPrimary],
+          // ),
           borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Color(0xFFAAAAAA)),
         ),
         child: ElevatedButton.icon(
           onPressed: isLoading ? null : onPressed,
@@ -39,7 +40,7 @@ class AppButton extends StatelessWidget {
                   height: 18,
                   child: CircularProgressIndicator(
                     strokeWidth: 1.5,
-                    color: AppColors.white,
+                    color: Colors.white,
                   ),
                 )
               : (icon != null ? Icon(icon, size: 18) : const SizedBox.shrink()),
@@ -48,14 +49,15 @@ class AppButton extends StatelessWidget {
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: AppColors.white,
+              color: Colors.white,
             ),
           ),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
-            foregroundColor: AppColors.white,
+            foregroundColor: Colors.white,
             disabledBackgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
+            overlayColor: AppColors.tealPrimary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),

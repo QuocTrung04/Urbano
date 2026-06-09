@@ -70,6 +70,19 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     setState(() {});
   }
 
+  void _onResend() {
+    if (_resendCountdown > 0) return;
+    //goi lai api gui otp
+    setState(() {
+      _secondsLeft = _expireSeconds;
+      _resendCountdown = 60;
+      for (final c in _controller) {
+        c.clear();
+      }
+      _focusNode[0].requestFocus();
+    });
+  }
+
   @override
   void dispose() {
     _time?.cancel();
@@ -238,7 +251,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   }
 
   Widget _buildTimeText() {
-    final expired = _expireSeconds == 0;
+    final expired = _secondsLeft == 0;
     return Center(
       child: Text.rich(
         TextSpan(
@@ -292,7 +305,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               recognizer: TapGestureRecognizer()
                 ..onTap = canResend
                     ? () {
-                        print('Text canresend');
+                        _onResend();
                       }
                     : null,
             ),

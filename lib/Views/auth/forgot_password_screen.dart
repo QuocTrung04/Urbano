@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:urbano/core/Widgets/app_back_button.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
@@ -44,55 +45,53 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 24),
-                _buidBackButton(context),
-                SizedBox(height: 34),
-                _buildHeader(),
-                SizedBox(height: 24),
-                _buildMethodSelected(),
-                SizedBox(height: 24),
-                AppTextField(
-                  label: _isSms ? 'Số điện thoại' : 'Email',
-                  hint: _isSms ? 'nhập số điện thoại' : 'Nhập Email',
-                  controller: _controller,
-                  prefixIcon: _isSms
-                      ? Icons.phone_callback
-                      : Icons.mail_rounded,
+          child: LayoutBuilder(
+            builder: (context, constrants) {
+              return SingleChildScrollView(
+                child: IntrinsicHeight(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constrants.maxHeight,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 24),
+                          AppBackButton(),
+                          SizedBox(height: 34),
+                          _buildHeader(),
+                          SizedBox(height: 24),
+                          _buildMethodSelected(),
+                          SizedBox(height: 24),
+                          AppTextField(
+                            label: _isSms ? 'Số điện thoại' : 'Email',
+                            hint: _isSms ? 'nhập số điện thoại' : 'Nhập Email',
+                            controller: _controller,
+                            prefixIcon: _isSms
+                                ? Icons.phone_callback
+                                : Icons.mail_rounded,
+                          ),
+                          SizedBox(height: 24),
+                          Spacer(),
+                          AppButton(
+                            label: 'Gửi mã xác nhận',
+                            onPressed: () {},
+                            icon: Icons.send_rounded,
+                          ),
+                          SizedBox(height: 24),
+                          _buildBottomNote(),
+                          SizedBox(height: 28),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                Spacer(),
-                AppButton(
-                  label: 'Gửi mã xác nhận',
-                  onPressed: () {},
-                  icon: Icons.send_rounded,
-                ),
-                SizedBox(height: 24),
-                _buildBottomNote(),
-                SizedBox(height: 28),
-              ],
-            ),
+              );
+            },
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buidBackButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pop(context),
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderButton),
-        ),
-        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
       ),
     );
   }
@@ -130,11 +129,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
         Text(
           'Nhập email hoặc số điện thoại đăng ký để tiếp tục.',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18,
-            color: AppColors.textMuted,
-            letterSpacing: 1,
-          ),
+          style: TextStyle(fontSize: 18, color: AppColors.textMuted),
         ),
       ],
     );

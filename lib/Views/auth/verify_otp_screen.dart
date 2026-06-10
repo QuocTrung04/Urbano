@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:urbano/core/Widgets/app_back_button.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
@@ -97,6 +98,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -116,7 +123,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 24),
-                _buildBackButton(context),
+                AppBackButton(),
                 SizedBox(height: 38),
                 _buildHeader(),
                 SizedBox(height: 28),
@@ -131,22 +138,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildBackButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pop(context),
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderButton),
-        ),
-        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
       ),
     );
   }
@@ -186,11 +177,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             children: [
               TextSpan(
                 text: 'Mã 6 số được gửi tới ',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.textMuted,
-                  letterSpacing: 1,
-                ),
+                style: TextStyle(fontSize: 18, color: AppColors.textMuted),
               ),
               TextSpan(
                 text: '.........',

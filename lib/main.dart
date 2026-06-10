@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:urbano/ViewModels/home/home_viewmodel.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
+import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const VerifyOtpScreen(),
+      home: const HomeScreen(),
     );
   }
 }

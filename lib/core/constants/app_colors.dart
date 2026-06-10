@@ -22,4 +22,9 @@ class AppColors {
   //màu input
   static const Color inputFill = Color(0x12FFFFFF);
   static const Color iconMuted = Color(0x4DFFFFFF);
+
+  static const _blue = Color(0xFF5BA4D4);
+  static const _amber = Color(0xFFEF9F27);
+  static const _pink = Color(0xFFED93B1);
+  static const _red = Color(0xFFE06363);
 }

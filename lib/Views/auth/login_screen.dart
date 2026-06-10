@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
@@ -10,10 +11,10 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _StateLoginScreen();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _StateLoginScreen extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _accountController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
@@ -47,27 +48,39 @@ class _StateLoginScreen extends State<LoginScreen> {
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildLogoSection(),
-                SizedBox(height: 20),
-                _buildGreeting(),
-                SizedBox(height: 24),
-                _buildEmailField(),
-                SizedBox(height: 24),
-                _buildPassword(),
-                SizedBox(height: 8),
-                _buildForgetPassword(),
-                SizedBox(height: 50),
-                _buildButtonLogin(),
-                const Spacer(),
-                _buildBottomNote(),
-                SizedBox(height: 18),
-              ],
-            ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildLogoSection(),
+                          SizedBox(height: 20),
+                          _buildGreeting(),
+                          SizedBox(height: 24),
+                          _buildEmailField(),
+                          SizedBox(height: 24),
+                          _buildPassword(),
+                          SizedBox(height: 8),
+                          _buildForgetPassword(),
+                          SizedBox(height: 50),
+                          _buildButtonLogin(),
+                          SizedBox(height: 24),
+                          const Spacer(),
+                          _buildBottomNote(),
+                          SizedBox(height: 18),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -112,7 +125,7 @@ class _StateLoginScreen extends State<LoginScreen> {
       hint: 'Nhập Email hoặc SĐT',
       controller: _accountController,
       prefixIcon: Icons.person_3_rounded,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.text,
     );
   }
 

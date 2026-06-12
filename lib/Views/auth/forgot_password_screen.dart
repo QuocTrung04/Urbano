@@ -104,7 +104,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.tealDark.withOpacity(0.15),
+              color: AppColors.tealDark.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: AppColors.borderSide, width: 1.5),
             ),
@@ -186,7 +186,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
           padding: EdgeInsets.symmetric(vertical: 15),
           decoration: BoxDecoration(
             color: selected
-                ? AppColors.tealPrimary.withOpacity(0.2)
+                ? AppColors.tealPrimary.withValues(alpha: 0.2)
                 : Color(0x0DFFFFFF),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
@@ -234,7 +234,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
               style: TextStyle(color: AppColors.tealDark),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  //TODO: xu ly su kien
+                  //TODOl: xu ly su kien
                 },
             ),
           ],

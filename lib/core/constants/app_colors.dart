@@ -14,6 +14,7 @@ class AppColors {
   static const Color tealDark = Color(0xFF1E7A5C);
   static const Color borderSide = Color(0x8041B996);
   static const Color borderButton = Color(0x1AFFFFFF);
+  static const Color nenContainer = Color(0x0DFFFFFF);
 
   //màu chữ
   static const Color textHint = Color(0x33FFFFFF);
@@ -23,8 +24,8 @@ class AppColors {
   static const Color inputFill = Color(0x12FFFFFF);
   static const Color iconMuted = Color(0x4DFFFFFF);
 
-  static const _blue = Color(0xFF5BA4D4);
-  static const _amber = Color(0xFFEF9F27);
-  static const _pink = Color(0xFFED93B1);
-  static const _red = Color(0xFFE06363);
+  static const Color blue = Color(0xFF5BA4D4);
+  static const Color amber = Color(0xFFEF9F27);
+  static const Color pink = Color(0xFFED93B1);
+  static const Color red = Color(0xFFE06363);
 }

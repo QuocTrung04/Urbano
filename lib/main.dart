@@ -4,6 +4,7 @@ import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
+import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
 void main() {

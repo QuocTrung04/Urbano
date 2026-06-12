@@ -176,7 +176,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.tealDark.withOpacity(0.15),
+              color: AppColors.tealDark.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: AppColors.borderSide, width: 1.5),
             ),

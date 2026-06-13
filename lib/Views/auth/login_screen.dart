@@ -5,6 +5,7 @@ import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -176,6 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
       label: 'Đăng Nhập',
       onPressed: () {
         // TODOL: sử lý sự kiện
+        Navigator.pushReplacementNamed(context, AppRoutes.home);
       },
     );
   }

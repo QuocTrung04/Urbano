@@ -6,15 +6,16 @@ import 'package:flutter/services.dart';
 import 'package:urbano/core/Widgets/app_back_button.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
-  // final String contact;
-  // final bool isSms;
+  final String contact;
+  final bool _isSms;
 
   const VerifyOtpScreen({
     super.key,
-    // required this.contact,
-    // required this.isSms,
+    required this.contact,
+    required this._isSms,
   });
 
   @override
@@ -131,7 +132,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 SizedBox(height: 24),
                 _buildTimeText(),
                 SizedBox(height: 34),
-                AppButton(label: 'Xác nhận', onPressed: () {}),
+                AppButton(
+                  label: 'Xác nhận',
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.resetPassword);
+                  },
+                ),
                 SizedBox(height: 24),
                 _buildResend(),
               ],
@@ -150,12 +156,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.tealDark.withOpacity(0.15),
+              color: AppColors.tealDark.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: AppColors.borderSide, width: 1.5),
             ),
             child: Icon(
-              Icons.sms_outlined,
+              widget._isSms ? Icons.phone_callback : Icons.email_outlined,
               size: 40,
               color: AppColors.tealPrimary,
             ),
@@ -180,7 +186,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 style: TextStyle(fontSize: 18, color: AppColors.textMuted),
               ),
               TextSpan(
-                text: '.........',
+                text: _maskContact(),
                 style: TextStyle(color: AppColors.tealPrimary),
               ),
             ],
@@ -189,6 +195,29 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         ),
       ],
     );
+  }
+
+  String _maskPhone(String phone) {
+    if (phone.length < 7) return phone;
+    final start = phone.substring(0, 3);
+    final end = phone.substring(phone.length - 3);
+    return '$start****$end';
+  }
+
+  String _maskEmail(String email) {
+    final parts = email.split('@');
+    if (parts.length != 2) return email;
+    final name = parts[0];
+    final domain = parts[1];
+    if (name.length <= 2) return email;
+    final visible = name.substring(0, 3);
+    return '$visible****@$domain';
+  }
+
+  String _maskContact() {
+    return widget._isSms
+        ? _maskPhone(widget.contact)
+        : _maskEmail(widget.contact);
   }
 
   Widget _buildOtpBox() {
@@ -215,7 +244,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               counterText: '',
               filled: true,
               fillColor: filled
-                  ? AppColors.tealPrimary.withOpacity(0.15)
+                  ? AppColors.tealPrimary.withValues(alpha: 0.15)
                   : AppColors.inputFill,
               contentPadding: EdgeInsets.zero,
               enabledBorder: OutlineInputBorder(

@@ -7,7 +7,7 @@ class HomeServices {
     return HomeData(
       cuDan: CuDan(id: 1, hoTen: 'Quốc Trung', sdt: '0392469847'),
       canHo: CanHo(id: 1, toaNha: 1, soCanHo: '202', tang: 2, dienTich: 65),
-      tenToaNha: 'Nhà ông Cơ',
+      tenToaNha: 'Plaza',
       hoaDonList: [
         HoaDon(
           id: 1,

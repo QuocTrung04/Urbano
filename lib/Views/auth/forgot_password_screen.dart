@@ -1,10 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:urbano/core/Widgets/app_back_button.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -16,7 +18,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   final _controller = TextEditingController();
   bool _isSms = true;
-
   @override
   void dispose() {
     _controller.dispose();
@@ -77,7 +78,30 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                           Spacer(),
                           AppButton(
                             label: 'Gửi mã xác nhận',
-                            onPressed: () {},
+                            onPressed: () {
+                              final contact = _controller.text.trim();
+                              if (contact.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      _isSms
+                                          ? 'Vui lòng nhập số điện thoại'
+                                          : 'Vui lòng nhập email',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.verifyOtp,
+                                arguments: {
+                                  'contact': contact,
+                                  '_isSms': _isSms,
+                                },
+                              );
+                            },
                             icon: Icons.send_rounded,
                           ),
                           SizedBox(height: 24),
@@ -235,6 +259,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   //TODOl: xu ly su kien
+                  Navigator.pushReplacementNamed(context, AppRoutes.login);
                 },
             ),
           ],

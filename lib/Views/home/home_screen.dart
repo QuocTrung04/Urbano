@@ -5,6 +5,7 @@ import 'package:urbano/Models/home/home_model.dart';
 import 'package:urbano/ViewModels/home/home_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -55,7 +56,7 @@ class _Homeview extends StatelessWidget {
       onRefresh: vm.loadData,
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: _buildHeader(data)),
+          SliverToBoxAdapter(child: _buildHeader(context, data)),
           _sliverSection(
             title: 'tiện ích nhanh',
             child: _buildQuickAction(context),
@@ -123,7 +124,7 @@ class _Homeview extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(HomeData data) {
+  Widget _buildHeader(BuildContext context, HomeData data) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
       child: Column(
@@ -170,6 +171,15 @@ class _Homeview extends StatelessWidget {
                 Icons.settings_rounded,
                 onTap: () {
                   //xu ly su kien
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.setting,
+                    arguments: {
+                      'cuDan': data.cuDan,
+                      'canHoText': _buildCanHoText(data),
+                    },
+                  );
+                  debugPrint('setting');
                 },
               ),
             ],
@@ -246,6 +256,7 @@ class _Homeview extends StatelessWidget {
                 SizedBox(height: 4),
                 Text(
                   canHoText,
+                  maxLines: 2,
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.white,
@@ -382,7 +393,7 @@ class _Homeview extends StatelessWidget {
   }) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+        padding: EdgeInsets.fromLTRB(16, 20, 16, 20),
         child: Column(
           children: [
             _selectTitle(title, action, onTap),
@@ -400,7 +411,7 @@ class _Homeview extends StatelessWidget {
         Text(
           title.toUpperCase(),
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.textMuted,
           ),
@@ -836,7 +847,6 @@ class _Homeview extends StatelessWidget {
                     ],
                     Spacer(),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Icon(
                           Icons.access_time_sharp,

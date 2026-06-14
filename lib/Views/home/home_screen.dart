@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:urbano/Models/home/home_model.dart';
 import 'package:urbano/ViewModels/home/home_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/Models/notification_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 
@@ -161,10 +162,14 @@ class _Homeview extends StatelessWidget {
               _iconButton(
                 Icons.notifications_outlined,
                 onTap: () {
-                  //print('object');
-                  //su ly su kien
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.notification,
+                    arguments: data.thongBaoList,
+                  );
+                  print(context);
                 },
-                hasdot: true,
+                hasdot: data.thongBaoList.any((tb) => tb.trangthai),
               ),
               SizedBox(width: 8),
               _iconButton(
@@ -315,7 +320,7 @@ class _Homeview extends StatelessWidget {
         'Hóa đơn',
         AppColors.tealPrimary,
         () {
-          print('Hoa don');
+          debugPrint('Hoa don');
         },
       ),
       (
@@ -323,7 +328,7 @@ class _Homeview extends StatelessWidget {
         'Sửa chữa',
         AppColors.blue,
         () {
-          print('Sua chua');
+          debugPrint('Sua chua');
         },
       ),
       (
@@ -331,7 +336,7 @@ class _Homeview extends StatelessWidget {
         'Phương tiện',
         AppColors.amber,
         () {
-          print('Phương tiện');
+          debugPrint('Phương tiện');
         },
       ),
       (
@@ -339,7 +344,7 @@ class _Homeview extends StatelessWidget {
         'Liên hệ',
         AppColors.pink,
         () {
-          print('lien he');
+          debugPrint('lien he');
         },
       ),
     ];
@@ -544,14 +549,22 @@ class _Homeview extends StatelessWidget {
   }
 
   Widget _buildNotification(List<ThongBao> thongBaoList) {
-    if (thongBaoList.isEmpty) {
-      return _boxEmpty('Chưa có thông báo');
+    final chuadoc = thongBaoList.where((tb) => tb.trangthai).toList();
+    debugPrint('day la trong bao $chuadoc');
+    if (chuadoc.isEmpty) {
+      return _boxEmpty('Không có thông báo mới');
     }
     return Column(
-      children: thongBaoList.take(3).map((tb) {
+      children: chuadoc.take(3).map((tb) {
         return Padding(
           padding: EdgeInsets.only(bottom: 10),
-          child: _notifiItem(tb, onTap: () {}),
+          child: _notifiItem(
+            tb,
+            onTap: () {
+              debugPrint('thong bao');
+              debugPrint('day la trong bao ${tb.trangthai}');
+            },
+          ),
         );
       }).toList(),
     );
@@ -559,10 +572,11 @@ class _Homeview extends StatelessWidget {
 
   Widget _notifiItem(ThongBao tb, {VoidCallback? onTap}) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.nenContainer,
+          color: AppColors.tealPrimary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.borderButton),
         ),
@@ -572,12 +586,12 @@ class _Homeview extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.iconMuted.withValues(alpha: 0.1),
+                color: AppColors.tealPrimary.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 Icons.notifications_none_rounded,
-                color: AppColors.iconMuted,
+                color: AppColors.tealPrimary,
               ),
             ),
             SizedBox(width: 12),
@@ -608,9 +622,22 @@ class _Homeview extends StatelessWidget {
                   ],
 
                   SizedBox(height: 4),
-                  Text(
-                    tb.thoiGianHienThi,
-                    style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.access_time_sharp,
+                        size: 12,
+                        color: AppColors.iconMuted,
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        tb.thoiGianHienThi,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textMuted,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/Models/home/home_model.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
@@ -6,6 +7,8 @@ import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
 import 'package:urbano/Views/setting_screen.dart';
+import 'package:urbano/Views/notification_screen.dart';
+import 'package:urbano/Models/notification_model.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -16,6 +19,7 @@ class AppRoutes {
   static const String resetPassword = '/reset-password';
   static const String verifyOtp = '/verify-otp';
   static const String setting = '/setting';
+  static const String notification = '/notification';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -26,6 +30,7 @@ class AppRoutes {
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
     switch (settings.name) {
+      //man nhap otp
       case verifyOtp:
         final arg = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
@@ -34,6 +39,7 @@ class AppRoutes {
             isSms: arg['_isSms'] as bool,
           ),
         );
+      //man  setting
       case setting:
         final arg = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
@@ -42,6 +48,13 @@ class AppRoutes {
             canHoText: arg['canHoText'] as String,
           ),
         );
+      //man thong bao
+      case notification:
+        final list = settings.arguments as List<ThongBao>;
+        return MaterialPageRoute(
+          builder: (_) => NotificationScreen(thongBaoList: list),
+        );
+
       default:
         return null;
     }

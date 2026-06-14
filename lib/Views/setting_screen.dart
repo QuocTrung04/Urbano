@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:urbano/Models/home/home_model.dart';
 import 'package:urbano/core/Widgets/app_back_button.dart';
-import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:urbano/core/routes/app_routes.dart';
+import 'package:urbano/Models/cudan_model.dart';
 
 class SettingScreen extends StatelessWidget {
   final CuDan cuDan;

@@ -1,0 +1,350 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:urbano/Models/notification_model.dart';
+import 'package:urbano/core/Widgets/app_back_button.dart';
+import 'package:urbano/core/constants/app_colors.dart';
+
+class NotificationScreen extends StatefulWidget {
+  final List<ThongBao> thongBaoList;
+  const NotificationScreen({super.key, required this.thongBaoList});
+
+  @override
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+  final Set<int> _readIds = {};
+  int _tab = 0;
+
+  bool _isRead(ThongBao tb) => !tb.trangthai || _readIds.contains(tb.id);
+  int get _soChuaDoc => widget.thongBaoList.where((tb) => !_isRead(tb)).length;
+
+  void _markRead(ThongBao tb) {
+    if (_isRead(tb)) return;
+    setState(() => _readIds.add(tb.id));
+  }
+
+  void _markAllRead() {
+    setState(() {
+      for (final tb in widget.thongBaoList) {
+        _readIds.add(tb.id);
+      }
+    });
+  }
+
+  List<ThongBao> get _danhSach {
+    if (_tab == 1) {
+      return widget.thongBaoList.where((tb) => !_isRead(tb)).toList();
+    }
+    return widget.thongBaoList;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarColor: Colors.transparent,
+      ),
+    );
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0.0, 0.5, 1.0],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAppbar(),
+              SizedBox(height: 24),
+              _buildTabs(),
+              Expanded(child: _buildList()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAppbar() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+      child: Row(
+        children: [
+          AppBackButton(),
+          SizedBox(width: 14),
+          Expanded(
+            child: Text(
+              'Thông báo',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+                letterSpacing: 1,
+              ),
+            ),
+          ),
+          if (_soChuaDoc > 0)
+            GestureDetector(
+              onTap: () {
+                _markAllRead();
+                debugPrint('danh dau da doc thong bao');
+              },
+              child: Text(
+                'Đánh dấu là đã đọc',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.tealPrimary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTabs() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+      child: Row(
+        children: [
+          _tabChip('Tất cả', 0),
+          SizedBox(width: 8),
+          _tabChip('Chưa đọc', 1, badge: _soChuaDoc),
+        ],
+      ),
+    );
+  }
+
+  Widget _tabChip(String lable, int index, {int badge = 0}) {
+    final selected = _tab == index;
+    return GestureDetector(
+      onTap: () => setState(() => _tab = index),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: selected
+              ? AppColors.tealPrimary.withValues(alpha: 0.15)
+              : AppColors.nenContainer,
+          border: Border.all(
+            color: selected ? AppColors.borderSide : AppColors.borderButton,
+          ),
+        ),
+        child: Row(
+          children: [
+            Text(
+              lable,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: selected ? AppColors.tealPrimary : AppColors.textMuted,
+              ),
+            ),
+            SizedBox(width: 8),
+            if (badge > 0) ...[
+              Text(
+                '($badge)',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: selected ? AppColors.tealPrimary : AppColors.textMuted,
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildList() {
+    final list = _danhSach;
+
+    final homNay = <ThongBao>[];
+    final homQua = <ThongBao>[];
+    final truocDo = <ThongBao>[];
+    final now = DateTime.now();
+
+    for (final tb in list) {
+      final d = tb.createdAt;
+      if (d == null) {
+        truocDo.add(tb);
+        continue;
+      }
+      final thoiGian = DateTime(
+        now.year,
+        now.month,
+        now.day,
+      ).difference(DateTime(d.year, d.month, d.day)).inDays;
+      if (thoiGian == 0) {
+        homNay.add(tb);
+      } else if (thoiGian == 1) {
+        homQua.add(tb);
+      } else {
+        truocDo.add(tb);
+      }
+    }
+    if (list.isEmpty) {
+      return Center(
+        child: Text(
+          'Không có thông báo',
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            color: AppColors.textMuted,
+          ),
+        ),
+      );
+    }
+    return ListView(
+      padding: EdgeInsets.fromLTRB(16, 6, 16, 24),
+      children: [
+        if (homNay.isNotEmpty) ..._goupNotifition('Hôm nay', homNay),
+        if (homQua.isNotEmpty) ..._goupNotifition('Hôm qua', homQua),
+        if (truocDo.isNotEmpty) ..._goupNotifition('Trước đó', truocDo),
+      ],
+    );
+  }
+
+  List<Widget> _goupNotifition(String title, List<ThongBao> items) {
+    return [
+      Padding(
+        padding: EdgeInsets.fromLTRB(4, 14, 4, 9),
+        child: Text(
+          title.toUpperCase(),
+          style: TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+            color: Color(0x66FFFFFF),
+            letterSpacing: 0.5,
+          ),
+        ),
+      ),
+      ...items.map(_notifiItem),
+    ];
+  }
+
+  Widget _notifiItem(ThongBao tb) {
+    final chuaDoc = !_isRead(tb);
+    return GestureDetector(
+      onTap: () {
+        _markRead(tb);
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: EdgeInsets.all(16),
+        margin: EdgeInsets.only(bottom: 9),
+        decoration: BoxDecoration(
+          color: chuaDoc
+              ? AppColors.tealPrimary.withValues(alpha: 0.1)
+              : AppColors.nenContainer,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: chuaDoc
+                ? AppColors.tealPrimary.withValues(alpha: 0.2)
+                : AppColors.borderButton,
+          ),
+        ),
+        child: Stack(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: chuaDoc
+                        ? AppColors.tealPrimary.withValues(alpha: 0.2)
+                        : AppColors.inputFill,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.notifications_none_rounded,
+                    color: chuaDoc
+                        ? AppColors.tealPrimary
+                        : AppColors.iconMuted,
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tb.tieuDe ?? 'Thông báo',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: chuaDoc
+                              ? AppColors.tealPrimary
+                              : AppColors.textMuted,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                      if (tb.noiDung != null) ...[
+                        SizedBox(height: 2),
+                        Text(
+                          tb.noiDung!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: AppColors.textMuted,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+
+                      SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time_sharp,
+                            size: 12,
+                            color: AppColors.iconMuted,
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            tb.thoiGianHienThi,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.textMuted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            if (chuaDoc) ...[
+              Positioned(
+                top: 1,
+                right: 1,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: AppColors.tealPrimary,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.bgDark, width: 1.5),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}

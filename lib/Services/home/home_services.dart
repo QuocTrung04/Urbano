@@ -1,4 +1,8 @@
+import 'package:urbano/Models/hoadon_model.dart';
 import 'package:urbano/Models/home/home_model.dart';
+import 'package:urbano/Models/notification_model.dart';
+import 'package:urbano/Models/canho_model.dart';
+import 'package:urbano/Models/cudan_model.dart';
 
 class HomeServices {
   Future<HomeData> fetchHomeData() async {
@@ -63,14 +67,48 @@ class HomeServices {
           tieuDe: 'Tạm Ngưng cấp nước',
           noiDung:
               'Tao thích thì tao cắt nước Tao thích thì tao cắt nước Tao thích thì tao cắt nướcTao thích thì tao cắt nước ',
-          creatrAt: DateTime.now().subtract(Duration(hours: 2)),
+          createdAt: DateTime.now().subtract(Duration(hours: 2)),
         ),
         ThongBao(
           id: 1,
           tieuDe: 'Cắt điện',
           noiDung:
               'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
-          creatrAt: DateTime.now().subtract(Duration(days: 2)),
+          createdAt: DateTime.now().subtract(Duration(days: 1)),
+          trangthai: false,
+        ),
+
+        ThongBao(
+          id: 1,
+          tieuDe: 'Cắt điện',
+          noiDung:
+              'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
+          createdAt: DateTime.now().subtract(Duration(days: 2)),
+          trangthai: false,
+        ),
+        ThongBao(
+          id: 1,
+          tieuDe: 'Cắt điện',
+          noiDung:
+              'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
+          createdAt: DateTime.now().subtract(Duration(days: 2)),
+          trangthai: false,
+        ),
+        ThongBao(
+          id: 1,
+          tieuDe: 'Cắt điện',
+          noiDung:
+              'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
+          createdAt: DateTime.now().subtract(Duration(days: 2)),
+          trangthai: false,
+        ),
+        ThongBao(
+          id: 1,
+          tieuDe: 'Cắt điện',
+          noiDung:
+              'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
+          createdAt: DateTime.now().subtract(Duration(days: 2)),
+          trangthai: false,
         ),
       ],
     );

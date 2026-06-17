@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/Models/home_model.dart';
+import 'package:urbano/Models/phuong_tien_model.dart';
 import 'package:urbano/Views/auth/change_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
@@ -11,6 +12,7 @@ import 'package:urbano/Views/notification_detail_screen.dart';
 import 'package:urbano/Views/setting_screen.dart';
 import 'package:urbano/Views/notification_screen.dart';
 import 'package:urbano/Models/notification_model.dart';
+import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_screen.dart';
 
 class AppRoutes {
@@ -26,6 +28,7 @@ class AppRoutes {
   static const String changePassword = '/change-password';
   static const String notificationDetail = '/notification-detail';
   static const String phuongTien = '/phuong-tien';
+  static const String phuongTienDetail = '/phuong-tien-detail';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -66,6 +69,11 @@ class AppRoutes {
         final tbList = settings.arguments as ThongBao;
         return MaterialPageRoute(
           builder: (_) => NotificationDetailScreen(thongBao: tbList),
+        );
+      case phuongTienDetail:
+        final phuongTienList = settings.arguments as PhuongTien;
+        return MaterialPageRoute(
+          builder: (_) => PhuongTienDetailScreen(phuongTien: phuongTienList),
         );
 
       default:

@@ -49,14 +49,6 @@ class PhuongTien {
       nguoiCapNhat: json['nguoiCapNhat'],
     );
   }
-  String get loaiText => loaiPhuongTien?.tenLoaiPhuongTien ?? 'Khác';
-
-  bool get laOto {
-    final ten = loaiPhuongTien?.tenLoaiPhuongTien.toLowerCase() ?? '';
-    return ten.contains('ô tô') ||
-        ten.contains('oto') ||
-        ten.contains('xe hơi');
-  }
 }
 
 DateTime? _parseDate(dynamic value) {

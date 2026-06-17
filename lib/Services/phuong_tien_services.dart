@@ -17,7 +17,7 @@ class PhuongTienServices {
       ),
 
       PhuongTien(
-        id: 1,
+        id: 2,
         tenPhuongTien: 'Audi a7',
         bienSo: '48K - 123.45',
         loaiPhuongTien: LoaiPhuongTien(id: 1, tenLoaiPhuongTien: 'Xe hơi'),
@@ -27,12 +27,13 @@ class PhuongTienServices {
         trangThaiText: 'Chờ duyệt',
       ),
       PhuongTien(
-        id: 1,
-        tenPhuongTien: 'Audi a7',
+        id: 3,
+        tenPhuongTien: 'xe đạp leo núi',
         bienSo: '48K - 123.45',
         loaiPhuongTien: LoaiPhuongTien(id: 3, tenLoaiPhuongTien: 'xe đạp'),
         canHo: 1,
         ngayDangKy: DateTime(2026, 3, 21),
+        ngayHuy: DateTime(2026, 7, 20),
         trangThai: 3,
         trangThaiText: 'Từ chối',
       ),

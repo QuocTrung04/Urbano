@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:urbano/Models/phuong_tien_model.dart';
 import 'package:urbano/ViewModels/phuong_tien_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class PhuongTienScreen extends StatelessWidget {
   const PhuongTienScreen({super.key});
@@ -58,7 +59,19 @@ class _PhuongTienView extends StatelessWidget {
           _buildAppbar(context),
           SizedBox(height: 28),
           _buildSumary(vm.phuongTienList.length),
-          SizedBox(height: 28),
+          SizedBox(height: 14),
+          Divider(color: AppColors.borderButton, thickness: 2),
+          SizedBox(height: 14),
+          Text(
+            'Danh sách phương tiện'.toUpperCase(),
+            style: TextStyle(
+              fontSize: 15,
+              color: AppColors.textMuted,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1,
+            ),
+          ),
+          SizedBox(height: 14),
           if (vm.phuongTienList.isNotEmpty) ...[
             ...vm.phuongTienList.map((xe) => _buildVehicleCard(context, xe)),
           ],
@@ -166,6 +179,8 @@ class _PhuongTienView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         debugPrint(xe.loaiPhuongTien!.tenLoaiPhuongTien);
+        debugPrint('${xe.id}');
+        Navigator.pushNamed(context, AppRoutes.phuongTienDetail, arguments: xe);
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -193,14 +208,17 @@ class _PhuongTienView extends StatelessWidget {
                       letterSpacing: 1,
                     ),
                   ),
-                  Text(
-                    xe.bienSo,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.textMuted,
-                      fontWeight: FontWeight.w500,
+                  if (xe.loaiPhuongTien!.id != 3 &&
+                      xe.loaiPhuongTien!.id != 4) ...[
+                    Text(
+                      xe.bienSo,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textMuted,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
+                  ],
                 ],
               ),
             ),

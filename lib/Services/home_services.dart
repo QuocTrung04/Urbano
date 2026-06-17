@@ -1,15 +1,22 @@
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/hoadon_model.dart';
-import 'package:urbano/Models/home/home_model.dart';
+import 'package:urbano/Models/home_model.dart';
 import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/Models/canho_model.dart';
 import 'package:urbano/Models/cudan_model.dart';
 
 class HomeServices {
   Future<HomeData> fetchHomeData() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-
+    await Future.delayed(Duration(milliseconds: 500));
+    final prefs = await SharedPreferences.getInstance();
+    final cuDanJson = prefs.getString('cuDan');
+    final cuDan = cuDanJson != null
+        ? CuDan.fromJson(jsonDecode(cuDanJson))
+        : CuDan(id: 0, hoTen: 'Khách');
     return HomeData(
-      cuDan: CuDan(id: 1, hoTen: 'Quốc Trung', sdt: '0392469847'),
+      cuDan: cuDan,
       canHo: CanHo(id: 1, toaNha: 1, soCanHo: '202', tang: 2, dienTich: 65),
       tenToaNha: 'Plaza',
       hoaDonList: [

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:urbano/core/Widgets/app_back_button.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
@@ -124,7 +123,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 24),
-                AppBackButton(),
+                _buildButtonBack(context),
                 SizedBox(height: 38),
                 _buildHeader(),
                 SizedBox(height: 28),
@@ -327,6 +326,22 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildButtonBack(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pop(context),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppColors.inputFill,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.borderButton),
+        ),
+        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
       ),
     );
   }

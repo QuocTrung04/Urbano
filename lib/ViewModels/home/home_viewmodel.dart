@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:urbano/Services/home/home_services.dart';
-import 'package:urbano/Models/home/home_model.dart';
+import 'package:urbano/Services/home_services.dart';
+import 'package:urbano/Models/home_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final HomeServices _services = HomeServices();

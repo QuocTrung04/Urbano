@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:urbano/core/Widgets/app_back_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/Models/cudan_model.dart';
 
@@ -42,7 +40,7 @@ class SettingScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildAppbar(),
+                _buildAppbar(context),
                 SizedBox(height: 24),
                 _buildProfileCard(context),
                 SizedBox(height: 24),
@@ -50,7 +48,7 @@ class SettingScreen extends StatelessWidget {
                 SizedBox(height: 14),
                 _card([
                   _navRow(
-                    icon: FontAwesomeIcons.circleUser,
+                    icon: Icons.person_4_rounded,
                     title: 'Thông tin tài khoản',
                     sub: 'Phương thức đăng nhập',
                     colors: AppColors.tealPrimary,
@@ -59,11 +57,11 @@ class SettingScreen extends StatelessWidget {
                     },
                   ),
                   _navRow(
-                    icon: FontAwesomeIcons.key,
+                    icon: Icons.key,
                     title: 'Đổi mật khẩu ',
                     colors: AppColors.blue,
                     onTap: () {
-                      debugPrint('Đổi mật khẩu');
+                      Navigator.pushNamed(context, AppRoutes.changePassword);
                     },
                   ),
                 ]),
@@ -72,29 +70,29 @@ class SettingScreen extends StatelessWidget {
                 SizedBox(height: 14),
                 _card([
                   _navRow(
-                    icon: FontAwesomeIcons.circleQuestion,
+                    icon: Icons.help_outline_sharp,
                     title: 'Trung tâm trợ giúp',
                     colors: AppColors.red,
                     onTap: () {
                       debugPrint('Hỗ trợ');
                     },
                   ),
-                  _navRow(
-                    icon: FontAwesomeIcons.fileLines,
-                    title: 'Điều khoản & chính sách',
-                    colors: AppColors.amber,
-                    onTap: () {
-                      debugPrint('Điều khoản & chính sách');
-                    },
-                  ),
-                  _navRow(
-                    icon: FontAwesomeIcons.circleInfo,
-                    title: 'Về ứng dụng',
-                    colors: AppColors.pink,
-                    onTap: () {
-                      debugPrint('Giới thiệu');
-                    },
-                  ),
+                  // _navRow(
+                  //   icon: FontAwesomeIcons.fileLines,
+                  //   title: 'Điều khoản & chính sách',
+                  //   colors: AppColors.amber,
+                  //   onTap: () {
+                  //     debugPrint('Điều khoản & chính sách');
+                  //   },
+                  // ),
+                  // _navRow(
+                  //   icon: FontAwesomeIcons.circleInfo,
+                  //   title: 'Về ứng dụng',
+                  //   colors: AppColors.pink,
+                  //   onTap: () {
+                  //     debugPrint('Giới thiệu');
+                  //   },
+                  // ),
                 ]),
                 SizedBox(height: 80),
                 _buildLogout(context),
@@ -106,10 +104,10 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAppbar() {
+  Widget _buildAppbar(BuildContext context) {
     return Row(
       children: [
-        AppBackButton(),
+        _buildButtonBack(context),
         SizedBox(width: 14),
         Text(
           'Cài đặt',
@@ -151,8 +149,8 @@ class SettingScreen extends StatelessWidget {
                 color: AppColors.tealPrimary.withValues(alpha: 0.17),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: FaIcon(
-                FontAwesomeIcons.user,
+              child: Icon(
+                Icons.person_outline_rounded,
                 color: AppColors.tealPrimary,
                 size: 26,
               ),
@@ -191,8 +189,8 @@ class SettingScreen extends StatelessWidget {
                     color: AppColors.tealPrimary.withValues(alpha: 0.17),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: FaIcon(
-                    FontAwesomeIcons.pen,
+                  child: Icon(
+                    Icons.drive_file_rename_outline_outlined,
                     color: AppColors.tealPrimary,
                     size: 15,
                   ),
@@ -237,7 +235,7 @@ class SettingScreen extends StatelessWidget {
   }
 
   Widget _navRow({
-    required FaIconData icon,
+    required IconData icon,
     required String title,
     required Color colors,
     String? sub,
@@ -278,7 +276,7 @@ class SettingScreen extends StatelessWidget {
                 ],
               ),
             ),
-            FaIcon(FontAwesomeIcons.caretRight, color: colors, size: 20),
+            Icon(Icons.arrow_forward_ios, color: colors, size: 20),
           ],
         ),
       ),
@@ -352,7 +350,23 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
-  Widget _iconBox(FaIconData icon, Color color) {
+  Widget _buildButtonBack(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pop(context),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppColors.inputFill,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.borderButton),
+        ),
+        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _iconBox(IconData icon, Color color) {
     return Container(
       width: 40,
       height: 40,
@@ -361,7 +375,7 @@ class SettingScreen extends StatelessWidget {
         color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: FaIcon(icon, color: color),
+      child: Icon(icon, color: color),
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:urbano/Models/notification_model.dart';
-import 'package:urbano/core/Widgets/app_back_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class NotificationScreen extends StatefulWidget {
   final List<ThongBao> thongBaoList;
@@ -43,7 +43,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
       ),
     );
@@ -79,7 +79,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
       child: Row(
         children: [
-          AppBackButton(),
+          _buildButtonBack(context),
           SizedBox(width: 14),
           Expanded(
             child: Text(
@@ -238,6 +238,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
     final chuaDoc = !_isRead(tb);
     return GestureDetector(
       onTap: () {
+        Navigator.pushNamed(
+          context,
+          AppRoutes.notificationDetail,
+          arguments: tb,
+        );
         _markRead(tb);
       },
       behavior: HitTestBehavior.opaque,
@@ -344,6 +349,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ],
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildButtonBack(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pop(context),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppColors.inputFill,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.borderButton),
+        ),
+        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
       ),
     );
   }

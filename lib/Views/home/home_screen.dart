@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:urbano/Models/home/home_model.dart';
+import 'package:urbano/Models/home_model.dart';
 import 'package:urbano/ViewModels/home/home_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/Models/notification_model.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,6 +24,12 @@ class _Homeview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<HomeViewModel>();
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -69,6 +74,7 @@ class _Homeview extends StatelessWidget {
             onTap: () {
               //TODOL: XU LY SU KIEN
               debugPrint('chi tiết hóa đơn');
+              debugPrint(data.cuDan.hoTen);
             },
           ),
           _sliverSection(
@@ -336,7 +342,7 @@ class _Homeview extends StatelessWidget {
         'Phương tiện',
         AppColors.amber,
         () {
-          debugPrint('Phương tiện');
+          Navigator.pushNamed(context, AppRoutes.phuongTien);
         },
       ),
       (
@@ -746,7 +752,7 @@ class _Homeview extends StatelessWidget {
       children: [
         Expanded(
           child: _paymentCard(
-            FontAwesomeIcons.commentDollar,
+            Icons.payments_outlined,
             'Thông báo TT',
             '2 hóa đơn đến hạn',
             () {
@@ -756,21 +762,16 @@ class _Homeview extends StatelessWidget {
         ),
         SizedBox(width: 9),
         Expanded(
-          child: _paymentCard(
-            FontAwesomeIcons.clockRotateLeft,
-            'Lịch sử TT',
-            'Xem giao dịch',
-            () {
-              debugPrint('lịch sử thanh toán');
-            },
-          ),
+          child: _paymentCard(Icons.history, 'Lịch sử TT', 'Xem giao dịch', () {
+            debugPrint('lịch sử thanh toán');
+          }),
         ),
       ],
     );
   }
 
   Widget _paymentCard(
-    FaIconData icon,
+    IconData icon,
     String string,
     String sub,
     VoidCallback? onTap,
@@ -788,7 +789,7 @@ class _Homeview extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FaIcon(icon, size: 24, color: AppColors.tealPrimary),
+            Icon(icon, size: 24, color: AppColors.tealPrimary),
             SizedBox(height: 8),
             Text(
               string,

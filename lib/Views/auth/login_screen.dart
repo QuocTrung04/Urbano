@@ -1,20 +1,32 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:urbano/ViewModels/auth/login_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => LoginViewmodel(),
+      child: const _LoginView(), // ⬅ lớp trong
+    );
+  }
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginView extends StatefulWidget {
+  const _LoginView();
+  @override
+  State<_LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<_LoginView> {
   final _accountController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
@@ -172,13 +184,27 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildButtonLogin() {
+    final isLoading = context.watch<LoginViewmodel>().isLoading;
     return AppButton(
       icon: Icons.login_rounded,
-      label: 'Đăng Nhập',
-      onPressed: () {
-        // TODOL: sử lý sự kiện
-        Navigator.pushReplacementNamed(context, AppRoutes.home);
-      },
+      label: isLoading ? 'Đang đăng nhập...' : 'Đăng Nhập',
+      onPressed: isLoading
+          ? null
+          : () async {
+              final vm = context.read<LoginViewmodel>();
+              final result = await vm.login(
+                _accountController.text,
+                _passwordController.text,
+              );
+              if (!mounted) return;
+              if (result) {
+                Navigator.pushReplacementNamed(context, AppRoutes.home);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(vm.error ?? 'Đăng nhập thất bại')),
+                );
+              }
+            },
     );
   }
 

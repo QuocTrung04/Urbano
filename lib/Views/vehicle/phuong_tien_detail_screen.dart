@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:urbano/Models/home_model.dart';
 import 'package:urbano/Models/phuong_tien_model.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
@@ -246,10 +245,10 @@ class PhuongTienDetailScreen extends StatelessWidget {
     }
   }
 
-  String _formatTime(DateTime _time) {
-    final d = _time.day.toString().padLeft(2, '0');
-    final m = _time.month.toString().padLeft(2, '0');
-    final y = _time.year.toString();
+  String _formatTime(DateTime time) {
+    final d = time.day.toString().padLeft(2, '0');
+    final m = time.month.toString().padLeft(2, '0');
+    final y = time.year.toString();
 
     return '$d/$m/$y';
   }

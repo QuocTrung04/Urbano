@@ -54,7 +54,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     });
   }
 
-  String get _otp => _controller.map((c) => c.text).join();
+  //String get _otp => _controller.map((c) => c.text).join();
 
   String _formatTime(int s) {
     final m = (s ~/ 60).toString().padLeft(2, '0');

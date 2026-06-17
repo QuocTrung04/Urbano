@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:urbano/ViewModels/home/home_viewmodel.dart';
-import 'package:urbano/Views/auth/forgot_password_screen.dart';
-import 'package:urbano/Views/auth/login_screen.dart';
-import 'package:urbano/Views/auth/reset_password_screen.dart';
-import 'package:urbano/Views/auth/verify_otp_screen.dart';
 import 'package:urbano/Views/home/home_screen.dart';
-import 'package:urbano/Views/notification_detail_screen.dart';
-import 'package:urbano/Views/notification_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 

@@ -12,7 +12,12 @@ import 'package:urbano/Views/setting_screen.dart';
 import 'package:urbano/Views/notification_screen.dart';
 import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:urbano/Models/hoadon_model.dart';
+import 'package:urbano/Services/hoa_don_services.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_screen.dart';
+import 'package:urbano/features/invoice/ViewModels/hoa_don_detail_viewmodel.dart';
+import 'package:urbano/features/invoice/Views/hoa_don_detail_view.dart';
 import 'package:urbano/features/invoice/Views/hoa_don_view.dart';
 
 class AppRoutes {
@@ -30,6 +35,7 @@ class AppRoutes {
   static const String phuongTien = '/phuong-tien';
   static const String phuongTienDetail = '/phuong-tien-detail';
   static const String invoice = '/invoice';
+  static const String invoiceDetail = '/invoice-detail';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -76,6 +82,17 @@ class AppRoutes {
         final phuongTienList = settings.arguments as PhuongTien;
         return MaterialPageRoute(
           builder: (_) => PhuongTienDetailScreen(phuongTien: phuongTienList),
+        );
+      case invoiceDetail:
+        final hoaDon = settings.arguments as HoaDonModel;
+        return MaterialPageRoute(
+          builder: (_) => ChangeNotifierProvider(
+            create: (_) => HoaDonDetailViewModel(
+              services: HoaDonServices(),
+              hoaDon: hoaDon,
+            )..fetchDetail(),
+            child: const HoaDonDetailView(),
+          ),
         );
 
       default:

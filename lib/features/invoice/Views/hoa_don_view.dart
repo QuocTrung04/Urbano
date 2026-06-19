@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/Models/hoadon_model.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/features/invoice/ViewModels/hoa_don_viewmodel.dart';
 
 class HoaDonView extends StatefulWidget {
@@ -110,40 +111,48 @@ class _HoaDonViewState extends State<HoaDonView> {
       statusText = 'Chưa thanh toán';
     }
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 14),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.borderButton),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.tealDark.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.borderSide.withValues(alpha: 0.5)),
-                ),
-                child: Text(
-                  item.kyThanhToan,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.tealPrimary,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          AppRoutes.invoiceDetail,
+          arguments: item,
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 14),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.nenContainer,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.borderButton),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.tealDark.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.borderSide.withValues(alpha: 0.5)),
+                  ),
+                  child: Text(
+                    item.kyThanhToan,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.tealPrimary,
                   ),
                 ),
               ),
@@ -258,7 +267,8 @@ class _HoaDonViewState extends State<HoaDonView> {
           ],
         ],
       ),
-    );
+    ),
+  );
   }
 
   Widget _buildErrorState(HoaDonViewModel vm) {

@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class AccountInfoScreen extends StatelessWidget {
   final CuDan cuDan;
-  final String? canHoText;
+  final String? soCanHo;
 
   const AccountInfoScreen({
     super.key,
     required this.cuDan,
-    required this.canHoText,
+    required this.soCanHo,
   });
 
   String _formatTime(DateTime? time) {
@@ -51,6 +52,74 @@ class AccountInfoScreen extends StatelessWidget {
                   _buildAppbar(context),
                   SizedBox(height: 24),
                   _buildHeader(),
+                  SizedBox(height: 24),
+                  Text(
+                    'Thông tin cá nhân'.toUpperCase(),
+                    style: TextStyle(
+                      color: AppColors.textMuted,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                  SizedBox(height: 12),
+
+                  _navRow(
+                    context: context,
+                    icon: Icons.badge_outlined,
+                    title: 'Số CCCD',
+                    value: cuDan.cccd!,
+                    color: AppColors.tealPrimary,
+                    canCopy: true,
+                  ),
+                  SizedBox(height: 12),
+                  _navRow(
+                    context: context,
+                    icon: Icons.cake_outlined,
+                    title: 'Ngày sinh',
+                    value: _formatTime(cuDan.ngaySinh),
+                    color: AppColors.amber,
+                  ),
+                  SizedBox(height: 12),
+                  _navRow(
+                    context: context,
+                    icon: cuDan.gioiTinh == 1 ? Icons.male : Icons.female,
+                    title: 'Giới tính',
+                    value: cuDan.gioiTinhText ?? '',
+                    color: cuDan.gioiTinh == 1
+                        ? AppColors.blue
+                        : AppColors.pink,
+                  ),
+
+                  SizedBox(height: 24),
+                  Text(
+                    'Liên hệ'.toUpperCase(),
+                    style: TextStyle(
+                      color: AppColors.textMuted,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                  SizedBox(height: 12),
+
+                  _navRow(
+                    context: context,
+                    icon: Icons.call,
+                    title: 'Số điện thoại',
+                    value: cuDan.sdt!,
+                    color: AppColors.tealPrimary,
+                    canCopy: true,
+                  ),
+                  SizedBox(height: 12),
+                  _navRow(
+                    context: context,
+                    icon: Icons.mail_outline_outlined,
+                    title: 'Email',
+                    value: cuDan.email!,
+                    color: AppColors.red,
+                    canCopy: true,
+                  ),
                 ],
               ),
             ),
@@ -89,7 +158,11 @@ class AccountInfoScreen extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => Navigator.pop(context),
+          onTap: () => Navigator.pushNamed(
+            context,
+            AppRoutes.editProfile,
+            arguments: cuDan,
+          ),
           child: Container(
             width: 40,
             height: 40,
@@ -112,49 +185,177 @@ class AccountInfoScreen extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16),
-      child: Center(
-        child: Column(
-          children: [
-            Container(
-              height: 80,
-              width: 80,
-              decoration: BoxDecoration(
-                color: AppColors.amber,
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              cuDan.hoTen,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                letterSpacing: 1,
-              ),
-            ),
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(canHoText!),
-                ),
-              ],
-            ),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 26, 20, 22),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.tealPrimary.withValues(alpha: 0.12),
+            AppColors.blue.withValues(alpha: 0.08),
           ],
         ),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.2)),
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+              color: AppColors.nenContainer,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Icon(Icons.person, color: AppColors.iconMuted, size: 50),
+          ),
+          SizedBox(height: 8),
+          Text(
+            cuDan.hoTen,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              letterSpacing: 1,
+            ),
+          ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                decoration: BoxDecoration(
+                  color: AppColors.nenContainer,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.account_balance,
+                      size: 18,
+                      color: AppColors.iconMuted,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'P.${soCanHo!}',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textMuted,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 12),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                decoration: BoxDecoration(
+                  color: AppColors.tealPrimary.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.check_circle_outline_rounded,
+                      color: AppColors.tealPrimary,
+                      size: 18,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      cuDan.trangThaiText!,
+                      style: TextStyle(color: AppColors.tealPrimary),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 
-  String _chuCaiDau(String hoTen) {
-    final parts = hoTen.trim().split(' ');
-    return parts.isNotEmpty && parts.last.isNotEmpty
-        ? parts.last[0].toUpperCase()
-        : '';
+  Widget _navRow({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required String value,
+    required Color color,
+    bool canCopy = false,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(13),
+      decoration: BoxDecoration(
+        color: AppColors.nenContainer,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.borderButton),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, size: 20, color: color),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textMuted,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (canCopy)
+            GestureDetector(
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: value));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Đã sao chép $title',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    duration: const Duration(seconds: 1),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: AppColors.tealDark,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: Icon(
+                  Icons.copy_rounded,
+                  size: 18,
+                  color: AppColors.iconMuted,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }

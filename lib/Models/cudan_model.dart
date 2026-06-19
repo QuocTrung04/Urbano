@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class CuDan {
   final int id;
   final String? hoTenDem;
@@ -80,6 +82,48 @@ class CuDan {
     'createdAt': createdAt?.toIso8601String(),
     'updatedAt': updatedAt?.toIso8601String(),
   };
+
+  CuDan copyWith({
+    int? id,
+    String? hoTenDem,
+    String? ten,
+    String? hoTen,
+    String? sdt,
+    String? cccd,
+    String? email,
+    DateTime? ngaySinh,
+    int? gioiTinh,
+    String? gioiTinhText,
+    String? tinh,
+    String? xa,
+    String? diaChi,
+    String? diaChiDayDu,
+    int? trangThai,
+    String? trangThaiText,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return CuDan(
+      id: id ?? this.id,
+      hoTenDem: hoTenDem ?? this.hoTenDem,
+      ten: ten ?? this.ten,
+      hoTen: hoTen ?? this.hoTen,
+      sdt: sdt ?? this.sdt,
+      cccd: cccd ?? this.cccd,
+      email: email ?? this.email,
+      ngaySinh: ngaySinh ?? this.ngaySinh,
+      gioiTinh: gioiTinh ?? this.gioiTinh,
+      gioiTinhText: gioiTinhText ?? this.gioiTinhText,
+      tinh: tinh ?? this.tinh,
+      xa: xa ?? this.xa,
+      diaChi: diaChi ?? this.diaChi,
+      diaChiDayDu: diaChiDayDu ?? this.diaChiDayDu,
+      trangThai: trangThai ?? this.trangThai,
+      trangThaiText: trangThaiText ?? this.trangThaiText,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.createdAt,
+    );
+  }
 }
 
 DateTime? _parseDate(dynamic value) {

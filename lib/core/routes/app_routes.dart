@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:urbano/Models/canho_model.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/Models/phuong_tien_model.dart';
 import 'package:urbano/Views/account/account_info_screen.dart';
+import 'package:urbano/Views/account/edit_profile_screen.dart';
 import 'package:urbano/Views/auth/change_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
@@ -33,6 +33,7 @@ class AppRoutes {
   static const String phuongTienDetail = '/phuong-tien-detail';
   static const String contact = '/contact';
   static const String accountInfo = '/account-info';
+  static const String editProfile = '/edit-profile';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -86,9 +87,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => AccountInfoScreen(
             cuDan: arg['cuDan'] as CuDan,
-            canHoText: arg['soCanHo'] as String,
+            soCanHo: arg['soCanHo'] as String,
           ),
         );
+      case editProfile:
+        final arg = settings.arguments as CuDan;
+        return MaterialPageRoute(builder: (_) => EditProfileScreen(cuDan: arg));
 
       default:
         return null;

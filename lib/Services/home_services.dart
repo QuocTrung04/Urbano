@@ -20,7 +20,7 @@ class HomeServices {
       canHo: CanHo(id: 1, toaNha: 1, soCanHo: '202', tang: 2, dienTich: 65),
       tenToaNha: 'Plaza',
       hoaDonList: [
-        HoaDon(
+        HoaDonModel(
           id: 1,
           canHo: 1,
           thang: 5,

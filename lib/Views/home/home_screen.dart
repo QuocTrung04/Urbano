@@ -69,12 +69,12 @@ class _Homeview extends StatelessWidget {
           ),
           _sliverSection(
             title: 'hóa đơn tháng ${DateTime.now().month - 1}',
-            child: _buildBillSumary(data),
+            child: _buildBillSumary(data, onTap: () {
+              Navigator.pushNamed(context, AppRoutes.invoice);
+            }),
             action: 'Xem chi tiết >',
             onTap: () {
-              //TODOL: XU LY SU KIEN
-              debugPrint('chi tiết hóa đơn');
-              debugPrint(data.cuDan.hoTen);
+              Navigator.pushNamed(context, AppRoutes.invoice);
             },
           ),
           _sliverSection(
@@ -326,7 +326,7 @@ class _Homeview extends StatelessWidget {
         'Hóa đơn',
         AppColors.tealPrimary,
         () {
-          debugPrint('Hoa don');
+          Navigator.pushNamed(context, AppRoutes.invoice);
         },
       ),
       (

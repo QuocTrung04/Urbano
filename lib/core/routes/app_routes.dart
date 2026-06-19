@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:urbano/Models/canho_model.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/Models/phuong_tien_model.dart';
+import 'package:urbano/Views/account/account_info_screen.dart';
 import 'package:urbano/Views/auth/change_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
-import 'package:urbano/Views/notification_detail_screen.dart';
+import 'package:urbano/Views/notification/notification_detail_screen.dart';
 import 'package:urbano/Views/setting_screen.dart';
-import 'package:urbano/Views/notification_screen.dart';
+import 'package:urbano/Views/notification/notification_screen.dart';
 import 'package:urbano/Models/notification_model.dart';
+import 'package:urbano/Views/support/contact_screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_screen.dart';
 
@@ -28,6 +31,8 @@ class AppRoutes {
   static const String notificationDetail = '/notification-detail';
   static const String phuongTien = '/phuong-tien';
   static const String phuongTienDetail = '/phuong-tien-detail';
+  static const String contact = '/contact';
+  static const String accountInfo = '/account-info';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -36,6 +41,7 @@ class AppRoutes {
     resetPassword: (_) => const ResetPasswordScreen(),
     changePassword: (_) => const ChangePasswordScreen(),
     phuongTien: (_) => const PhuongTienScreen(),
+    contact: (_) => const ContactScreen(),
   };
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
@@ -56,6 +62,7 @@ class AppRoutes {
           builder: (_) => SettingScreen(
             cuDan: arg['cuDan'] as CuDan,
             canHoText: arg['canHoText'] as String,
+            soCanHo: arg['soCanHo'] as String,
           ),
         );
       //man thong bao
@@ -73,6 +80,14 @@ class AppRoutes {
         final phuongTienList = settings.arguments as PhuongTien;
         return MaterialPageRoute(
           builder: (_) => PhuongTienDetailScreen(phuongTien: phuongTienList),
+        );
+      case accountInfo:
+        final arg = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => AccountInfoScreen(
+            cuDan: arg['cuDan'] as CuDan,
+            canHoText: arg['soCanHo'] as String,
+          ),
         );
 
       default:

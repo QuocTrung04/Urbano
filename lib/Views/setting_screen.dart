@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:urbano/Models/canho_model.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/Models/cudan_model.dart';
@@ -7,13 +8,14 @@ import 'package:urbano/Models/cudan_model.dart';
 class SettingScreen extends StatelessWidget {
   final CuDan cuDan;
   final String canHoText;
+  final String soCanHo;
 
   const SettingScreen({
     super.key,
     required this.cuDan,
     required this.canHoText,
+    required this.soCanHo,
   });
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -50,10 +52,15 @@ class SettingScreen extends StatelessWidget {
                   _navRow(
                     icon: Icons.person_4_rounded,
                     title: 'Thông tin tài khoản',
-                    sub: 'Phương thức đăng nhập',
                     colors: AppColors.tealPrimary,
                     onTap: () {
-                      debugPrint('quan ly tai khoan');
+                      debugPrint('${cuDan.id}');
+                      debugPrint(cuDan.email);
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.accountInfo,
+                        arguments: {'cuDan': cuDan, 'soCanHo': soCanHo},
+                      );
                     },
                   ),
                   _navRow(

@@ -188,6 +188,7 @@ class _Homeview extends StatelessWidget {
                     arguments: {
                       'cuDan': data.cuDan,
                       'canHoText': _buildCanHoText(data),
+                      'soCanHo': data.canHo.soCanHo,
                     },
                   );
                   debugPrint('setting');
@@ -312,11 +313,11 @@ class _Homeview extends StatelessWidget {
   String _buildCanHoText(HomeData data) {
     final c = data.canHo;
     final parts = <String>[
-      'Tòa ${data.tenToaNha}',
-      if (c.tang != null) 'Tầng ${c.tang}', // chỉ thêm khi có
+      'Tòa ${data.tenToaNha}\n',
+      if (c.tang != null) 'Tầng ${c.tang} • ', // chỉ thêm khi có
       'P.${c.soCanHo}',
     ];
-    return parts.join(' - ');
+    return parts.join();
   }
 
   Widget _buildQuickAction(BuildContext context) {
@@ -350,6 +351,7 @@ class _Homeview extends StatelessWidget {
         'Liên hệ',
         AppColors.pink,
         () {
+          Navigator.pushNamed(context, AppRoutes.contact);
           debugPrint('lien he');
         },
       ),

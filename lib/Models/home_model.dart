@@ -7,7 +7,7 @@ class HomeData {
   final CuDan cuDan;
   final CanHo canHo;
   final String tenToaNha;
-  final List<HoaDon> hoaDonList;
+  final List<HoaDonModel> hoaDonList;
   final List<ThongBao> thongBaoList;
 
   HomeData({
@@ -23,7 +23,7 @@ class HomeData {
       canHo: CanHo.fromJson(json['can_ho']),
       tenToaNha: json['ten_toa_nha'] ?? '',
       hoaDonList: (json['hoa_don_list'] as List? ?? [])
-          .map((item) => HoaDon.fromJson(item))
+          .map((item) => HoaDonModel.fromJson(item))
           .toList(),
       thongBaoList: (json['thong_bao_list'] as List? ?? [])
           .map((item) => ThongBao.fromJson(item))

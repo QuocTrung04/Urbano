@@ -16,6 +16,7 @@ import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/Views/support/contact_screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_screen.dart';
+import 'package:urbano/features/invoice/Views/hoa_don_view.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -34,6 +35,7 @@ class AppRoutes {
   static const String contact = '/contact';
   static const String accountInfo = '/account-info';
   static const String editProfile = '/edit-profile';
+  static const String invoice = '/invoice';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -43,6 +45,7 @@ class AppRoutes {
     changePassword: (_) => const ChangePasswordScreen(),
     phuongTien: (_) => const PhuongTienScreen(),
     contact: (_) => const ContactScreen(),
+    invoice: (_) => const HoaDonView(),
   };
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {

@@ -187,7 +187,13 @@ class SettingScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.editProfile,
+                    arguments: cuDan,
+                  );
+                },
                 child: Container(
                   height: 35,
                   width: 35,

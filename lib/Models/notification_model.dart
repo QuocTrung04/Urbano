@@ -5,13 +5,13 @@ class ThongBao {
   final String? tieuDe;
   final String? noiDung;
   final int? nguoiTao;
-  final bool trangthai;
+  final bool daDoc;
   final DateTime? createdAt;
 
   ThongBao({
     required this.id,
     this.tieuDe,
-    this.trangthai = true,
+    this.daDoc = true,
     this.noiDung,
     this.createdAt,
     this.nguoiTao,
@@ -23,7 +23,7 @@ class ThongBao {
       noiDung: json['noi_dung'],
       nguoiTao: json['nguoi_tao'],
       createdAt: _parseDate(json['createAt']),
-      trangthai: json['trang_thai'] == true || json['trang_thai'] == 1,
+      daDoc: json['daDoc'] ?? false,
     );
   }
   String get thoiGianHienThi {
@@ -33,6 +33,24 @@ class ThongBao {
     if (diff.inHours < 24) return '${diff.inHours} giờ trước';
     if (diff.inDays < 30) return '${diff.inDays} ngày trước';
     return '${(diff.inDays) ~/ 30} tháng trước';
+  }
+
+  ThongBao copyWith({
+    int? id,
+    String? tieuDe,
+    String? noiDung,
+    int? nguoiTao,
+    bool? daDoc,
+    DateTime? createdAt,
+  }) {
+    return ThongBao(
+      id: id ?? this.id,
+      tieuDe: tieuDe ?? this.tieuDe,
+      noiDung: noiDung ?? this.noiDung,
+      nguoiTao: nguoiTao ?? this.nguoiTao,
+      daDoc: daDoc ?? this.daDoc,
+      createdAt: createdAt ?? this.createdAt,
+    );
   }
 }
 

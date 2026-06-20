@@ -23,13 +23,13 @@ class AuthServices {
 
   //========DOI MAT KHAU==============
   Future<void> doiMatKhau(
-    int cudanId,
+    int cuDanId,
     String matkhaucu,
     String matkhaumoi,
     String token,
   ) async {
-    final res = await http.put(
-      Uri.parse('$baseUrl/cudan/change-password/$cudanId'),
+    final res = await http.post(
+      Uri.parse('$baseUrl/cudan/change-password?cuDanId=$cuDanId'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -40,7 +40,7 @@ class AuthServices {
       }),
     );
     if (res.statusCode != 200) {
-      debugPrint('ljflsdaflkj $baseUrl/cudan/change-password/$cudanId');
+      debugPrint('ljflsdaflkj $baseUrl/cudan/change-password?cuDanId=$cuDanId');
       throw Exception('Đổi mật khẩu thất bại (${res.statusCode})');
     }
   }

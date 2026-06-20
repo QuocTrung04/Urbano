@@ -16,7 +16,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   final Set<int> _readIds = {};
   int _tab = 0;
 
-  bool _isRead(ThongBao tb) => !tb.trangthai || _readIds.contains(tb.id);
+  bool _isRead(ThongBao tb) => tb.daDoc || _readIds.contains(tb.id);
   int get _soChuaDoc => widget.thongBaoList.where((tb) => !_isRead(tb)).length;
 
   void _markRead(ThongBao tb) {

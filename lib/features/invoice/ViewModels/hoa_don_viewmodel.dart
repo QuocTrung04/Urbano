@@ -1,42 +1,44 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:urbano/Models/hoadon_model.dart';
+import 'package:urbano/Services/hoa_don_services.dart';
 
 class HoaDonViewModel extends ChangeNotifier {
-  static const String apiUrl = 'http://103.116.39.175/api/HoaDon';
+  final HoaDonServices _hoaDonServices = HoaDonServices();
 
   bool isLoading = false;
   String? error;
   List<HoaDonModel> hoaDonList = [];
+  bool _isDisposed = false;
 
   Future<void> fetchHoaDons() async {
+    // Prevent duplicate concurrent requests
+    if (isLoading) return;
+
     isLoading = true;
     error = null;
     notifyListeners();
 
     try {
-      final response = await http.get(Uri.parse(apiUrl));
-
-      if (response.statusCode == 200) {
-        // Giải mã UTF-8 để hiển thị đúng tiếng Việt
-        final decoded = jsonDecode(utf8.decode(response.bodyBytes));
-        List listJson = [];
-        if (decoded is List) {
-          listJson = decoded;
-        } else if (decoded is Map && decoded['value'] != null) {
-          listJson = decoded['value'];
-        }
-        hoaDonList = listJson.map((item) => HoaDonModel.fromJson(item)).toList();
-      } else {
-        error = 'Không thể tải danh sách hóa đơn (${response.statusCode})';
-      }
+      hoaDonList = await _hoaDonServices.fetchHoaDons();
     } catch (e) {
       debugPrint('Lỗi tải hóa đơn: $e');
       error = 'Kết nối mạng không ổn định. Vui lòng thử lại!';
     } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_isDisposed) {
+      super.notifyListeners();
     }
   }
 }

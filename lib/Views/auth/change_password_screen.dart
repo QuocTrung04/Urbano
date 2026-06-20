@@ -58,11 +58,12 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
 
   Future<void> _capNhat() async {
     final prefs = await SharedPreferences.getInstance();
-    final cudanId = prefs.getInt('cuDanId') ?? 0;
+    final cuDanId = prefs.getInt('cuDanId') ?? 0;
+    debugPrint('cu dandfsdfds: $cuDanId');
     if (!mounted) return;
     final vm = context.read<ChangePasswordViewmodel>();
     final result = await vm.doiMatKhau(
-      cudanId,
+      cuDanId,
       _matkhaucu.text,
       _matkhaumoi.text,
       _xacnhanmatkhau.text,
@@ -72,6 +73,7 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Đổi mật khẩu thành công')));
+      Navigator.pop(context);
     }
   }
 

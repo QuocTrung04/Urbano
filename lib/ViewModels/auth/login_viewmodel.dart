@@ -19,11 +19,6 @@ class LoginViewmodel extends ChangeNotifier {
       notifyListeners();
       return false;
     }
-    if (password.length < 6) {
-      error = 'Mật khẩu ít nhất 6 ký tự';
-      notifyListeners();
-      return false;
-    }
     isLoading = true;
     error = null;
     notifyListeners();
@@ -34,6 +29,8 @@ class LoginViewmodel extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', result.token);
       await prefs.setString('cuDan', jsonEncode(result.cuDan.toJson()));
+      await prefs.setInt('cuDanId', result.cuDan.id);
+      debugPrint('id cu dan ne:  ${result.cuDan.id}');
       isLoading = false;
       notifyListeners();
       return true;

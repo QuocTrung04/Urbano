@@ -101,7 +101,7 @@ class _Homeview extends StatelessWidget {
           ),
           _sliverSection(
             title: 'THÔNG BÁO MỚI',
-            child: _buildNotification(data.thongBaoList),
+            child: _buildNotification(data.thongBaoList, context, vm),
             action: 'Xem tất cả >',
             onTap: () {
               //TODOL: XU LY SU KIEN
@@ -178,7 +178,7 @@ class _Homeview extends StatelessWidget {
                   );
                   print(context);
                 },
-                hasdot: data.thongBaoList.any((tb) => tb.trangthai),
+                hasdot: data.thongBaoList.any((tb) => !tb.daDoc),
               ),
               SizedBox(width: 8),
               _iconButton(
@@ -335,10 +335,10 @@ class _Homeview extends StatelessWidget {
       ),
       (
         Icons.build_rounded,
-        'Sửa chữa',
+        'Yêu cầu',
         AppColors.blue,
         () {
-          debugPrint('Sua chua');
+          Navigator.pushNamed(context, AppRoutes.yeucau);
         },
       ),
       (
@@ -559,21 +559,29 @@ class _Homeview extends StatelessWidget {
     );
   }
 
-  Widget _buildNotification(List<ThongBao> thongBaoList) {
-    final chuadoc = thongBaoList.where((tb) => tb.trangthai).toList();
-    debugPrint('day la trong bao $chuadoc');
-    if (chuadoc.isEmpty) {
+  Widget _buildNotification(
+    List<ThongBao> thongBaoList,
+    BuildContext context,
+    HomeViewModel vm,
+  ) {
+    final daDoc = thongBaoList.where((tb) => !tb.daDoc).toList();
+    debugPrint('day la trong bao $daDoc');
+    if (daDoc.isEmpty) {
       return _boxEmpty('Không có thông báo mới');
     }
     return Column(
-      children: chuadoc.take(3).map((tb) {
+      children: daDoc.take(3).map((tb) {
         return Padding(
           padding: EdgeInsets.only(bottom: 10),
           child: _notifiItem(
             tb,
             onTap: () {
-              debugPrint('thong bao');
-              debugPrint('day la trong bao ${tb.trangthai}');
+              vm.danhDauDaDoc(tb); // đánh dấu đã đọc
+              Navigator.pushNamed(
+                context,
+                AppRoutes.notificationDetail,
+                arguments: tb,
+              );
             },
           ),
         );

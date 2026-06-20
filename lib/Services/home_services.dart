@@ -75,6 +75,7 @@ class HomeServices {
           noiDung:
               'Tao thích thì tao cắt nước Tao thích thì tao cắt nước Tao thích thì tao cắt nướcTao thích thì tao cắt nước ',
           createdAt: DateTime.now().subtract(Duration(hours: 2)),
+          daDoc: false,
         ),
         ThongBao(
           id: 1,
@@ -82,7 +83,6 @@ class HomeServices {
           noiDung:
               'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
           createdAt: DateTime.now().subtract(Duration(days: 1)),
-          trangthai: false,
         ),
 
         ThongBao(
@@ -91,7 +91,7 @@ class HomeServices {
           noiDung:
               'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
           createdAt: DateTime.now().subtract(Duration(days: 2)),
-          trangthai: false,
+          //daDoc: false,
         ),
         ThongBao(
           id: 1,
@@ -99,7 +99,7 @@ class HomeServices {
           noiDung:
               'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
           createdAt: DateTime.now().subtract(Duration(days: 2)),
-          trangthai: false,
+          //daDoc: false,
         ),
         ThongBao(
           id: 1,
@@ -107,7 +107,7 @@ class HomeServices {
           noiDung:
               'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
           createdAt: DateTime.now().subtract(Duration(days: 2)),
-          trangthai: false,
+          //daDoc: false,
         ),
         ThongBao(
           id: 1,
@@ -115,7 +115,7 @@ class HomeServices {
           noiDung:
               'Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt Ghét thì cắt',
           createdAt: DateTime.now().subtract(Duration(days: 2)),
-          trangthai: false,
+          //daDoc: false,
         ),
       ],
     );

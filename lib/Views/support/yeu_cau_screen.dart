@@ -64,7 +64,7 @@ class _YeuVauView extends StatelessWidget {
 
   Widget _buildAppbar(BuildContext context, YeuCauViewModel vm) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
       child: Row(
         children: [
           GestureDetector(
@@ -233,9 +233,9 @@ class _YeuVauView extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 13),
       decoration: BoxDecoration(
-        color: const Color(0x0DFFFFFF),
+        color: AppColors.nenContainer,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0x1AFFFFFF)),
+        border: Border.all(color: AppColors.borderButton),
       ),
       clipBehavior: Clip.antiAlias,
       child: IntrinsicHeight(
@@ -305,7 +305,7 @@ class _YeuVauView extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 11),
                       decoration: const BoxDecoration(
                         border: Border(
-                          top: BorderSide(color: Color(0x14FFFFFF)),
+                          top: BorderSide(color: AppColors.borderButton),
                         ),
                       ),
                       child: Row(

@@ -114,7 +114,6 @@ class LoaiYeuCau {
     }
   }
 
-  // Danh sách cố định (khớp bảng loai_yeu_cau)
   static List<LoaiYeuCau> danhSach = [
     LoaiYeuCau(id: 1, name: 'Sửa chữa'),
     LoaiYeuCau(id: 2, name: 'Khiếu nại'),

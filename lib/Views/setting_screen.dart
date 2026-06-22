@@ -38,7 +38,7 @@ class SettingScreen extends StatelessWidget {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+            padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -81,25 +81,17 @@ class SettingScreen extends StatelessWidget {
                     title: 'Trung tâm trợ giúp',
                     colors: AppColors.red,
                     onTap: () {
-                      debugPrint('Hỗ trợ');
+                      Navigator.pushNamed(context, AppRoutes.trogiup);
                     },
                   ),
-                  // _navRow(
-                  //   icon: FontAwesomeIcons.fileLines,
-                  //   title: 'Điều khoản & chính sách',
-                  //   colors: AppColors.amber,
-                  //   onTap: () {
-                  //     debugPrint('Điều khoản & chính sách');
-                  //   },
-                  // ),
-                  // _navRow(
-                  //   icon: FontAwesomeIcons.circleInfo,
-                  //   title: 'Về ứng dụng',
-                  //   colors: AppColors.pink,
-                  //   onTap: () {
-                  //     debugPrint('Giới thiệu');
-                  //   },
-                  // ),
+                  _navRow(
+                    icon: Icons.article,
+                    title: 'Điều khoản & chính sách',
+                    colors: AppColors.amber,
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoutes.dieuKhoan);
+                    },
+                  ),
                 ]),
                 SizedBox(height: 80),
                 _buildLogout(context),
@@ -114,7 +106,19 @@ class SettingScreen extends StatelessWidget {
   Widget _buildAppbar(BuildContext context) {
     return Row(
       children: [
-        _buildButtonBack(context),
+        GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.inputFill,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.borderButton),
+            ),
+            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+          ),
+        ),
         SizedBox(width: 14),
         Text(
           'Cài đặt',
@@ -359,22 +363,6 @@ class SettingScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildButtonBack(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pop(context),
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderButton),
-        ),
-        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
       ),
     );
   }

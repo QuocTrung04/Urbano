@@ -93,7 +93,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(18, 16, 18, 28),
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -96,7 +96,7 @@ class _Homeview extends StatelessWidget {
             action: 'Xem tất cả >',
             onTap: () {
               //TODOL: XU LY SU KIEN
-              debugPrint('tất cả bảng tin tòa nhà');
+              Navigator.pushNamed(context, AppRoutes.bangTin);
             },
           ),
           _sliverSection(
@@ -104,8 +104,11 @@ class _Homeview extends StatelessWidget {
             child: _buildNotification(data.thongBaoList, context, vm),
             action: 'Xem tất cả >',
             onTap: () {
-              //TODOL: XU LY SU KIEN
-              debugPrint('tất cả thông báo');
+              Navigator.pushNamed(
+                context,
+                AppRoutes.notification,
+                arguments: data.thongBaoList,
+              );
             },
           ),
         ],
@@ -176,7 +179,7 @@ class _Homeview extends StatelessWidget {
                     AppRoutes.notification,
                     arguments: data.thongBaoList,
                   );
-                  print(context);
+                  debugPrint('up ba la xi bua: $context');
                 },
                 hasdot: data.thongBaoList.any((tb) => !tb.daDoc),
               ),

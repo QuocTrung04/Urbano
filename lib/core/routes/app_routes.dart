@@ -9,11 +9,14 @@ import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
+import 'package:urbano/Views/notification/bang_tin_screen.dart';
 import 'package:urbano/Views/notification/notification_detail_screen.dart';
 import 'package:urbano/Views/setting_screen.dart';
 import 'package:urbano/Views/notification/notification_screen.dart';
 import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/Views/support/contact_screen.dart';
+import 'package:urbano/Views/support/dieu_khoan_screen.dart';
+import 'package:urbano/Views/support/tro_giup_screen.dart';
 import 'package:urbano/Views/support/yeu_cau_screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +47,9 @@ class AppRoutes {
   static const String invoice = '/invoice';
   static const String invoiceDetail = '/invoice-detail';
   static const String yeucau = '/yeu-cau';
+  static const String bangTin = '/bang-tin';
+  static const String dieuKhoan = '/dieu-khoan';
+  static const String trogiup = '/tro-giup';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -55,6 +61,9 @@ class AppRoutes {
     contact: (_) => const ContactScreen(),
     invoice: (_) => const HoaDonView(),
     yeucau: (_) => const YeuCauScreen(),
+    bangTin: (_) => const BangTinScreen(),
+    dieuKhoan: (_) => const DieuKhoanScreen(),
+    trogiup: (_) => const TroGiupScreen(),
   };
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {

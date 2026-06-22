@@ -76,7 +76,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Widget _buildAppbar() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+      padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
       child: Row(
         children: [
           _buildButtonBack(context),

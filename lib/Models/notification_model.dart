@@ -5,7 +5,7 @@ class ThongBao {
   final String? tieuDe;
   final String? noiDung;
   final int? nguoiTao;
-  final bool daDoc;
+  bool daDoc;
   final DateTime? createdAt;
 
   ThongBao({
@@ -19,9 +19,9 @@ class ThongBao {
   factory ThongBao.fromJson(Map<String, dynamic> json) {
     return ThongBao(
       id: json['id'],
-      tieuDe: json['tieu_de'],
-      noiDung: json['noi_dung'],
-      nguoiTao: json['nguoi_tao'],
+      tieuDe: json['tieuDe'],
+      noiDung: json['noiDung'],
+      nguoiTao: json['nguoiTao'],
       createdAt: _parseDate(json['createAt']),
       daDoc: json['daDoc'] ?? false,
     );

@@ -7,8 +7,8 @@ class HomeData {
   final CuDan cuDan;
   final CanHo canHo;
   final String tenToaNha;
-  final List<HoaDonModel> hoaDonList;
-  final List<ThongBao> thongBaoList;
+  List<HoaDonModel> hoaDonList;
+  List<ThongBao> thongBaoList;
 
   HomeData({
     required this.cuDan,
@@ -17,6 +17,23 @@ class HomeData {
     required this.hoaDonList,
     required this.thongBaoList,
   });
+
+  HomeData copyWith({
+    CuDan? cuDan,
+    CanHo? canHo,
+    String? tenToaNha,
+    List<HoaDonModel>? hoaDonList,
+    List<ThongBao>? thongBaoList,
+  }) {
+    return HomeData(
+      cuDan: cuDan ?? this.cuDan,
+      canHo: canHo ?? this.canHo,
+      tenToaNha: tenToaNha ?? this.tenToaNha,
+      hoaDonList: hoaDonList ?? this.hoaDonList,
+      thongBaoList: thongBaoList ?? this.thongBaoList,
+    );
+  }
+
   factory HomeData.fromJson(Map<String, dynamic> json) {
     return HomeData(
       cuDan: CuDan.fromJson(json['cu_dan']),

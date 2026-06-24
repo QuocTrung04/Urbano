@@ -1,10 +1,63 @@
+// import 'dart:convert';
+// import 'package:flutter/rendering.dart';
+// import 'package:urbano/Models/cudan_model.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:urbano/Models/login_result.dart';
+
+// class AuthServices {
+//   static const String baseUrl = 'http://10.0.2.2:5080/api';
+
+//   //=======API DANG NHAP==========
+//   Future<LoginResult> login(String account, String password) async {
+//     final res = await http.post(
+//       Uri.parse('$baseUrl/cudan/login'),
+//       headers: {'Content-Type': 'application/json'},
+//       body: jsonEncode({'account': account, 'password': password}),
+//     );
+
+//     if (res.statusCode == 200) {
+//       final data = jsonDecode(utf8.decode(res.bodyBytes));
+//       return LoginResult(
+//         token: data['accessToken'],
+//         cuDan: CuDan.fromJson(data['user']),
+//         canHoId: data['canHoId'],   // ⬅ THÊM đọc canHoId
+//       );
+//     }
+//     throw Exception('Đăng nhập thất bại (${res.statusCode})');
+//   }
+
+//   //========DOI MAT KHAU==============
+//   Future<void> doiMatKhau(
+//     int cuDanId,
+//     String matkhaucu,
+//     String matkhaumoi,
+//     String token,
+//   ) async {
+//     final res = await http.post(
+//       Uri.parse('$baseUrl/cudan/change-password?cuDanId=$cuDanId'),
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': 'Bearer $token',
+//       },
+//       body: jsonEncode({
+//         'currentPassword': matkhaucu,
+//         'newPassword': matkhaumoi,
+//       }),
+//     );
+//     if (res.statusCode != 200) {
+//       debugPrint('ljflsdaflkj $baseUrl/cudan/change-password?cuDanId=$cuDanId');
+//       throw Exception('Đổi mật khẩu thất bại (${res.statusCode})');
+//     }
+//   }
+// }
+
 import 'dart:convert';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/foundation.dart';
 import 'package:urbano/Models/login_result.dart';
 import 'package:http/http.dart' as http;
 
 class AuthServices {
-  static const String baseUrl = 'http://103.116.39.175/api';
+  static const String baseUrl = 'http://10.0.2.2:5080/api';
 
   //=======API DANG NHAP==========
   Future<LoginResult> login(String contact, String password) async {

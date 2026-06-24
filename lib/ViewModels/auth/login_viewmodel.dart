@@ -12,6 +12,7 @@ class LoginViewmodel extends ChangeNotifier {
 
   String? token;
   CuDan? cuDan;
+  int? canHoId;
 
   Future<bool> login(String contact, String password) async {
     if (contact.trim().isEmpty || password.isEmpty) {
@@ -26,16 +27,21 @@ class LoginViewmodel extends ChangeNotifier {
       final result = await _services.login(contact.trim(), password);
       token = result.token;
       cuDan = result.cuDan;
+      canHoId = result.canHoId;
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', result.token);
       await prefs.setString('cuDan', jsonEncode(result.cuDan.toJson()));
       await prefs.setInt('cuDanId', result.cuDan.id);
-      debugPrint('id cu dan ne:  ${result.cuDan.id}');
+      await prefs.setInt('canHoId', result.canHoId ?? 0);
+
+      debugPrint('cuDanId: ${result.cuDan.id}, canHoId: ${result.canHoId}');
+
       isLoading = false;
       notifyListeners();
       return true;
     } catch (e) {
-      debugPrint('loi deo login duoc $e');
+      debugPrint('Lỗi login: $e');
       error = 'Sai tài khoản hoặc mật khẩu';
       isLoading = false;
       notifyListeners();

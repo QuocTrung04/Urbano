@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:urbano/Models/canho_model.dart';
 import 'package:urbano/Models/hoadon_model.dart';
 import 'package:urbano/Services/hoa_don_services.dart';
 
 class HoaDonViewModel extends ChangeNotifier {
   final HoaDonServices _hoaDonServices = HoaDonServices();
-
   bool isLoading = false;
   String? error;
   List<HoaDonModel> hoaDonList = [];
   bool _isDisposed = false;
 
-  Future<void> fetchHoaDons() async {
+  Future<void> fetchHoaDons(int canHoId) async {
     // Prevent duplicate concurrent requests
     if (isLoading) return;
 
@@ -19,7 +19,7 @@ class HoaDonViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      hoaDonList = await _hoaDonServices.fetchHoaDons();
+      hoaDonList = await _hoaDonServices.fetchHoaDons(canHoId);
     } catch (e) {
       debugPrint('Lỗi tải hóa đơn: $e');
       error = 'Kết nối mạng không ổn định. Vui lòng thử lại!';

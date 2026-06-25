@@ -164,7 +164,7 @@ class _BangTinView extends StatelessWidget {
           ),
         ),
         clipBehavior: Clip.antiAlias,
-        child: bt.hinhanh ? _cardCoAnh(bt) : _cardKhongAnh(bt),
+        child: _cardCoAnh(bt),
       ),
     );
   }
@@ -177,32 +177,39 @@ class _BangTinView extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 16 / 9,
-              child: Image.network(
-                bt.hinhUrl!,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, progress) {
-                  if (progress == null) return child;
-                  return Container(
-                    color: AppColors.inputFill,
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.tealPrimary,
-                        strokeWidth: 2,
+              child: bt.hinhanh
+                  ? Image.network(
+                      bt.hinhUrl!,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, progress) {
+                        if (progress == null) return child;
+                        return Container(
+                          color: AppColors.inputFill,
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.tealPrimary,
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        );
+                      },
+                      errorBuilder: (_, __, ___) => Container(
+                        color: AppColors.inputFill,
+                        child: const Center(
+                          child: Icon(
+                            Icons.broken_image_outlined,
+                            color: AppColors.iconMuted,
+                            size: 30,
+                          ),
+                        ),
                       ),
+                    )
+                  : Image.asset(
+                      'assets/images/hinh_thongbao.png',
+                      width: double.infinity,
+                      height: 130,
+                      fit: BoxFit.fill,
                     ),
-                  );
-                },
-                errorBuilder: (_, __, ___) => Container(
-                  color: AppColors.inputFill,
-                  child: const Center(
-                    child: Icon(
-                      Icons.broken_image_outlined,
-                      color: AppColors.iconMuted,
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ),
             ),
             if (bt.tinMoi) Positioned(top: 12, left: 12, child: _badgeMoi()),
           ],

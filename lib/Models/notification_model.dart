@@ -22,7 +22,7 @@ class ThongBao {
       tieuDe: json['tieuDe'],
       noiDung: json['noiDung'],
       nguoiTao: json['nguoiTao'],
-      createdAt: _parseDate(json['createAt']),
+      createdAt: _parseDate(json['createdAt']),
       daDoc: json['daDoc'] ?? false,
     );
   }

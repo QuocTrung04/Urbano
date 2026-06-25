@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:urbano/Models/cudan_model.dart';
+import 'package:urbano/ViewModels/account/account_info_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 
@@ -13,6 +15,20 @@ class AccountInfoScreen extends StatelessWidget {
     required this.cuDan,
     required this.soCanHo,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      // Hiển thị NGAY dữ liệu được truyền vào, đồng thời gọi API lấy bản mới từ DB
+      create: (_) => AccountInfoViewmodel(initial: cuDan)..loadData(),
+      child: _AccountInfoView(soCanHo: soCanHo),
+    );
+  }
+}
+
+class _AccountInfoView extends StatelessWidget {
+  final String? soCanHo;
+  const _AccountInfoView({required this.soCanHo});
 
   String _formatTime(DateTime? time) {
     if (time == null) return 'Chưa rõ';
@@ -30,6 +46,9 @@ class AccountInfoScreen extends StatelessWidget {
         statusBarIconBrightness: Brightness.light,
       ),
     );
+    final vm = context.watch<AccountInfoViewmodel>();
+    final cuDan = vm.cuDan;
+
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -42,94 +61,145 @@ class AccountInfoScreen extends StatelessWidget {
             stops: [0.0, 0.5, 1.0],
           ),
         ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildAppbar(context),
-                  SizedBox(height: 24),
-                  _buildHeader(),
-                  SizedBox(height: 24),
-                  Text(
-                    'Thông tin cá nhân'.toUpperCase(),
-                    style: TextStyle(
-                      color: AppColors.textMuted,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  SizedBox(height: 12),
+        child: SafeArea(child: _buildBody(context, vm, cuDan)),
+      ),
+    );
+  }
 
-                  _navRow(
-                    context: context,
-                    icon: Icons.badge_outlined,
-                    title: 'Số CCCD',
-                    value: cuDan.cccd!,
-                    color: AppColors.tealPrimary,
-                    canCopy: true,
-                  ),
-                  SizedBox(height: 12),
-                  _navRow(
-                    context: context,
-                    icon: Icons.cake_outlined,
-                    title: 'Ngày sinh',
-                    value: _formatTime(cuDan.ngaySinh),
-                    color: AppColors.amber,
-                  ),
-                  SizedBox(height: 12),
-                  _navRow(
-                    context: context,
-                    icon: cuDan.gioiTinh == 1 ? Icons.male : Icons.female,
-                    title: 'Giới tính',
-                    value: cuDan.gioiTinhText ?? '',
-                    color: cuDan.gioiTinh == 1
-                        ? AppColors.blue
-                        : AppColors.pink,
-                  ),
-
-                  SizedBox(height: 24),
-                  Text(
-                    'Liên hệ'.toUpperCase(),
-                    style: TextStyle(
-                      color: AppColors.textMuted,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  SizedBox(height: 12),
-
-                  _navRow(
-                    context: context,
-                    icon: Icons.call,
-                    title: 'Số điện thoại',
-                    value: cuDan.sdt!,
-                    color: AppColors.tealPrimary,
-                    canCopy: true,
-                  ),
-                  SizedBox(height: 12),
-                  _navRow(
-                    context: context,
-                    icon: Icons.mail_outline_outlined,
-                    title: 'Email',
-                    value: cuDan.email!,
-                    color: AppColors.red,
-                    canCopy: true,
-                  ),
-                ],
+  Widget _buildBody(
+    BuildContext context,
+    AccountInfoViewmodel vm,
+    CuDan? cuDan,
+  ) {
+    // Chưa có dữ liệu + đang tải -> vòng xoay
+    if (cuDan == null && vm.isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(color: AppColors.tealPrimary),
+      );
+    }
+    // Chưa có dữ liệu + lỗi -> báo lỗi + nút thử lại
+    if (cuDan == null) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.error_outline,
+              color: AppColors.textMuted,
+              size: 48,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              vm.error ?? 'Không tải được thông tin',
+              style: const TextStyle(color: AppColors.textMuted),
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: vm.refresh,
+              child: const Text(
+                'Thử lại',
+                style: TextStyle(color: AppColors.tealPrimary),
               ),
             ),
+          ],
+        ),
+      );
+    }
+
+    // Có dữ liệu -> hiển thị + kéo để làm mới (gọi lại API)
+    return RefreshIndicator(
+      color: AppColors.tealPrimary,
+      backgroundColor: AppColors.bgDark,
+      onRefresh: vm.refresh,
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAppbar(context, cuDan, vm),
+              SizedBox(height: 24),
+              _buildHeader(cuDan),
+              SizedBox(height: 24),
+              Text(
+                'Thông tin cá nhân'.toUpperCase(),
+                style: TextStyle(
+                  color: AppColors.textMuted,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1,
+                ),
+              ),
+              SizedBox(height: 12),
+
+              _navRow(
+                context: context,
+                icon: Icons.badge_outlined,
+                title: 'Số CCCD',
+                value: cuDan.cccd ?? '',
+                color: AppColors.tealPrimary,
+                canCopy: true,
+              ),
+              SizedBox(height: 12),
+              _navRow(
+                context: context,
+                icon: Icons.cake_outlined,
+                title: 'Ngày sinh',
+                value: _formatTime(cuDan.ngaySinh),
+                color: AppColors.amber,
+              ),
+              SizedBox(height: 12),
+              _navRow(
+                context: context,
+                icon: cuDan.gioiTinh == 1 ? Icons.male : Icons.female,
+                title: 'Giới tính',
+                value: cuDan.gioiTinhText ?? '',
+                color: cuDan.gioiTinh == 1 ? AppColors.blue : AppColors.pink,
+              ),
+
+              SizedBox(height: 24),
+              Text(
+                'Liên hệ'.toUpperCase(),
+                style: TextStyle(
+                  color: AppColors.textMuted,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1,
+                ),
+              ),
+              SizedBox(height: 12),
+
+              _navRow(
+                context: context,
+                icon: Icons.call,
+                title: 'Số điện thoại',
+                value: cuDan.sdt ?? '',
+                color: AppColors.tealPrimary,
+                canCopy: true,
+              ),
+              SizedBox(height: 12),
+              _navRow(
+                context: context,
+                icon: Icons.mail_outline_outlined,
+                title: 'Email',
+                value: cuDan.email ?? '',
+                color: AppColors.red,
+                canCopy: true,
+              ),
+              SizedBox(height: 24),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildAppbar(BuildContext context) {
+  Widget _buildAppbar(
+    BuildContext context,
+    CuDan cuDan,
+    AccountInfoViewmodel vm,
+  ) {
     return Row(
       children: [
         GestureDetector(
@@ -158,11 +228,15 @@ class AccountInfoScreen extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => Navigator.pushNamed(
-            context,
-            AppRoutes.editProfile,
-            arguments: cuDan,
-          ),
+          onTap: () async {
+            // Sau khi sửa hồ sơ, cập nhật lại UI ngay bằng dữ liệu trả về
+            final updated = await Navigator.pushNamed(
+              context,
+              AppRoutes.editProfile,
+              arguments: cuDan,
+            );
+            if (updated is CuDan) vm.capNhat(updated);
+          },
           child: Container(
             width: 40,
             height: 40,
@@ -184,7 +258,7 @@ class AccountInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(CuDan cuDan) {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 26, 20, 22),
       decoration: BoxDecoration(
@@ -239,7 +313,7 @@ class AccountInfoScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      'P.${soCanHo!}',
+                      soCanHo ?? '',
                       style: TextStyle(
                         fontSize: 13,
                         color: AppColors.textMuted,
@@ -266,7 +340,7 @@ class AccountInfoScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 4),
                     Text(
-                      cuDan.trangThaiText!,
+                      cuDan.trangThaiText ?? '',
                       style: TextStyle(color: AppColors.tealPrimary),
                     ),
                   ],

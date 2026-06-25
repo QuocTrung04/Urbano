@@ -1,3 +1,4 @@
+import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/Models/canho_model.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/Models/hoadon_model.dart';
@@ -9,6 +10,7 @@ class HomeData {
   final String tenToaNha;
   List<HoaDonModel> hoaDonList;
   List<ThongBao> thongBaoList;
+  List<BangTin> bangTinList;
 
   HomeData({
     required this.cuDan,
@@ -16,6 +18,7 @@ class HomeData {
     required this.tenToaNha,
     required this.hoaDonList,
     required this.thongBaoList,
+    required this.bangTinList,
   });
 
   HomeData copyWith({
@@ -24,6 +27,7 @@ class HomeData {
     String? tenToaNha,
     List<HoaDonModel>? hoaDonList,
     List<ThongBao>? thongBaoList,
+    List<BangTin>? bangTinList,
   }) {
     return HomeData(
       cuDan: cuDan ?? this.cuDan,
@@ -31,6 +35,7 @@ class HomeData {
       tenToaNha: tenToaNha ?? this.tenToaNha,
       hoaDonList: hoaDonList ?? this.hoaDonList,
       thongBaoList: thongBaoList ?? this.thongBaoList,
+      bangTinList: bangTinList ?? this.bangTinList,
     );
   }
 
@@ -44,6 +49,9 @@ class HomeData {
           .toList(),
       thongBaoList: (json['thong_bao_list'] as List? ?? [])
           .map((item) => ThongBao.fromJson(item))
+          .toList(),
+      bangTinList: (json['thong_bao-list'] as List? ?? [])
+          .map((item) => BangTin.fromJson(item))
           .toList(),
     );
   }

@@ -200,7 +200,7 @@ class _PhuongTienView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    xe.tenPhuongTien!,
+                    xe.tenPhuongTien ?? xe.loaiPhuongTien!.tenLoaiPhuongTien,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -242,13 +242,17 @@ class _PhuongTienView extends StatelessWidget {
   }
 
   Widget _buildStatus(PhuongTien xe) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
-      decoration: BoxDecoration(
-        color: _color(xe).withValues(alpha: 0.25),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(xe.trangThaiText!, style: TextStyle(color: _color(xe))),
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+          decoration: BoxDecoration(
+            color: _color(xe).withValues(alpha: 0.25),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(xe.trangThaiText!, style: TextStyle(color: _color(xe))),
+        ),
+      ],
     );
   }
 

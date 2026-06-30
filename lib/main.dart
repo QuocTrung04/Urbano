@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/features/invoice/ViewModels/hoa_don_viewmodel.dart';
@@ -15,7 +16,10 @@ void main() {
   );
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => HoaDonViewModel())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => HoaDonViewModel()),
+        ChangeNotifierProvider(create: (_) => UserProvider()..loadFromPrefs()),
+      ],
       child: const MyApp(),
     ),
   );

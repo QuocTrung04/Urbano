@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/Models/home_model.dart';
+import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/ViewModels/home/home_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/Models/notification_model.dart';
@@ -174,7 +175,8 @@ class _Homeview extends StatelessWidget {
                     ),
                     SizedBox(height: 2),
                     Text(
-                      data.cuDan.hoTen,
+                      context.watch<UserProvider>().cuDan?.hoTen ??
+                          data.cuDan.hoTen,
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -891,12 +893,6 @@ class _Homeview extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image.asset(
-            //  bt.hinhanh!,
-            //   width: double.infinity,
-            //   height: 100,
-            //   fit: BoxFit.fill,
-            // ),
             bt.hinhanh
                 ? Image.network(
                     bt.hinhUrl!,

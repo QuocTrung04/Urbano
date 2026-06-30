@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/Services/account_services.dart';
+import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
@@ -127,6 +129,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       await _accountServices.capNhatCuDan(cuDanId, cuDanMoi, token: token);
       await prefs.setString('cuDan', jsonEncode(cuDanMoi.toJson()));
       if (!mounted) return;
+
+      context.read<UserProvider>().capNhat(cuDanMoi);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(

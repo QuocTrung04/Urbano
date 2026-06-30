@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:urbano/Models/canho_model.dart';
+import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/Models/cudan_model.dart';
@@ -172,7 +174,7 @@ class SettingScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    cuDan.hoTen,
+                    context.watch<UserProvider>().cuDan?.hoTen ?? cuDan.hoTen,
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.white,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/cudan_model.dart';
+import 'package:urbano/Services/account_services.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
@@ -15,9 +16,12 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  late TextEditingController _hoTenCtrl;
+  late TextEditingController _hoTenDemCtrl;
+  late TextEditingController _tenCtrl;
   late TextEditingController _sdtCtrl;
   late TextEditingController _emailCtrl;
+
+  final AccountServices _accountServices = AccountServices();
 
   late int _gioiTinh;
   DateTime? _ngaySinh;
@@ -27,7 +31,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     super.initState();
     final cd = widget.cuDan;
-    _hoTenCtrl = TextEditingController(text: cd.hoTen);
+    _hoTenDemCtrl = TextEditingController(text: cd.hoTenDem ?? '');
+    _tenCtrl = TextEditingController(text: cd.ten ?? '');
     _sdtCtrl = TextEditingController(text: cd.sdt ?? '');
     _emailCtrl = TextEditingController(text: cd.email ?? '');
     _gioiTinh = cd.gioiTinh ?? 1;
@@ -36,7 +41,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void dispose() {
-    _hoTenCtrl.dispose();
+    _hoTenDemCtrl.dispose();
+    _tenCtrl.dispose();
     _sdtCtrl.dispose();
     _emailCtrl.dispose();
     super.dispose();
@@ -80,12 +86,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future<void> _luu() async {
-    final hoTen = _hoTenCtrl.text.trim();
+    final hoTenDem = _hoTenDemCtrl.text.trim();
+    final ten = _tenCtrl.text.trim();
     final sdt = _sdtCtrl.text.trim();
     final email = _emailCtrl.text.trim();
 
-    if (hoTen.isEmpty) {
-      _baoLoi('Họ tên không được để trống');
+    if (hoTenDem.isEmpty) {
+      _baoLoi('Họ và tên đệm không được để trống');
+      return;
+    }
+    if (ten.isEmpty) {
+      _baoLoi('Tên không được để trống');
       return;
     }
     if (sdt.isNotEmpty && !RegExp(r'^0\d{9}$').hasMatch(sdt)) {
@@ -100,7 +111,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     setState(() => _dangLuu = true);
     try {
       final cuDanMoi = widget.cuDan.copyWith(
-        hoTen: hoTen,
+        hoTenDem: hoTenDem,
+        ten: ten,
+        hoTen: '$hoTenDem $ten'.trim(),
         sdt: sdt,
         email: email,
         gioiTinh: _gioiTinh,
@@ -108,6 +121,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ngaySinh: _ngaySinh,
       );
       final prefs = await SharedPreferences.getInstance();
+      final cuDanId = prefs.getInt('cuDanId') ?? widget.cuDan.id;
+      final token = prefs.getString('token') ?? '';
+
+      await _accountServices.capNhatCuDan(cuDanId, cuDanMoi, token: token);
       await prefs.setString('cuDan', jsonEncode(cuDanMoi.toJson()));
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -177,10 +194,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(height: 14),
                 _sectionLabel('Thông tin cá nhân'),
                 AppTextField(
-                  label: 'Họ và tên',
-                  hint: 'Nhập họ tên',
-                  controller: _hoTenCtrl,
+                  label: 'Họ và tên đệm',
+                  hint: 'Nhập họ và tên đệm',
+                  controller: _hoTenDemCtrl,
                   prefixIcon: Icons.person,
+                ),
+                SizedBox(height: 14),
+                AppTextField(
+                  label: 'Tên',
+                  hint: 'Nhập tên',
+                  controller: _tenCtrl,
+                  prefixIcon: Icons.person_outline,
                 ),
                 SizedBox(height: 14),
                 _label('Giới tính'),
@@ -325,7 +349,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Icon(
                 icon,
                 color: chon ? AppColors.tealPrimary : AppColors.iconMuted,
-
                 size: 18,
               ),
               SizedBox(width: 8),
@@ -391,7 +414,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           SizedBox(width: 20),
           Expanded(
             child: Text(
-              widget.cuDan.cccd!,
+              widget.cuDan.cccd ?? '',
               style: TextStyle(
                 color: AppColors.textMuted,
                 fontSize: 15,

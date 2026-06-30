@@ -219,29 +219,6 @@ class _BangTinView extends StatelessWidget {
     );
   }
 
-  Widget _cardKhongAnh(BangTin bt) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(width: 3, color: AppColors.tealPrimary),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(13),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (bt.tinMoi) ...[_badgeMoi()],
-                  _noiDungThe(bt),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _noiDungThe(BangTin bt) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -28,17 +28,19 @@ class CanHo {
   });
   factory CanHo.fromJson(Map<String, dynamic> json) {
     return CanHo(
-      id: json['id'],
-      toaNha: json['toaNha'],
-      soCanHo: json['soCanHo'],
+      id: json['id'] ?? 0,
+      // backend gửi 'toaNhaId' -> đọc cả 2, mặc định 0 để không crash
+      toaNha: json['toaNha'] ?? json['toaNhaId'] ?? 0,
+      soCanHo: json['soCanHo'] ?? '',
       tang: json['tang'],
-      dienTich: json['dienTich'],
-      trangThai: json['trangThai'],
-      gia: json['gia'],
-      loaiCanHo: json['loaiCanHo'],
+      dienTich: (json['dienTich'] as num?)?.toDouble(),
+      trangThai: json['trangThai'] ?? json['trangThaiId'],
+      gia: (json['gia'] as num?)?.toDouble(),
+      loaiCanHo: json['loaiCanHo'] ?? json['loaiCanHoId'],
       tenToaNha: json['tenToaNha'],
-      loaiCanHoText: json['loaiCanHoText'],
-      trangThaiText: json['trangThaiText'],
+      // backend gửi 'tenLoaiCanHo' / 'tenTrangThai'
+      loaiCanHoText: json['loaiCanHoText'] ?? json['tenLoaiCanHo'],
+      trangThaiText: json['trangThaiText'] ?? json['tenTrangThai'],
     );
   }
 }

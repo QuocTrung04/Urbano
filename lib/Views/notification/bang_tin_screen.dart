@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/ViewModels/bang_tin_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class BangTinScreen extends StatelessWidget {
   const BangTinScreen({super.key});
@@ -148,9 +149,7 @@ class _BangTinView extends StatelessWidget {
   Widget _buildCard(BuildContext context, BangTin bt) {
     return GestureDetector(
       onTap: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Mở: ${bt.tieuDe}')));
+        Navigator.pushNamed(context, AppRoutes.bangTinDetail, arguments: bt);
       },
 
       behavior: HitTestBehavior.opaque,

@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:urbano/Models/notification_model.dart';
+import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
-class NotificationDetailScreen extends StatelessWidget {
-  final ThongBao thongBao;
-  const NotificationDetailScreen({super.key, required this.thongBao});
+class BangTinDetailScreen extends StatelessWidget {
+  final BangTin bangTin;
+  const BangTinDetailScreen({super.key, required this.bangTin});
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.light,
       ),
     );
     return Scaffold(
       body: Container(
-        width: double.infinity,
         height: double.infinity,
+        width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
+            colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             stops: [0.0, 0.5, 1.0],
           ),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
+              padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildAppbar(context),
-                  SizedBox(height: 32),
-                  _buildHeader(),
+                  SizedBox(height: 24),
+                  _buildHeader(bangTin),
                   SizedBox(height: 24),
                   Divider(
                     color: AppColors.borderButton,
@@ -54,7 +54,7 @@ class NotificationDetailScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    thongBao.noiDung ?? '',
+                    bangTin.noiDung ?? '',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.textMuted,
@@ -73,10 +73,22 @@ class NotificationDetailScreen extends StatelessWidget {
   Widget _buildAppbar(BuildContext context) {
     return Row(
       children: [
-        _buildButtonBack(context),
+        GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.inputFill,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.borderButton),
+            ),
+            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+          ),
+        ),
         SizedBox(width: 14),
         Text(
-          'Chi tiết thông báo',
+          'Chi tiết bảng tin',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -88,27 +100,53 @@ class NotificationDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BangTin bt) {
     return Center(
       child: Column(
         children: [
           Container(
-            height: 80,
-            width: 80,
-            decoration: BoxDecoration(
-              color: AppColors.tealPrimary.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.borderSide),
-            ),
-            child: Icon(
-              Icons.notifications_active_outlined,
-              color: AppColors.tealPrimary,
-              size: 40,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+            clipBehavior: Clip.antiAlias,
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: bt.hinhanh
+                  ? Image.network(
+                      bt.hinhUrl!,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, progress) {
+                        if (progress == null) return child;
+                        return Container(
+                          color: AppColors.inputFill,
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.tealPrimary,
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        );
+                      },
+                      errorBuilder: (_, __, ___) => Container(
+                        color: AppColors.inputFill,
+                        child: const Center(
+                          child: Icon(
+                            Icons.broken_image_outlined,
+                            color: AppColors.iconMuted,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Image.asset(
+                      'assets/images/hinh_thongbao.png',
+                      width: double.infinity,
+                      height: 130,
+                      fit: BoxFit.fill,
+                    ),
             ),
           ),
           SizedBox(height: 12),
           Text(
-            thongBao.tieuDe ?? 'Thông báo',
+            bangTin.tieuDe ?? 'Thông báo',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -123,9 +161,9 @@ class NotificationDetailScreen extends StatelessWidget {
             children: [
               Icon(Icons.timer_sharp, color: AppColors.tealPrimary, size: 17),
               SizedBox(width: 4),
-              if (thongBao.createdAt != null) ...[
+              if (bangTin.createdAt != null) ...[
                 Text(
-                  _formatTime(thongBao.createdAt!),
+                  _formatTime(bangTin.createdAt!),
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.textMuted,
@@ -136,22 +174,6 @@ class NotificationDetailScreen extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildButtonBack(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pop(context),
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderButton),
-        ),
-        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
       ),
     );
   }

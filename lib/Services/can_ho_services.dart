@@ -5,8 +5,6 @@ import 'package:urbano/Models/canho_model.dart';
 class CanHoServices {
   static const String baseUrl = 'http://10.0.2.2:5080/api';
 
-  /// Lấy thông tin 1 căn hộ (kèm tên tòa nhà) theo id.
-  /// Khớp endpoint .NET: GET /api/canho/{id}
   Future<CanHo> fetchCanHo(int canHoId, {String token = ''}) async {
     final res = await http.get(
       Uri.parse('$baseUrl/canho/$canHoId'),

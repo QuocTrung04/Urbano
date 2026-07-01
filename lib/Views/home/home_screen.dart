@@ -5,6 +5,7 @@ import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/Models/home_model.dart';
 import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/ViewModels/home/home_viewmodel.dart';
+import 'package:urbano/Views/utilities/home_tien_ich_section.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/core/routes/app_routes.dart';
@@ -97,11 +98,10 @@ class _Homeview extends StatelessWidget {
           ),
           _sliverSection(
             title: 'tiện ích khác',
-            child: _buildutilities(context),
+            child: const HomeTienIchSection(),
             action: 'Xem tất cả >',
             onTap: () {
-              //TODOL: XU LY SU KIEN
-              debugPrint('tất cả tiện ích');
+              Navigator.pushNamed(context, AppRoutes.tienich);
             },
           ),
           _sliverSection(title: 'thanh toán', child: _buildPayment(context)),
@@ -706,99 +706,6 @@ class _Homeview extends StatelessWidget {
     );
   }
 
-  Widget _buildutilities(BuildContext context) {
-    final items = [
-      (
-        Icons.fitness_center,
-        'Phòng Gym',
-        'Còn chỗ trống',
-        AppColors.tealPrimary,
-      ),
-      (Icons.pool, 'Hồ Bơi', 'Tự do', AppColors.blue),
-      (Icons.local_fire_department, 'Khu BBQ', 'Đăng ký dùng', AppColors.amber),
-      (Icons.group, 'Phòng Họp', 'Đặt phòng', AppColors.pink),
-    ];
-
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(child: _utilCard(items[0])),
-            const SizedBox(width: 9),
-            Expanded(child: _utilCard(items[1])),
-          ],
-        ),
-        const SizedBox(height: 9),
-        Row(
-          children: [
-            Expanded(child: _utilCard(items[2])),
-            const SizedBox(width: 9),
-            Expanded(child: _utilCard(items[3])),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _utilCard((IconData, String, String, Color) it) {
-    return GestureDetector(
-      onTap: () {
-        // TODOl: xử lý sự kiện
-        debugPrint(it.$2);
-      },
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(
-          color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderButton),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: it.$4.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(it.$1, color: it.$4),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    it.$2,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    it.$3,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: AppColors.textMuted,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildPayment(BuildContext context) {
     return Row(
       children: [
@@ -870,17 +777,16 @@ class _Homeview extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: btList.length,
         separatorBuilder: (_, __) => SizedBox(width: 10),
-        itemBuilder: (context, index) => _bulletinCard(btList[index]),
+        itemBuilder: (context, index) => _bulletinCard(context, btList[index]),
       ),
     );
   }
 
-  Widget _bulletinCard(BangTin bt) {
+  Widget _bulletinCard(BuildContext context, BangTin bt) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        //TODOL:"XU LY SU KIEN"
-        debugPrint('chi tiet bang tin');
+        Navigator.pushNamed(context, AppRoutes.bangTinDetail, arguments: bt);
       },
       child: Container(
         width: 200,

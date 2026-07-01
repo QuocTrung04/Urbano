@@ -230,118 +230,124 @@ class _YeuVauView extends StatelessWidget {
     final loai = LoaiYeuCau.timTheoId(yc.loaiYeuCau);
     final (stColor, stBg) = _trangThaiTheme(yc.trangThai);
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 13),
-      decoration: BoxDecoration(
-        color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.borderButton),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(width: 4, color: priorityColor),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        _chip(
-                          loai.icon,
-                          loai.name,
-                          loai.color,
-                          loai.color.withValues(alpha: 0.15),
-                        ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: stBg,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            yc.trangThaiText,
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: stColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 9),
-                    Text(
-                      yc.tieuDe,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                    if (yc.noiDung != null) ...[
-                      const SizedBox(height: 6),
-                      Text(
-                        yc.noiDung!,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 12.5,
-                          color: AppColors.textMuted,
-                          height: 1.5,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 12),
-                    Container(
-                      padding: const EdgeInsets.only(top: 11),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: AppColors.borderButton),
-                        ),
-                      ),
-                      child: Row(
+    return GestureDetector(
+      onTap: () {
+        debugPrint('chi tiet yeu cau');
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 13),
+        decoration: BoxDecoration(
+          color: AppColors.nenContainer,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.borderButton),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(width: 4, color: priorityColor),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
-                          const Icon(
-                            Icons.access_time,
-                            size: 13,
-                            color: AppColors.iconMuted,
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            _formatTime(yc.ngayGui ?? yc.createdAt),
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: AppColors.textMuted,
-                            ),
+                          _chip(
+                            loai.icon,
+                            loai.name,
+                            loai.color,
+                            loai.color.withValues(alpha: 0.15),
                           ),
                           const Spacer(),
-                          Icon(Icons.flag, size: 13, color: priorityColor),
-                          const SizedBox(width: 4),
-                          Text(
-                            yc.uuTienText,
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              color: priorityColor,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: stBg,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              yc.trangThaiText,
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: stColor,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 9),
+                      Text(
+                        yc.tieuDe,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                      if (yc.noiDung != null) ...[
+                        const SizedBox(height: 6),
+                        Text(
+                          yc.noiDung!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 12.5,
+                            color: AppColors.textMuted,
+                            height: 1.5,
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.only(top: 11),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide(color: AppColors.borderButton),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.access_time,
+                              size: 13,
+                              color: AppColors.iconMuted,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              _formatTime(yc.ngayGui ?? yc.createdAt),
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: AppColors.textMuted,
+                              ),
+                            ),
+                            const Spacer(),
+                            Icon(Icons.flag, size: 13, color: priorityColor),
+                            const SizedBox(width: 4),
+                            Text(
+                              yc.uuTienText,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: priorityColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

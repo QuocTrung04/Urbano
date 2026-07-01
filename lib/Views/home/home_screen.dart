@@ -219,7 +219,7 @@ class _Homeview extends StatelessWidget {
             ],
           ),
           SizedBox(height: 12),
-          _buldApartmentCard(data),
+          _buldApartmentCard(context, data),
         ],
       ),
     );
@@ -263,88 +263,93 @@ class _Homeview extends StatelessWidget {
     );
   }
 
-  Widget _buldApartmentCard(HomeData data) {
+  Widget _buldApartmentCard(BuildContext context, HomeData data) {
     final canHo = data.canHo;
     final canHoText = _buildCanHoText(data);
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-      decoration: BoxDecoration(
-        color: AppColors.tealDark.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: AppColors.borderSide),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Căn hộ của bạn',
-                  style: TextStyle(
-                    fontSize: 12,
-                    letterSpacing: 1,
-                    color: AppColors.textMuted,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  canHoText,
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                if (canHo.dienTich != null) ...[
-                  const SizedBox(height: 2),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, AppRoutes.nhanKhau);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+        decoration: BoxDecoration(
+          color: AppColors.tealDark.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: AppColors.borderSide),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    'Diện tích: ${canHo.dienTich} m²',
-                    style: const TextStyle(
-                      fontSize: 13,
+                    'Căn hộ của bạn',
+                    style: TextStyle(
+                      fontSize: 12,
+                      letterSpacing: 1,
                       color: AppColors.textMuted,
                     ),
                   ),
+                  SizedBox(height: 4),
+                  Text(
+                    canHoText,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  if (canHo.dienTich != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      'Diện tích: ${canHo.dienTich} m²',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textMuted,
+                      ),
+                    ),
+                  ],
                 ],
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.tealPrimary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              canHo.trangThaiText ?? '',
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.tealPrimary,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 1,
               ),
             ),
-          ),
-          SizedBox(width: 4),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.tealPrimary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              canHo.loaiCanHoText ?? '',
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.tealPrimary,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 1,
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: AppColors.tealPrimary.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                canHo.trangThaiText ?? '',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.tealPrimary,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1,
+                ),
               ),
             ),
-          ),
-        ],
+            SizedBox(width: 4),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: AppColors.tealPrimary.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                canHo.loaiCanHoText ?? '',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.tealPrimary,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

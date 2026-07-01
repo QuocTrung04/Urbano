@@ -109,8 +109,14 @@ class _PhuongTienView extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            debugPrint('dang ky phuong tien moi');
+          onTap: () async {
+            final ok = await Navigator.pushNamed(
+              context,
+              AppRoutes.addPhuongTien,
+            );
+            if (ok == true && context.mounted) {
+              context.read<PhuongTienViewModel>().loadData();
+            }
           },
           child: Container(
             height: 35,

@@ -10,6 +10,7 @@ import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
+import 'package:urbano/Views/nhan_khau_screen.dart';
 import 'package:urbano/Views/notification/bang_tin_detail.dart';
 import 'package:urbano/Views/notification/bang_tin_screen.dart';
 import 'package:urbano/Views/notification/notification_detail_screen.dart';
@@ -21,6 +22,7 @@ import 'package:urbano/Views/support/dieu_khoan_screen.dart';
 import 'package:urbano/Views/support/tro_giup_screen.dart';
 import 'package:urbano/Views/support/yeu_cau_screen.dart';
 import 'package:urbano/Views/utilities/tien_ich_screen.dart';
+import 'package:urbano/Views/vehicle/add_phuong_tien.screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/Models/hoadon_model.dart';
@@ -55,6 +57,8 @@ class AppRoutes {
   static const String trogiup = '/tro-giup';
   static const String tienich = '/tien-ich';
   static const String bangTinDetail = '/bang-tin-detail';
+  static const String addPhuongTien = '/add-phuong-tien';
+  static const String nhanKhau = '/nhan-khau';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -69,6 +73,8 @@ class AppRoutes {
     dieuKhoan: (_) => const DieuKhoanScreen(),
     trogiup: (_) => const TroGiupScreen(),
     tienich: (_) => const TienIchScreen(),
+    addPhuongTien: (_) => const ThemPhuongTienScreen(),
+    nhanKhau: (_) => const NhanKhauScreen(),
   };
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {

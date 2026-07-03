@@ -7,7 +7,6 @@ import 'package:urbano/Models/can_ho_tong_quan_model.dart';
 class NhanKhauServices {
   static const String baseUrl = 'http://10.0.2.2:5080/api';
 
-  // Danh sách nhân khẩu theo căn hộ
   Future<List<NhanKhau>> fetchNhanKhau(String token, int canHoId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/cudan/canho/$canHoId'),
@@ -26,7 +25,6 @@ class NhanKhauServices {
         .toList();
   }
 
-  // Tổng quan căn hộ (số căn hộ, tòa nhà, tầng, thuộc tính)
   Future<CanHoTongQuan> fetchCanHoTongQuan(String token, int canHoId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/canho/$canHoId/tongquan'),

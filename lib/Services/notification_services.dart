@@ -7,7 +7,6 @@ import 'package:urbano/Models/notification_model.dart';
 class ThongbaoServices {
   static const String url = 'http://10.0.2.2:5080/api';
 
-  // Lấy danh sách thông báo + trạng thái đã đọc theo cư dân
   Future<List<ThongBao>> fetchThongBao(int cuDanId) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');

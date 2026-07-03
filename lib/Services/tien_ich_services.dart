@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/tien_ich_model.dart';
 
 class TienIchServices {
-  static const String baseUrl = 'http://10.0.2.2:5080/api';
+  static const String baseUrl = 'httpz://10.0.2.2:7080/api';
 
   // Lấy danh sách tiện ích
   Future<List<TienIch>> fetchTienIch() async {

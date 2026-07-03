@@ -34,14 +34,23 @@ class HoaDonModel {
       thang: json['thang'],
       nam: json['nam'],
       maThanhToan: json['maThanhToan'] ?? json['ma_thanh_toan'],
-      chiPhi: (json['chiPhi'] as num?)?.toDouble() ?? (json['chi_phi'] as num?)?.toDouble(),
+      chiPhi:
+          (json['chiPhi'] as num?)?.toDouble() ??
+          (json['chi_phi'] as num?)?.toDouble(),
       hanThanhToan: _parseDate(json['hanThanhToan'] ?? json['han_thanh_toan']),
-      soTienDaThanhToan: (json['soTienDaThanhToan'] as num?)?.toDouble() ?? (json['so_tien_da_thanh_toan'] as num?)?.toDouble(),
-      tongTien: (json['tongTien'] as num?)?.toDouble() ?? (json['tong_tien'] as num?)?.toDouble(),
+      soTienDaThanhToan:
+          (json['soTienDaThanhToan'] as num?)?.toDouble() ??
+          (json['so_tien_da_thanh_toan'] as num?)?.toDouble(),
+      tongTien:
+          (json['tongTien'] as num?)?.toDouble() ??
+          (json['tong_tien'] as num?)?.toDouble(),
       trangThai: json['trangThai'] ?? json['trang_thai'],
-      chiTietHoaDonList: (json['chi_tiet_hoa_don'] as List? ?? json['chiTietHoaDon'] as List? ?? [])
-          .map((item) => ChiTietHoaDon.fromJson(item))
-          .toList(),
+      chiTietHoaDonList:
+          (json['chi_tiet_hoa_don'] as List? ??
+                  json['chiTietHoaDon'] as List? ??
+                  [])
+              .map((item) => ChiTietHoaDon.fromJson(item))
+              .toList(),
     );
   }
 
@@ -63,8 +72,8 @@ class HoaDonModel {
 //-----------CHI TIẾT HÓA ĐƠN--------
 class ChiTietHoaDon {
   final int id;
-  final int hoaDon;
-  final int phiDichVu;
+  //final int hoaDon;
+  final String tenPhiDichVu;
   final double donGia;
   final int? soCu;
   final int? soMoi;
@@ -75,8 +84,8 @@ class ChiTietHoaDon {
   final LoaiPhiDichvu? loaiPhiDichVu;
   ChiTietHoaDon({
     required this.id,
-    required this.hoaDon,
-    required this.phiDichVu,
+    //required this.hoaDon,
+    required this.tenPhiDichVu,
     required this.donGia,
     this.soCu,
     this.soMoi,
@@ -88,16 +97,32 @@ class ChiTietHoaDon {
   factory ChiTietHoaDon.fromJson(Map<String, dynamic> json) {
     return ChiTietHoaDon(
       id: json['id'],
-      hoaDon: json['hoaDon'] ?? json['hoa_don'],
-      phiDichVu: json['phiDichVu'] ?? json['phi_dich_vu'],
-      donGia: (json['donGia'] as num?)?.toDouble() ?? (json['don_gia'] as num?)?.toDouble() ?? 0.0,
-      soLuong: (json['soLuong'] as num?)?.toDouble() ?? (json['so_luong'] as num?)?.toDouble() ?? 0.0,
-      thanhTien: (json['thanhTien'] as num?)?.toDouble() ?? (json['thanh_tien'] as num?)?.toDouble() ?? 0.0,
-      soCu: json['chiSoCu'] ?? json['chi_so_cu'] ?? json['soCu'] ?? json['so_cu'],
-      soMoi: json['chiSoMoi'] ?? json['chi_so_moi'] ?? json['soMoi'] ?? json['so_moi'],
+      //hoaDon: json['hoaDon'] ?? json['hoa_don'],
+      tenPhiDichVu: json['tenPhiDichVu'] ?? "",
+      donGia:
+          (json['donGia'] as num?)?.toDouble() ??
+          (json['don_gia'] as num?)?.toDouble() ??
+          0.0,
+      soLuong:
+          (json['soLuong'] as num?)?.toDouble() ??
+          (json['so_luong'] as num?)?.toDouble() ??
+          0.0,
+      thanhTien:
+          (json['thanhTien'] as num?)?.toDouble() ??
+          (json['thanh_tien'] as num?)?.toDouble() ??
+          0.0,
+      soCu:
+          json['chiSoCu'] ?? json['chi_so_cu'] ?? json['soCu'] ?? json['so_cu'],
+      soMoi:
+          json['chiSoMoi'] ??
+          json['chi_so_moi'] ??
+          json['soMoi'] ??
+          json['so_moi'],
       createAt: _parseDate(json['createAt'] ?? json['create_at']),
       loaiPhiDichVu: (json['loaiPhiDichVu'] ?? json['loai_phi_dich_vu']) != null
-          ? LoaiPhiDichvu.fromJson(json['loaiPhiDichVu'] ?? json['loai_phi_dich_vu'])
+          ? LoaiPhiDichvu.fromJson(
+              json['loaiPhiDichVu'] ?? json['loai_phi_dich_vu'],
+            )
           : null,
     );
   }
@@ -111,7 +136,12 @@ class LoaiPhiDichvu {
   factory LoaiPhiDichvu.fromJson(Map<String, dynamic> json) {
     return LoaiPhiDichvu(
       id: json['id'],
-      tenPhiDichVu: json['tenLoaiPhiDichVu'] ?? json['ten_loai_phi_dich_vu'] ?? json['tenPhiDichVu'] ?? json['ten_phi_dich_vu'] ?? '',
+      tenPhiDichVu:
+          json['tenLoaiPhiDichVu'] ??
+          json['ten_loai_phi_dich_vu'] ??
+          json['tenPhiDichVu'] ??
+          json['ten_phi_dich_vu'] ??
+          '',
     );
   }
 }

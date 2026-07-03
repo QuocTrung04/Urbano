@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
+import 'package:urbano/Services/auth_services.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   final String contact;
@@ -24,7 +25,7 @@ class VerifyOtpScreen extends StatefulWidget {
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   static const int _otpLength = 6;
   static const int _expireSeconds = 300;
-
+  final _auth = AuthServices();
   final List<TextEditingController> _controller = List.generate(
     _otpLength,
     (_) => TextEditingController(),
@@ -54,7 +55,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     });
   }
 
-  //String get _otp => _controller.map((c) => c.text).join();
+  String get _otp => _controller.map((c) => c.text).join();
 
   String _formatTime(int s) {
     final m = (s ~/ 60).toString().padLeft(2, '0');
@@ -71,17 +72,24 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     setState(() {});
   }
 
-  void _onResend() {
+  Future<void> _onResend() async {
     if (_resendCountdown > 0) return;
-    //goi lai api gui otp
-    setState(() {
-      _secondsLeft = _expireSeconds;
-      _resendCountdown = 60;
-      for (final c in _controller) {
-        c.clear();
-      }
-      _focusNode[0].requestFocus();
-    });
+    try {
+      await _auth.forgotPassword(widget.contact); // gửi lại OTP
+      if (!mounted) return;
+      setState(() {
+        _secondsLeft = _expireSeconds;
+        _resendCountdown = 60;
+        for (final c in _controller) {
+          c.clear();
+        }
+        _focusNode[0].requestFocus();
+      });
+      _snack('Đã gửi lại mã OTP');
+    } catch (e) {
+      if (!mounted) return;
+      _snack(e.toString().replaceFirst('Exception: ', ''));
+    }
   }
 
   @override
@@ -94,6 +102,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       f.dispose();
     }
     super.dispose();
+  }
+
+  bool _verifying = false;
+
+  void _snack(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   @override
@@ -133,8 +147,36 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 SizedBox(height: 34),
                 AppButton(
                   label: 'Xác nhận',
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.resetPassword);
+                  onPressed: () async {
+                    if (_secondsLeft == 0) {
+                      _snack('Mã đã hết hạn, vui lòng gửi lại');
+                      return;
+                    }
+                    if (_otp.length < _otpLength) {
+                      _snack('Vui lòng nhập đủ 6 số');
+                      return;
+                    }
+                    if (_verifying) return;
+                    setState(() => _verifying = true);
+                    try {
+                      await _auth.verifyOtp(
+                        widget.contact,
+                        _otp,
+                      ); // <-- KIỂM OTP
+                      if (!mounted) return;
+                      setState(() => _verifying = false);
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.resetPassword,
+                        arguments: {'email': widget.contact, 'otp': _otp},
+                      );
+                    } catch (e) {
+                      if (!mounted) return;
+                      setState(() => _verifying = false);
+                      _snack(
+                        e.toString().replaceFirst('Exception: ', ''),
+                      ); // "OTP sai hoặc đã hết hạn"
+                    }
                   },
                 ),
                 SizedBox(height: 24),

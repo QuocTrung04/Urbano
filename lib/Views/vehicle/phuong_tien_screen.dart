@@ -49,8 +49,16 @@ class _PhuongTienView extends StatelessWidget {
 
   Widget _body(BuildContext context, PhuongTienViewModel vm) {
     if (vm.isLoading) {
-      return Column();
+      return const Center(
+        child: CircularProgressIndicator(color: AppColors.tealPrimary),
+      );
     }
+
+    // Chỉ hiển thị xe Đã duyệt (1) và Chờ duyệt (2); ẩn Đã hủy/Từ chối
+    final danhSach = vm.phuongTienList
+        .where((xe) => xe.trangThai == 1 || xe.trangThai == 2)
+        .toList();
+
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
       child: Column(
@@ -58,7 +66,7 @@ class _PhuongTienView extends StatelessWidget {
         children: [
           _buildAppbar(context),
           SizedBox(height: 28),
-          _buildSumary(vm.phuongTienList.length),
+          _buildSumary(danhSach.length),
           SizedBox(height: 14),
           Divider(color: AppColors.borderButton, thickness: 2),
           SizedBox(height: 14),
@@ -72,8 +80,18 @@ class _PhuongTienView extends StatelessWidget {
             ),
           ),
           SizedBox(height: 14),
-          if (vm.phuongTienList.isNotEmpty) ...[
-            ...vm.phuongTienList.map((xe) => _buildVehicleCard(context, xe)),
+          if (danhSach.isNotEmpty) ...[
+            ...danhSach.map((xe) => _buildVehicleCard(context, xe)),
+          ] else ...[
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Center(
+                child: Text(
+                  'Chưa có phương tiện',
+                  style: TextStyle(color: AppColors.textMuted, fontSize: 14),
+                ),
+              ),
+            ),
           ],
         ],
       ),

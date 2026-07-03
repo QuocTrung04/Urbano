@@ -5,6 +5,7 @@ import 'package:urbano/Models/yeu_cau_model.dart';
 import 'package:urbano/ViewModels/yeu_cau_viewmodel.dart';
 import 'package:urbano/Views/support/tao_yeu_cau_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class YeuCauScreen extends StatelessWidget {
   const YeuCauScreen({super.key});
@@ -202,6 +203,7 @@ class _YeuVauView extends StatelessWidget {
     }
 
     final list = vm.danhSachLoc;
+    debugPrint('so luong yeu cau: ${list.length}');
     if (list.isEmpty) {
       return Center(
         child: Column(
@@ -221,18 +223,18 @@ class _YeuVauView extends StatelessWidget {
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(18, 12, 18, 100),
       itemCount: list.length,
-      itemBuilder: (_, i) => _buildCard(list[i]),
+      itemBuilder: (context, i) => _buildCard(context, list[i]),
     );
   }
 
-  Widget _buildCard(YeuCauCuDan yc) {
+  Widget _buildCard(BuildContext context, YeuCauCuDan yc) {
     final priorityColor = _mauUuTien(yc.mucDoUuTien);
     final loai = LoaiYeuCau.timTheoId(yc.loaiYeuCau);
     final (stColor, stBg) = _trangThaiTheme(yc.trangThai);
 
     return GestureDetector(
       onTap: () {
-        debugPrint('chi tiet yeu cau');
+        Navigator.pushNamed(context, AppRoutes.yeuCauDetail, arguments: yc);
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -258,7 +260,9 @@ class _YeuVauView extends StatelessWidget {
                         children: [
                           _chip(
                             loai.icon,
-                            loai.name,
+                            yc.tenLoaiYeuCau.isNotEmpty
+                                ? yc.tenLoaiYeuCau
+                                : loai.name, // ưu tiên tên API
                             loai.color,
                             loai.color.withValues(alpha: 0.15),
                           ),

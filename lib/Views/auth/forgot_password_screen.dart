@@ -5,6 +5,7 @@ import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:urbano/core/routes/app_routes.dart';
+import 'package:urbano/Services/auth_services.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -16,6 +17,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   final _controller = TextEditingController();
   bool _isSms = true;
+  final _auth = AuthServices();
+  bool _sending = false;
   @override
   void dispose() {
     _controller.dispose();
@@ -76,7 +79,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                           Spacer(),
                           AppButton(
                             label: 'Gửi mã xác nhận',
-                            onPressed: () {
+                            onPressed: () async {
                               final contact = _controller.text.trim();
                               if (contact.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -91,14 +94,47 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                                 return;
                               }
 
-                              Navigator.pushNamed(
-                                context,
-                                AppRoutes.verifyOtp,
-                                arguments: {
-                                  'contact': contact,
-                                  '_isSms': _isSms,
-                                },
-                              );
+                              // Backend chỉ hỗ trợ OTP qua EMAIL
+                              if (_isSms) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Hiện chỉ hỗ trợ nhận mã qua Email',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (_sending) return;
+                              setState(() => _sending = true);
+                              try {
+                                await _auth.forgotPassword(
+                                  contact,
+                                ); // <-- GỬI OTP
+                                if (!mounted) return;
+                                setState(() => _sending = false);
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.verifyOtp,
+                                  arguments: {
+                                    'contact': contact,
+                                    '_isSms': _isSms,
+                                  },
+                                );
+                              } catch (e) {
+                                if (!mounted) return;
+                                setState(() => _sending = false);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      e.toString().replaceFirst(
+                                        'Exception: ',
+                                        '',
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
                             },
                             icon: Icons.send_rounded,
                           ),

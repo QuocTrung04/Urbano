@@ -5,6 +5,7 @@ import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/Models/home_model.dart';
 import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/ViewModels/home/home_viewmodel.dart';
+import 'package:urbano/Views/thong_bao_thanh_toan_card.dart';
 import 'package:urbano/Views/utilities/home_tien_ich_section.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/Models/notification_model.dart';
@@ -714,20 +715,11 @@ class _Homeview extends StatelessWidget {
   Widget _buildPayment(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: _paymentCard(
-            Icons.payments_outlined,
-            'Thông báo TT',
-            '2 hóa đơn đến hạn',
-            () {
-              debugPrint('thong bao thanh toan');
-            },
-          ),
-        ),
+        Expanded(child: const ThongBaoTTCard()),
         SizedBox(width: 9),
         Expanded(
           child: _paymentCard(Icons.history, 'Lịch sử TT', 'Xem giao dịch', () {
-            debugPrint('lịch sử thanh toán');
+            Navigator.pushNamed(context, AppRoutes.lichSuThanhToan);
           }),
         ),
       ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/yeu_cau_model.dart';
+import 'package:urbano/Services/yeu_cau_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
 class TaoYeuCauScreen extends StatefulWidget {
@@ -13,9 +15,10 @@ class TaoYeuCauScreen extends StatefulWidget {
 class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
   final _tieuDeCtrl = TextEditingController();
   final _noiDungCtrl = TextEditingController();
+  final YeuCauServices _services = YeuCauServices();
 
-  int _loaiChon = 1; // mặc định Sửa chữa
-  int _uuTienChon = 1; // mặc định Thấp
+  int _loaiChon = 1;
+  int _uuTienChon = 1;
   bool _dangGui = false;
 
   @override
@@ -49,24 +52,35 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
     }
 
     setState(() => _dangGui = true);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token') ?? '';
+      final cuDanId = prefs.getInt('cuDanId') ?? 0;
+      if (cuDanId == 0) {
+        if (!mounted) return;
+        setState(() => _dangGui = false);
+        _baoLoi('Không tìm thấy cư dân. Vui lòng đăng nhập lại.');
+        return;
+      }
 
-    await Future.delayed(const Duration(milliseconds: 500));
+      final yeuCauMoi = await _services.createYeuCau(
+        token,
+        cuDan: cuDanId,
+        loaiYeuCau: _loaiChon,
+        tieuDe: tieuDe,
+        noiDung: noiDung,
+        mucDoUuTien: _uuTienChon,
+      );
 
-    // Tạo object yêu cầu mới (mock, trạng thái Chờ xử lý)
-    final yeuCauMoi = YeuCauCuDan(
-      id: DateTime.now().millisecondsSinceEpoch, // id tạm
-      loaiYeuCau: _loaiChon,
-      tieuDe: tieuDe,
-      noiDung: noiDung,
-      mucDoUuTien: _uuTienChon,
-      trangThai: 1, // Chờ xử lý
-      ngayGui: DateTime.now(),
-      createdAt: DateTime.now(),
-    );
-
-    if (!mounted) return;
-    setState(() => _dangGui = false);
-    Navigator.pop(context, yeuCauMoi); // trả về màn danh sách
+      if (!mounted) return;
+      setState(() => _dangGui = false);
+      Navigator.pop(context, yeuCauMoi); // trả về màn danh sách
+    } catch (e) {
+      debugPrint('Lỗi gửi yêu cầu: $e');
+      if (!mounted) return;
+      setState(() => _dangGui = false);
+      _baoLoi('Gửi yêu cầu thất bại. Vui lòng thử lại.');
+    }
   }
 
   @override
@@ -289,7 +303,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
         final chon = _uuTienChon == m.$1;
         return Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(right: 9),
+            padding: EdgeInsets.only(right: m.$1 == 3 ? 0 : 9),
             child: GestureDetector(
               onTap: () => setState(() => _uuTienChon = m.$1),
               child: Container(

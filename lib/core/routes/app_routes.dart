@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/Models/phuong_tien_model.dart';
+import 'package:urbano/Models/yeu_cau_model.dart';
 import 'package:urbano/Views/account/account_info_screen.dart';
 import 'package:urbano/Views/account/edit_profile_screen.dart';
 import 'package:urbano/Views/auth/change_password_screen.dart';
@@ -10,6 +11,7 @@ import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
+import 'package:urbano/Views/lich_su_thanh_toan_screen.dart';
 import 'package:urbano/Views/nhan_khau_screen.dart';
 import 'package:urbano/Views/notification/bang_tin_detail.dart';
 import 'package:urbano/Views/notification/bang_tin_screen.dart';
@@ -20,7 +22,10 @@ import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/Views/support/contact_screen.dart';
 import 'package:urbano/Views/support/dieu_khoan_screen.dart';
 import 'package:urbano/Views/support/tro_giup_screen.dart';
+import 'package:urbano/Views/support/yeu_cau_detail.dart';
 import 'package:urbano/Views/support/yeu_cau_screen.dart';
+import 'package:urbano/Views/thanh_toan_screen.dart';
+import 'package:urbano/Views/thong_bao_thanh_toan_screen.dart';
 import 'package:urbano/Views/utilities/tien_ich_screen.dart';
 import 'package:urbano/Views/vehicle/add_phuong_tien.screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
@@ -59,6 +64,10 @@ class AppRoutes {
   static const String bangTinDetail = '/bang-tin-detail';
   static const String addPhuongTien = '/add-phuong-tien';
   static const String nhanKhau = '/nhan-khau';
+  static const String yeuCauDetail = '/yeu-cau-detail';
+  static const String lichSuThanhToan = '/lich-su-thanh-toan';
+  static const String thanhToan = '/thanh-toan';
+  static const String thongBaoThanhToan = '/thong-bao-thanh-toan';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -75,6 +84,8 @@ class AppRoutes {
     tienich: (_) => const TienIchScreen(),
     addPhuongTien: (_) => const ThemPhuongTienScreen(),
     nhanKhau: (_) => const NhanKhauScreen(),
+    lichSuThanhToan: (_) => const LichSuThanhToanScreen(),
+    thongBaoThanhToan: (_) => const ThongBaoThanhToanScreen(),
   };
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
@@ -144,6 +155,14 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => BangTinDetailScreen(bangTin: btList),
         );
+      case yeuCauDetail:
+        final yc = settings.arguments as YeuCauCuDan;
+        return MaterialPageRoute(
+          builder: (_) => ChiTietYeuCauScreen(yeuCau: yc),
+        );
+      case thanhToan:
+        final tt = settings.arguments as HoaDonModel;
+        return MaterialPageRoute(builder: (_) => ThanhToanScreen(hoaDon: tt));
       default:
         return null;
     }

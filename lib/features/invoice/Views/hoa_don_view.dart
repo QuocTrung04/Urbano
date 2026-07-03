@@ -96,9 +96,7 @@ class _HoaDonViewState extends State<HoaDonView> {
 
   Widget _buildInvoiceItem(HoaDonModel item) {
     final bool isPaid = item.daThanhToan;
-    final int status =
-        item.trangThai ??
-        1; // 1: Chưa thanh toán, 2: Đã thanh toán, 3: Thanh toán 1 phần
+    final int status = item.trangThai ?? 1;
 
     Color statusColor;
     String statusText;

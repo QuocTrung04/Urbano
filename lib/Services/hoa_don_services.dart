@@ -1,16 +1,16 @@
 import 'dart:convert';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:urbano/Models/hoadon_model.dart';
 
 class HoaDonServices {
   static const String apiUrl = 'http://10.0.2.2:5080/api';
 
-  /// Fetches the list of invoices (HoaDon) from the API.
+  /// Danh sách hóa đơn theo căn hộ.
   Future<List<HoaDonModel>> fetchHoaDons(int canHoId) async {
     final response = await http.get(Uri.parse('$apiUrl/hoadon/canho/$canHoId'));
 
     if (response.statusCode == 200) {
-      // Decode bodyBytes with UTF-8 to correctly display Vietnamese characters
       final decoded = jsonDecode(utf8.decode(response.bodyBytes));
       List listJson = [];
       if (decoded is List) {
@@ -26,14 +26,35 @@ class HoaDonServices {
     }
   }
 
-  /// Fetches details for a specific invoice (API implementation placeholder).
   Future<HoaDonModel> fetchHoaDonDetail(int id) async {
-    // API will be provided later. Simulating network latency.
-    await Future.delayed(const Duration(milliseconds: 500));
+    final response = await http.get(Uri.parse('$apiUrl/hoadon/$id'));
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(utf8.decode(response.bodyBytes));
+      final map = decoded is Map<String, dynamic>
+          ? (decoded['value'] ?? decoded['data'] ?? decoded)
+          : decoded;
+      return HoaDonModel.fromJson(map as Map<String, dynamic>);
+    } else if (response.statusCode == 404) {
+      throw Exception('Không tìm thấy hóa đơn');
+    } else {
+      throw Exception(
+        'Không thể tải chi tiết hóa đơn (${response.statusCode})',
+      );
+    }
+  }
 
-    // Once the API is available, this can be implemented as:
-    // final response = await http.get(Uri.parse('$apiUrl/$id'));
-    // ...
-    throw UnimplementedError('API chi tiết hóa đơn sẽ được tích hợp sau.');
+  Future<void> thanhToan(
+    int hoaDonId, {
+    required String phuongThuc,
+    required double soTien,
+  }) async {
+    final res = await http.post(
+      Uri.parse('$apiUrl/hoadon/$hoaDonId/thanh-toan'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'phuongThucThanhToan': phuongThuc, 'soTien': soTien}),
+    );
+    if (res.statusCode != 200 && res.statusCode != 201) {
+      throw Exception('Thanh toán thất bại (${res.statusCode})');
+    }
   }
 }

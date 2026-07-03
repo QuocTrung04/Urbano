@@ -40,8 +40,57 @@ class AuthServices {
       }),
     );
     if (res.statusCode != 200) {
-      debugPrint('ljflsdaflkj $baseUrl/cudan/change-password?cuDanId=$cuDanId');
       throw Exception('Đổi mật khẩu thất bại (${res.statusCode})');
+    }
+  }
+
+  Future<void> forgotPassword(String email) async {
+    final res = await http.post(
+      Uri.parse('$baseUrl/cudan/forgot-password'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email}),
+    );
+    if (res.statusCode != 200) {
+      throw Exception(_message(res.body) ?? 'Không gửi được OTP');
+    }
+  }
+
+  // Đặt lại mật khẩu bằng OTP
+  Future<void> resetPassword({
+    required String email,
+    required String otp,
+    required String newPassword,
+  }) async {
+    final res = await http.post(
+      Uri.parse('$baseUrl/cudan/reset-password'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'otp': otp,
+        'newPassword': newPassword,
+      }),
+    );
+    if (res.statusCode != 200) {
+      throw Exception(_message(res.body) ?? 'Đặt lại mật khẩu thất bại');
+    }
+  }
+
+  String? _message(String body) {
+    try {
+      final m = jsonDecode(body);
+      if (m is Map && m['message'] != null) return m['message'].toString();
+    } catch (_) {}
+    return null;
+  }
+
+  Future<void> verifyOtp(String email, String otp) async {
+    final res = await http.post(
+      Uri.parse('$baseUrl/cudan/verify-otp'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'otp': otp}),
+    );
+    if (res.statusCode != 200) {
+      throw Exception(_message(res.body) ?? 'OTP không đúng');
     }
   }
 }

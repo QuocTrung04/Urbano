@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:urbano/Models/phuong_tien_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class PhuongTienServices {
-  static const String baseUrl = 'httpz://10.0.2.2:7080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   Future<List<PhuongTien>> fetchPhuongTien(String token, int canHoId) async {
     final response = await http.get(

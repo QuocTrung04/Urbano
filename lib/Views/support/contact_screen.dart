@@ -68,26 +68,14 @@ class ContactScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 24),
                   _buildCardItem(
-                    Icons.local_phone_rounded,
-                    AppColors.tealPrimary,
-                    'Đường dây nóng',
-                    '0901234567',
-                    Icons.phone_forwarded_rounded,
-                    () {
-                      debugPrint('lien he duong day nong');
-                      _goiDien('0901234567');
-                    },
-                  ),
-                  SizedBox(height: 14),
-                  _buildCardItem(
                     Icons.mail_outline_rounded,
                     AppColors.blue,
                     'Email',
-                    'bql@Urbano.com',
+                    'urbano.support@gmail.com',
                     Icons.send_rounded,
                     () {
                       debugPrint('lien he email');
-                      _guiEmail('bql@Urbano.com');
+                      _guiEmail('urbano.support@gmail.com');
                     },
                   ),
                   SizedBox(height: 14),
@@ -99,7 +87,6 @@ class ContactScreen extends StatelessWidget {
                     Icons.phone_forwarded_rounded,
                     () {
                       _goiDien('0901234567');
-                      debugPrint('goi bao ve');
                     },
                   ),
                   SizedBox(height: 14),

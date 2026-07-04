@@ -5,9 +5,7 @@ import 'package:urbano/core/constants/app_colors.dart';
 
 class TroGiupScreen extends StatelessWidget {
   const TroGiupScreen({super.key});
-
-  static const String _hotline = '19001234';
-  static const String _email = 'bql@urbano.vn';
+  static const String _email = 'urbano.support@gmail.com';
 
   static const List<(IconData, String, String)> _faqs = [
     (
@@ -255,28 +253,12 @@ class TroGiupScreen extends StatelessWidget {
   }
 
   Widget _buildContact(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _contactCard(
-            icon: Icons.phone,
-            iconColor: AppColors.tealPrimary,
-            label: 'Gọi điện',
-            value: '1900 1234',
-            onTap: () => _moLink(context, 'tel:$_hotline'),
-          ),
-        ),
-        const SizedBox(width: 11),
-        Expanded(
-          child: _contactCard(
-            icon: Icons.mail_outline,
-            iconColor: AppColors.blue,
-            label: 'Email',
-            value: _email,
-            onTap: () => _moLink(context, 'mailto:$_email'),
-          ),
-        ),
-      ],
+    return _contactCard(
+      icon: Icons.mail_outline,
+      iconColor: AppColors.blue,
+      label: 'Email',
+      value: _email,
+      onTap: () => _moLink(context, 'mailto:$_email'),
     );
   }
 
@@ -290,6 +272,7 @@ class TroGiupScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: iconColor.withValues(alpha: 0.08),

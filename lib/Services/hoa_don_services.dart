@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:urbano/Models/hoadon_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class HoaDonServices {
-  static const String apiUrl = 'http://10.0.2.2:5080/api';
+  static const String apiUrl = ApiConfig.baseUrl;
 
   /// Danh sách hóa đơn theo căn hộ.
   Future<List<HoaDonModel>> fetchHoaDons(int canHoId) async {

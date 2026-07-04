@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:urbano/Models/yeu_cau_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class YeuCauServices {
-  static const String baseUrl = 'httpz://10.0.2.2:7080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   Map<String, String> _headers(String token) => {
     'Content-Type': 'application/json',

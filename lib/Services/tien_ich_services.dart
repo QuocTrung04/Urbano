@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/tien_ich_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class TienIchServices {
-  static const String baseUrl = 'httpz://10.0.2.2:7080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   // Lấy danh sách tiện ích
   Future<List<TienIch>> fetchTienIch() async {

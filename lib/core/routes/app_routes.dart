@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/Models/phuong_tien_model.dart';
+import 'package:urbano/Models/tien_ich_model.dart';
 import 'package:urbano/Models/yeu_cau_model.dart';
 import 'package:urbano/Views/account/account_info_screen.dart';
 import 'package:urbano/Views/account/edit_profile_screen.dart';
 import 'package:urbano/Views/auth/change_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
+import 'package:urbano/Views/utilities/dat_lich_tien_ich_screen.dart';
 import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
@@ -26,6 +28,7 @@ import 'package:urbano/Views/support/yeu_cau_detail.dart';
 import 'package:urbano/Views/support/yeu_cau_screen.dart';
 import 'package:urbano/Views/thanh_toan_screen.dart';
 import 'package:urbano/Views/thong_bao_thanh_toan_screen.dart';
+import 'package:urbano/Views/utilities/lich_su_dat_tien_ich_screen.dart';
 import 'package:urbano/Views/utilities/tien_ich_screen.dart';
 import 'package:urbano/Views/vehicle/add_phuong_tien.screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
@@ -68,6 +71,8 @@ class AppRoutes {
   static const String lichSuThanhToan = '/lich-su-thanh-toan';
   static const String thanhToan = '/thanh-toan';
   static const String thongBaoThanhToan = '/thong-bao-thanh-toan';
+  static const String datLichTienIch = '/dat-lich-tien-ich';
+  static const String lichSuDatTienIch = '/lich-su-dat-tien-ich';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -86,6 +91,7 @@ class AppRoutes {
     nhanKhau: (_) => const NhanKhauScreen(),
     lichSuThanhToan: (_) => const LichSuThanhToanScreen(),
     thongBaoThanhToan: (_) => const ThongBaoThanhToanScreen(),
+    lichSuDatTienIch: (_) => const LichSuDatLichScreen(),
   };
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
@@ -163,6 +169,11 @@ class AppRoutes {
       case thanhToan:
         final tt = settings.arguments as HoaDonModel;
         return MaterialPageRoute(builder: (_) => ThanhToanScreen(hoaDon: tt));
+      case datLichTienIch:
+        final datLich = settings.arguments as TienIch;
+        return MaterialPageRoute(
+          builder: (_) => DatLichScreen(tienIch: datLich),
+        );
       default:
         return null;
     }

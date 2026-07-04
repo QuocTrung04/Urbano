@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:urbano/Models/canho_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class CanHoServices {
-  static const String baseUrl = 'http://10.0.2.2:5080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   Future<CanHo> fetchCanHo(int canHoId, {String token = ''}) async {
     final res = await http.get(

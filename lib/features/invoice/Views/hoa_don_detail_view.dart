@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/Models/hoadon_model.dart';
 import 'package:urbano/core/constants/app_colors.dart';
@@ -10,6 +11,12 @@ class HoaDonDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     final vm = context.watch<HoaDonDetailViewModel>();
     final item = vm.hoaDon;
 
@@ -29,7 +36,54 @@ class HoaDonDetailView extends StatelessWidget {
       statusColor = AppColors.red;
       statusText = 'Chưa thanh toán';
     }
-
+    if (vm.isLoading) {
+      if (vm.isLoading) {
+        return Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            title: const Text(
+              'CHI TIẾT HÓA ĐƠN',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+                color: Colors.white,
+              ),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.white,
+                size: 20,
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  AppColors.bgDark,
+                  AppColors.bgMid,
+                  AppColors.bgDarkest,
+                ],
+                stops: [0.0, 0.5, 1.0],
+              ),
+            ),
+            child: const Center(
+              child: CircularProgressIndicator(color: AppColors.tealPrimary),
+            ),
+          ),
+        );
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -63,6 +117,7 @@ class HoaDonDetailView extends StatelessWidget {
             stops: [0.0, 0.5, 1.0],
           ),
         ),
+
         child: SafeArea(
           child: Column(
             children: [

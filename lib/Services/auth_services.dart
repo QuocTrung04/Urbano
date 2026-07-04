@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:urbano/Models/login_result.dart';
 import 'package:http/http.dart' as http;
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class AuthServices {
-  static const String baseUrl = 'http://10.0.2.2:5080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   //=======API DANG NHAP==========
   Future<LoginResult> login(String contact, String password) async {

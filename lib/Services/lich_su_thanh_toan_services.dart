@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:urbano/Models/lich_su_thanh_toan_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class LichSuThanhToanServices {
-  static const String baseUrl = 'http://10.0.2.2:5080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   Future<List<LichSuThanhToan>> fetchByCanHo(String token, int canHoId) async {
     final res = await http.get(

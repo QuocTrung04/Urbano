@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:urbano/Models/cudan_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class AccountServices {
-  static const String baseUrl = 'http://10.0.2.2:5080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   Future<CuDan> fetchCuDan(int cuDanId, String token) async {
     final result = await http.get(

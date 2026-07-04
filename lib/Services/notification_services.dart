@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/notification_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class ThongbaoServices {
-  static const String url = 'http://10.0.2.2:5080/api';
+  static const String url = ApiConfig.baseUrl;
 
   Future<List<ThongBao>> fetchThongBao(int cuDanId) async {
     final prefs = await SharedPreferences.getInstance();

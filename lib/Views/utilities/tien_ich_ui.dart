@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:urbano/Models/tien_ich_model.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 // ================== Helpers suy icon/màu/trạng thái/phí ==================
 // Dùng chung cho màn Tiện ích và mục tiện ích ở Home.
@@ -273,17 +274,7 @@ Widget _nutDangKy(BuildContext context, TienIch t) {
   // Cần đặt trước -> nút hành động
   return GestureDetector(
     onTap: () {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Đã gửi yêu cầu đặt trước ${t.tenTienIch}',
-            style: const TextStyle(color: Colors.white),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: AppColors.tealDark,
-        ),
-      );
+      Navigator.pushNamed(context, AppRoutes.datLichTienIch, arguments: t);
     },
     child: Container(
       width: double.infinity,

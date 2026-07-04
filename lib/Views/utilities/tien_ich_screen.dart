@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:urbano/Models/tien_ich_model.dart';
 import 'package:urbano/Services/tien_ich_services.dart';
+import 'package:urbano/Views/utilities/lich_su_dat_tien_ich_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 /// Màn "Tiện ích tòa nhà" - lấy dữ liệu thật từ API (GET /api/tienich).
 class TienIchScreen extends StatefulWidget {
@@ -264,6 +266,27 @@ class _TienIchScreenState extends State<TienIchScreen> {
             fontWeight: FontWeight.w600,
             color: Colors.white,
             letterSpacing: 1,
+          ),
+        ),
+        const Spacer(), // <-- đẩy nút lịch sử sang phải
+        // NÚT LỊCH SỬ
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutes.lichSuDatTienIch);
+          },
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.inputFill,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.borderButton),
+            ),
+            child: const Icon(
+              Icons.history_rounded,
+              color: AppColors.tealPrimary,
+              size: 22,
+            ),
           ),
         ),
       ],
@@ -662,17 +685,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
     // Cần đặt trước -> nút hành động
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Đã gửi yêu cầu đặt trước ${t.tenTienIch}',
-              style: const TextStyle(color: Colors.white),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: AppColors.tealDark,
-          ),
-        );
+        Navigator.pushNamed(context, AppRoutes.datLichTienIch, arguments: t);
       },
       child: Container(
         width: double.infinity,

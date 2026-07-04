@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:urbano/Models/nhan_khau_model.dart';
 import 'package:urbano/Models/can_ho_tong_quan_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class NhanKhauServices {
-  static const String baseUrl = 'http://10.0.2.2:5080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   Future<List<NhanKhau>> fetchNhanKhau(String token, int canHoId) async {
     final response = await http.get(

@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/bang_tin_model.dart';
+import 'package:urbano/core/constants/apiconfig.dart';
 
 class BangTinServices {
-  static const String baseUrl = 'http://10.0.2.2:5080/api';
+  static const String baseUrl = ApiConfig.baseUrl;
   Future<List<BangTin>> fetchBangTin() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:urbano/ViewModels/add_phuong_tien_viewmodel.dart';
+import 'package:urbano/ViewModels/phuong_tien_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
 /// Màn yêu cầu thêm phương tiện mới (chỉ UI).
@@ -12,7 +12,7 @@ class ThemPhuongTienScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => ThemPhuongTienViewModel(),
+      create: (_) => PhuongTienViewModel()..loadLoai(), // <-- thêm ..loadLoai()
       child: const _ThemPhuongTienView(),
     );
   }
@@ -26,13 +26,20 @@ class _ThemPhuongTienView extends StatefulWidget {
 }
 
 class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
-  // (id, tên, icon, màu)
-  final List<(int, String, IconData, Color)> _loaiOptions = const [
-    (1, 'Ô tô', Icons.directions_car_rounded, AppColors.blue),
-    (2, 'Xe máy', Icons.two_wheeler_rounded, AppColors.tealPrimary),
-    (3, 'Xe đạp', Icons.pedal_bike_rounded, AppColors.amber),
-    (4, 'Xe điện', Icons.electric_scooter_rounded, AppColors.pink),
-  ];
+  (IconData, Color) _loaiStyle(int id) {
+    switch (id) {
+      case 1:
+        return (Icons.directions_car_rounded, AppColors.blue);
+      case 2:
+        return (Icons.two_wheeler_rounded, AppColors.tealPrimary);
+      case 3:
+        return (Icons.pedal_bike_rounded, AppColors.amber);
+      case 4:
+        return (Icons.electric_scooter_rounded, AppColors.pink);
+      default:
+        return (Icons.directions_car_rounded, AppColors.tealPrimary);
+    }
+  }
 
   final TextEditingController _tenCtrl = TextEditingController();
   final TextEditingController _bienSoCtrl = TextEditingController();
@@ -45,7 +52,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
   }
 
   Future<void> _onSubmit() async {
-    final vm = context.read<ThemPhuongTienViewModel>();
+    final vm = context.read<PhuongTienViewModel>();
     final ok = await vm.submit(ten: _tenCtrl.text, bienSo: _bienSoCtrl.text);
     if (!mounted) return;
     if (ok) {
@@ -114,7 +121,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
       ),
     );
 
-    final vm = context.watch<ThemPhuongTienViewModel>();
+    final vm = context.watch<PhuongTienViewModel>();
 
     return Scaffold(
       body: Container(
@@ -191,7 +198,21 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
     );
   }
 
-  Widget _buildLoaiGrid(ThemPhuongTienViewModel vm) {
+  Widget _buildLoaiGrid(PhuongTienViewModel vm) {
+    if (vm.loadingLoai) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: Center(
+          child: CircularProgressIndicator(color: AppColors.tealPrimary),
+        ),
+      );
+    }
+    if (vm.loaiList.isEmpty) {
+      return const Text(
+        'Chưa có loại phương tiện',
+        style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+      );
+    }
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
@@ -199,32 +220,35 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
       childAspectRatio: 2.4,
-      children: _loaiOptions.map((o) {
-        final chon = vm.loaiId == o.$1;
+      children: vm.loaiList.map((loai) {
+        final chon = vm.loaiId == loai.id;
+        final (icon, mau) = _loaiStyle(loai.id);
         return GestureDetector(
-          onTap: () => vm.chonLoai(o.$1),
+          onTap: () => vm.chonLoai(loai.id),
           behavior: HitTestBehavior.opaque,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14),
             decoration: BoxDecoration(
               color: chon
-                  ? o.$4.withValues(alpha: 0.18)
+                  ? mau.withValues(alpha: 0.18)
                   : AppColors.nenContainer,
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: chon
-                    ? o.$4.withValues(alpha: 0.5)
+                    ? mau.withValues(alpha: 0.5)
                     : AppColors.borderButton,
                 width: chon ? 1.5 : 1,
               ),
             ),
             child: Row(
               children: [
-                Icon(o.$3, color: o.$4, size: 26),
+                Icon(icon, color: mau, size: 26),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    o.$2,
+                    loai.tenLoaiPhuongTien, // <-- TÊN TỪ API
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: chon ? Colors.white : AppColors.textMuted,
                       fontSize: 14,
@@ -233,7 +257,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
                   ),
                 ),
                 if (chon)
-                  Icon(Icons.check_circle_rounded, color: o.$4, size: 18),
+                  Icon(Icons.check_circle_rounded, color: mau, size: 18),
               ],
             ),
           ),

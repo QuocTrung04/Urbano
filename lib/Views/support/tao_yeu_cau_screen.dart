@@ -191,48 +191,59 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
   }
 
   Widget _buildLoai() {
-    return Wrap(
-      spacing: 9,
-      runSpacing: 9,
-      children: LoaiYeuCau.danhSach.map((loai) {
-        final chon = _loaiChon == loai.id;
-        return GestureDetector(
-          onTap: () => setState(() => _loaiChon = loai.id),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              color: chon
-                  ? loai.color.withValues(alpha: 0.15)
-                  : AppColors.inputFill,
-              borderRadius: BorderRadius.circular(11),
-              border: Border.all(
-                color: chon
-                    ? loai.color.withValues(alpha: 0.5)
-                    : AppColors.borderSide,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  loai.icon,
-                  size: 16,
-                  color: chon ? loai.color : AppColors.textMuted,
-                ),
-                const SizedBox(width: 7),
-                Text(
-                  loai.name,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: chon ? loai.color : AppColors.textMuted,
-                  ),
-                ),
-              ],
-            ),
+    // tìm loại đang chọn (null nếu chưa chọn)
+    final loaiChon = LoaiYeuCau.danhSach
+        .where((e) => e.id == _loaiChon)
+        .cast<LoaiYeuCau?>()
+        .firstOrNull;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: AppColors.inputFill,
+        borderRadius: BorderRadius.circular(11),
+        border: Border.all(color: AppColors.borderSide),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          isExpanded: true,
+          value: loaiChon?.id,
+          hint: const Text(
+            'Chọn loại yêu cầu',
+            style: TextStyle(color: AppColors.textMuted, fontSize: 13),
           ),
-        );
-      }).toList(),
+          icon: const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: AppColors.textMuted,
+          ),
+          dropdownColor: AppColors.bgMid,
+          borderRadius: BorderRadius.circular(12),
+          style: const TextStyle(color: Colors.white, fontSize: 13),
+          items: LoaiYeuCau.danhSach.map((loai) {
+            return DropdownMenuItem<int>(
+              value: loai.id,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(loai.icon, size: 16, color: loai.color),
+                  const SizedBox(width: 8),
+                  Text(
+                    loai.name,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+          onChanged: (val) {
+            if (val != null) setState(() => _loaiChon = val);
+          },
+        ),
+      ),
     );
   }
 

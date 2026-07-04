@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/yeu_cau_model.dart';
+import 'package:urbano/Services/yeu_cau_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
 class ChiTietYeuCauScreen extends StatelessWidget {
@@ -54,6 +56,9 @@ class ChiTietYeuCauScreen extends StatelessWidget {
                 _groupTitle('Thông tin'),
                 const SizedBox(height: 12),
                 _buildInfo(tenLoai),
+
+                const SizedBox(height: 22),
+                _buildHanhDong(context, yc),
               ],
             ),
           ),
@@ -428,5 +433,117 @@ class ChiTietYeuCauScreen extends StatelessWidget {
     final hh = d.hour.toString().padLeft(2, '0');
     final mi = d.minute.toString().padLeft(2, '0');
     return '$dd/$mm/${d.year} • $hh:$mi';
+  }
+
+  Widget _buildHanhDong(BuildContext context, YeuCauCuDan yc) {
+    if (yc.trangThai == 1) {
+      return _actionBtn(
+        'Hủy đăng ký',
+        Icons.close_rounded,
+        AppColors.red,
+        () => _huyTrucTiep(context, yc),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget _actionBtn(
+    String label,
+    IconData icon,
+    Color mau,
+    VoidCallback onTap,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          color: mau.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: mau.withValues(alpha: 0.4)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: mau, size: 19),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: TextStyle(
+                color: mau,
+                fontSize: 14.5,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _huyTrucTiep(BuildContext context, YeuCauCuDan yc) async {
+    final dong = await _confirm(
+      context,
+      'Hủy đăng ký',
+      'Bạn chắc chắn muốn hủy đăng ký phương tiện này?',
+    );
+    if (dong != true) return;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token') ?? '';
+      await YeuCauServices().HuyYeuCau(token, yc.id);
+      if (!context.mounted) return;
+      _thongBao(context, 'Đã hủy đăng ký');
+      Navigator.pop(context, true);
+    } catch (e) {
+      if (!context.mounted) return;
+      _thongBao(context, 'Hủy thất bại. Vui lòng thử lại.', loi: true);
+    }
+  }
+
+  Future<bool?> _confirm(BuildContext context, String title, String msg) {
+    return showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.bgMid,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          title,
+          style: const TextStyle(color: Colors.white, fontSize: 18),
+        ),
+        content: Text(
+          msg,
+          style: const TextStyle(color: AppColors.textMuted, height: 1.4),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text(
+              'Đóng',
+              style: TextStyle(color: AppColors.textMuted),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text(
+              'Xác nhận',
+              style: TextStyle(color: AppColors.red),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _thongBao(BuildContext context, String msg, {bool loi = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg, style: const TextStyle(color: Colors.white)),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: loi ? AppColors.red : AppColors.bgMid,
+      ),
+    );
   }
 }

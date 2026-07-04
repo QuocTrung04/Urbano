@@ -82,8 +82,10 @@ class YeuCauCuDan {
         return 'Chờ xử lý';
       case 2:
         return 'Đang xử lý';
-      default:
+      case 3:
         return 'Hoàn thành';
+      default:
+        return 'Đã hủy';
     }
   }
 }
@@ -106,6 +108,8 @@ class LoaiYeuCau {
         return Icons.help_outline; // Hỏi đáp
       case 4:
         return Icons.directions_car;
+      case 5:
+        return Icons.person_add_alt_1;
       default:
         return Icons.build_outlined; // Sửa chữa
     }
@@ -118,6 +122,8 @@ class LoaiYeuCau {
       case 3:
         return AppColors.blue;
       case 4:
+        return AppColors.amber;
+      case 5:
         return AppColors.pink;
       default:
         return AppColors.tealPrimary;
@@ -128,7 +134,8 @@ class LoaiYeuCau {
     LoaiYeuCau(id: 1, name: 'Sửa chữa'),
     LoaiYeuCau(id: 2, name: 'Khiếu nại'),
     LoaiYeuCau(id: 3, name: 'Hỏi đáp'),
-    LoaiYeuCau(id: 4, name: 'Đăng ký phương tiện'),
+    LoaiYeuCau(id: 4, name: 'Đăng ký nhân khẩu'),
+    LoaiYeuCau(id: 5, name: 'Đăng ký phương tiện'),
   ];
 
   static LoaiYeuCau timTheoId(int? id) {

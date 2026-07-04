@@ -88,4 +88,17 @@ class YeuCauServices {
     }
     return const [];
   }
+
+  Future<void> HuyYeuCau(String token, int id) async {
+    final res = await http.put(
+      Uri.parse('$baseUrl/yeucaucudan/$id/huyyeucau'),
+      headers: {
+        'Content-Type': 'application/json',
+        if (token.isNotEmpty) 'Authorization': 'Bearer $token',
+      },
+    );
+    if (res.statusCode != 200) {
+      throw Exception('Hủy thất bại (${res.statusCode})');
+    }
+  }
 }

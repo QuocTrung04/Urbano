@@ -233,8 +233,15 @@ class _YeuVauView extends StatelessWidget {
     final (stColor, stBg) = _trangThaiTheme(yc.trangThai);
 
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, AppRoutes.yeuCauDetail, arguments: yc);
+      onTap: () async {
+        final ok = await Navigator.pushNamed(
+          context,
+          AppRoutes.yeuCauDetail,
+          arguments: yc,
+        );
+        if (ok == true && context.mounted) {
+          context.read<YeuCauViewModel>().loadData();
+        }
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -374,11 +381,13 @@ class _YeuVauView extends StatelessWidget {
         return (AppColors.amber, AppColors.amber.withValues(alpha: 0.15));
       case 2:
         return (AppColors.blue, AppColors.blue.withValues(alpha: 0.15));
-      default:
+      case 3:
         return (
           AppColors.tealPrimary,
           AppColors.tealPrimary.withValues(alpha: 0.15),
         );
+      default:
+        return (AppColors.red, AppColors.red.withValues(alpha: 0.15));
     }
   }
 

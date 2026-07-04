@@ -5,6 +5,7 @@ import 'package:urbano/Models/can_ho_tong_quan_model.dart';
 import 'package:urbano/Models/nhan_khau_model.dart';
 import 'package:urbano/Services/nhan_khau_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 /// Màn "Nhân khẩu": thông tin căn hộ (diện tích, hướng, số phòng...) + danh sách nhân khẩu.
 class NhanKhauScreen extends StatefulWidget {
@@ -21,6 +22,10 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
   String? _error;
   CanHoTongQuan? _canHo;
   List<NhanKhau> _list = [];
+  int _myCuDanId = 0; // id cư dân đang đăng nhập
+
+  // người đang đăng nhập có phải chủ hộ căn hộ này không
+  bool get _laChuHo => _list.any((n) => n.laChuHo && n.id == _myCuDanId);
 
   @override
   void initState() {
@@ -37,6 +42,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token') ?? '';
       final canHoId = prefs.getInt('canHoId') ?? 0;
+      _myCuDanId = prefs.getInt('cuDanId') ?? 0;
       if (canHoId == 0) throw Exception('Không tìm thấy căn hộ');
 
       // nhân khẩu là bắt buộc; tổng quan căn hộ nếu lỗi thì bỏ qua
@@ -137,6 +143,60 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
             ),
             const SizedBox(height: 12),
             if (_list.isEmpty) _emptyBox() else ..._list.map(_buildMemberCard),
+            if (_laChuHo)
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () async {
+                      final ok = await Navigator.pushNamed(
+                        context,
+                        AppRoutes.themNhanKhau,
+                      );
+                      if (ok == true && mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Đã gửi yêu cầu thêm nhân khẩu'),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 9,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.tealPrimary.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: AppColors.tealPrimary.withValues(alpha: 0.4),
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.person_add_alt_1_rounded,
+                            size: 16,
+                            color: AppColors.tealPrimary,
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            'Thêm nhân khẩu',
+                            style: TextStyle(
+                              color: AppColors.tealPrimary,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

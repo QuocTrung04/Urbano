@@ -61,6 +61,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _chonNgaySinh() async {
     final birthday = await showDatePicker(
       context: context,
+      helpText: 'Chọn ngày sinh',
+      fieldLabelText: 'Ngày sinh',
+      cancelText: 'Hủy',
+      confirmText: 'Đồng ý',
+      fieldHintText: 'dd/MM/yyyy',
+      locale: const Locale('vi', 'VN'),
       initialDate: _ngaySinh ?? DateTime(2000),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),

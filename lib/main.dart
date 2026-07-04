@@ -5,6 +5,7 @@ import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/features/invoice/ViewModels/hoa_don_viewmodel.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -40,6 +41,13 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('vi', 'VN'), Locale('en', 'US')],
+      locale: const Locale('vi', 'VN'),
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.login,
       routes: AppRoutes.routes,

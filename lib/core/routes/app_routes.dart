@@ -5,6 +5,7 @@ import 'package:urbano/Models/phuong_tien_model.dart';
 import 'package:urbano/Models/tien_ich_model.dart';
 import 'package:urbano/Models/yeu_cau_model.dart';
 import 'package:urbano/Views/account/account_info_screen.dart';
+import 'package:urbano/Views/account/add_nhan_khau_screen.dart';
 import 'package:urbano/Views/account/edit_profile_screen.dart';
 import 'package:urbano/Views/auth/change_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
@@ -14,7 +15,7 @@ import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
 import 'package:urbano/Views/auth/verify_otp_screen.dart';
 import 'package:urbano/Views/lich_su_thanh_toan_screen.dart';
-import 'package:urbano/Views/nhan_khau_screen.dart';
+import 'package:urbano/Views/account/nhan_khau_screen.dart';
 import 'package:urbano/Views/notification/bang_tin_detail.dart';
 import 'package:urbano/Views/notification/bang_tin_screen.dart';
 import 'package:urbano/Views/notification/notification_detail_screen.dart';
@@ -73,6 +74,7 @@ class AppRoutes {
   static const String thongBaoThanhToan = '/thong-bao-thanh-toan';
   static const String datLichTienIch = '/dat-lich-tien-ich';
   static const String lichSuDatTienIch = '/lich-su-dat-tien-ich';
+  static const String themNhanKhau = '/them-nhan-khau';
 
   static Map<String, WidgetBuilder> get routes => {
     login: (_) => const LoginScreen(),
@@ -92,6 +94,7 @@ class AppRoutes {
     lichSuThanhToan: (_) => const LichSuThanhToanScreen(),
     thongBaoThanhToan: (_) => const ThongBaoThanhToanScreen(),
     lichSuDatTienIch: (_) => const LichSuDatLichScreen(),
+    themNhanKhau: (_) => const ThemNhanKhauScreen(),
   };
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {

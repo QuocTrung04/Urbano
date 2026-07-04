@@ -14,7 +14,6 @@ class CanHoServices {
         if (token.isNotEmpty) 'Authorization': 'Bearer $token',
       },
     );
-
     if (res.statusCode == 200) {
       final decoded = jsonDecode(utf8.decode(res.bodyBytes));
       final Map<String, dynamic> json = decoded is Map<String, dynamic>

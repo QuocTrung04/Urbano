@@ -4,11 +4,13 @@ import 'package:urbano/Models/hoadon_model.dart';
 import 'package:urbano/core/constants/apiconfig.dart';
 
 class HoaDonServices {
-  static const String apiUrl = ApiConfig.baseUrl;
+  static const String baseUrl = ApiConfig.baseUrl;
 
   /// Danh sách hóa đơn theo căn hộ.
   Future<List<HoaDonModel>> fetchHoaDons(int canHoId) async {
-    final response = await http.get(Uri.parse('$apiUrl/hoadon/canho/$canHoId'));
+    final response = await http.get(
+      Uri.parse('$baseUrl/hoadon/canho/$canHoId'),
+    );
 
     if (response.statusCode == 200) {
       final decoded = jsonDecode(utf8.decode(response.bodyBytes));
@@ -27,7 +29,7 @@ class HoaDonServices {
   }
 
   Future<HoaDonModel> fetchHoaDonDetail(int id) async {
-    final response = await http.get(Uri.parse('$apiUrl/hoadon/$id'));
+    final response = await http.get(Uri.parse('$baseUrl/hoadon/$id'));
     if (response.statusCode == 200) {
       final decoded = jsonDecode(utf8.decode(response.bodyBytes));
       final map = decoded is Map<String, dynamic>
@@ -49,7 +51,7 @@ class HoaDonServices {
     required double soTien,
   }) async {
     final res = await http.post(
-      Uri.parse('$apiUrl/hoadon/$hoaDonId/thanh-toan'),
+      Uri.parse('$baseUrl/hoadon/$hoaDonId/thanh-toan'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'phuongThucThanhToan': phuongThuc, 'soTien': soTien}),
     );

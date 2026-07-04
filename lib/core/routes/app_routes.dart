@@ -30,7 +30,7 @@ import 'package:urbano/Views/thanh_toan_screen.dart';
 import 'package:urbano/Views/thong_bao_thanh_toan_screen.dart';
 import 'package:urbano/Views/utilities/lich_su_dat_tien_ich_screen.dart';
 import 'package:urbano/Views/utilities/tien_ich_screen.dart';
-import 'package:urbano/Views/vehicle/add_phuong_tien.screen.dart';
+import 'package:urbano/Views/vehicle/add_phuong_tien_screen.dart';
 import 'package:urbano/Views/vehicle/phuong_tien_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/Models/hoadon_model.dart';

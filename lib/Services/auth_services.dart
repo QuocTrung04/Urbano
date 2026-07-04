@@ -13,6 +13,7 @@ class AuthServices {
       headers: {'content-Type': 'application/json'},
       body: jsonEncode({'account': contact, 'password': password}),
     );
+
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body);
       return LoginResult.fromJson(data);
@@ -39,6 +40,7 @@ class AuthServices {
         'newPassword': matkhaumoi,
       }),
     );
+
     if (res.statusCode != 200) {
       throw Exception('Đổi mật khẩu thất bại (${res.statusCode})');
     }
@@ -50,6 +52,7 @@ class AuthServices {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email}),
     );
+
     if (res.statusCode != 200) {
       throw Exception(_message(res.body) ?? 'Không gửi được OTP');
     }
@@ -70,6 +73,7 @@ class AuthServices {
         'newPassword': newPassword,
       }),
     );
+
     if (res.statusCode != 200) {
       throw Exception(_message(res.body) ?? 'Đặt lại mật khẩu thất bại');
     }
@@ -89,6 +93,7 @@ class AuthServices {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'otp': otp}),
     );
+
     if (res.statusCode != 200) {
       throw Exception(_message(res.body) ?? 'OTP không đúng');
     }

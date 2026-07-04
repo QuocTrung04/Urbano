@@ -19,7 +19,6 @@ class HomeServices {
   final BangTinServices bangTinServices = BangTinServices();
 
   Future<HomeData> fetchHomeData() async {
-    await Future.delayed(Duration(milliseconds: 500));
     final prefs = await SharedPreferences.getInstance();
     final cuDanJson = prefs.getString('cuDan');
     final canHoId = prefs.getInt('canHoId') ?? 0;

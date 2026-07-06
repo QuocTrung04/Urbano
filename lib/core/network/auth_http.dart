@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:urbano/main.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -46,7 +49,22 @@ class AuthHttp {
 
   static void _checkAuth(int statusCode) {
     if (statusCode == 401 || statusCode == 403) {
+      _handleUnauthorized();
       throw AuthException('Phiên đăng nhập đã hết hạn hoặc bạn không có quyền');
+    }
+  }
+
+  static Future<void> _handleUnauthorized() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    await prefs.remove('cuDan');
+    
+    final context = navigatorKey.currentContext;
+    if (context != null && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Phiên đăng nhập đã hết hạn')),
+      );
+      Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
     }
   }
 }

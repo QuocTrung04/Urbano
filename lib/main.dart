@@ -7,6 +7,8 @@ import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/features/invoice/ViewModels/hoa_don_viewmodel.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'Urbano',
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.bgDark,

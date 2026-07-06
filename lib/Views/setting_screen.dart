@@ -7,6 +7,7 @@ import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/Models/cudan_model.dart';
+import 'package:urbano/core/network/signalr_service.dart';
 
 class SettingScreen extends StatelessWidget {
   final CuDan cuDan;
@@ -334,6 +335,8 @@ class SettingScreen extends StatelessWidget {
   }
 
   Future<void> logout(BuildContext context) async {
+    context.read<SignalRService>().disconnect();
+    
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 

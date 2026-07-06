@@ -8,9 +8,10 @@ import 'package:urbano/ViewModels/home/home_viewmodel.dart';
 import 'package:urbano/Views/thong_bao_thanh_toan_card.dart';
 import 'package:urbano/Views/utilities/home_tien_ich_section.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'dart:async';
 import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/core/routes/app_routes.dart';
-
+import 'package:urbano/core/network/signalr_service.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -23,8 +24,79 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _Homeview extends StatelessWidget {
+class _Homeview extends StatefulWidget {
   const _Homeview();
+  @override
+  State<_Homeview> createState() => _HomeviewState();
+}
+
+class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
+  late SignalRService _signalRService;
+  Timer? _debounceTimer;
+  String? _lastEventId;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    
+    _signalRService = Provider.of<SignalRService>(context, listen: false);
+    _signalRService.connect();
+    _signalRService.addListener(_onSignalREvent);
+  }
+
+  void _onSignalREvent() {
+    if (_signalRService.recentEvents.isNotEmpty) {
+      final latest = _signalRService.recentEvents.first;
+      final currentEventId = latest['_receivedAt'] as String?;
+      
+      if (currentEventId != null && currentEventId != _lastEventId) {
+        _lastEventId = currentEventId;
+        
+        final type = latest['_type'] as String?;
+        String message = 'Có cập nhật mới';
+        if (type == 'new_request' || type == 'request_status') {
+           message = 'Yêu cầu của bạn đã được cập nhật';
+        } else if (type == 'new_booking' || type == 'booking_status') {
+           message = 'Đặt lịch tiện ích đã được duyệt/từ chối';
+        } else if (type == 'new_invoice') {
+           message = 'Có hóa đơn mới';
+        } else {
+           message = latest['tieuDe']?.toString() ?? latest['message']?.toString() ?? 'Có thông báo mới';
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            backgroundColor: AppColors.tealPrimary,
+          ),
+        );
+
+        if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
+        _debounceTimer = Timer(const Duration(seconds: 1), () {
+          if (mounted) {
+            context.read<HomeViewModel>().loadData();
+          }
+        });
+      }
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (!_signalRService.isConnected) _signalRService.connect();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _debounceTimer?.cancel();
+    _signalRService.removeListener(_onSignalREvent);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<HomeViewModel>();
@@ -188,17 +260,24 @@ class _Homeview extends StatelessWidget {
                   ],
                 ),
               ),
-              _iconButton(
-                Icons.notifications_outlined,
-                onTap: () async {
-                  final ketQua = await Navigator.pushNamed(
-                    context,
-                    AppRoutes.notification,
-                    arguments: data.thongBaoList,
-                  );
-                  if (ketQua is List<ThongBao>) vm.capNhatThongBao(ketQua);
-                },
-                hasdot: data.thongBaoList.any((tb) => !tb.daDoc),
+              Consumer<SignalRService>(
+                builder: (_, signalR, __) => Badge(
+                  isLabelVisible: signalR.unreadCount > 0,
+                  label: Text('${signalR.unreadCount}'),
+                  child: _iconButton(
+                    Icons.notifications_outlined,
+                    onTap: () async {
+                      signalR.clearUnread();
+                      final ketQua = await Navigator.pushNamed(
+                        context,
+                        AppRoutes.notification,
+                        arguments: data.thongBaoList,
+                      );
+                      if (ketQua is List<ThongBao>) vm.capNhatThongBao(ketQua);
+                    },
+                    hasdot: false,
+                  ),
+                ),
               ),
               SizedBox(width: 8),
               _iconButton(

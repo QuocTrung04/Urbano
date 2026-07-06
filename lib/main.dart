@@ -6,6 +6,7 @@ import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/features/invoice/ViewModels/hoa_don_viewmodel.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:urbano/core/network/signalr_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -22,6 +23,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => HoaDonViewModel()),
         ChangeNotifierProvider(create: (_) => UserProvider()..loadFromPrefs()),
+        ChangeNotifierProvider(create: (_) => SignalRService()),
       ],
       child: const MyApp(),
     ),

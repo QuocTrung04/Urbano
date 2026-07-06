@@ -1,25 +1,13 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:urbano/Models/nhan_khau_model.dart';
 import 'package:urbano/Models/can_ho_tong_quan_model.dart';
 import 'package:urbano/core/constants/apiconfig.dart';
+import 'package:urbano/core/network/auth_http.dart';
 
 class NhanKhauServices {
   static const String baseUrl = ApiConfig.baseUrl;
 
   Future<List<NhanKhau>> fetchNhanKhau(String token, int canHoId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/cudan/canho/$canHoId'),
-      headers: {
-        'Content-Type': 'application/json',
-        if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-      },
-    );
-    if (response.statusCode != 200) {
-      throw Exception('Lỗi tải nhân khẩu (${response.statusCode})');
-    }
-    final decoded = jsonDecode(utf8.decode(response.bodyBytes));
+    final decoded = await AuthHttp.get('$baseUrl/cudan/canho/$canHoId');
     final data = _asList(decoded);
     return data
         .map<NhanKhau>((e) => NhanKhau.fromJson(e as Map<String, dynamic>))
@@ -27,17 +15,7 @@ class NhanKhauServices {
   }
 
   Future<CanHoTongQuan> fetchCanHoTongQuan(String token, int canHoId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/canho/$canHoId/tongquan'),
-      headers: {
-        'Content-Type': 'application/json',
-        if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-      },
-    );
-    if (response.statusCode != 200) {
-      throw Exception('Lỗi tải căn hộ (${response.statusCode})');
-    }
-    final decoded = jsonDecode(utf8.decode(response.bodyBytes));
+    final decoded = await AuthHttp.get('$baseUrl/canho/$canHoId/tongquan');
     final map = decoded is Map<String, dynamic>
         ? (decoded['value'] ?? decoded['data'] ?? decoded)
         : <String, dynamic>{};

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:urbano/Models/login_result.dart';
 import 'package:http/http.dart' as http;
 import 'package:urbano/core/constants/apiconfig.dart';
+import 'package:urbano/core/network/auth_http.dart';
 
 class AuthServices {
   static const String baseUrl = ApiConfig.baseUrl;
@@ -29,32 +30,23 @@ class AuthServices {
     String matkhaumoi,
     String token,
   ) async {
-    final res = await http.post(
-      Uri.parse('$baseUrl/cudan/change-password?cuDanId=$cuDanId'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode({
+    await AuthHttp.post(
+      '$baseUrl/cudan/change-password?cuDanId=$cuDanId',
+      body: {
         'currentPassword': matkhaucu,
         'newPassword': matkhaumoi,
-      }),
+      },
     );
-
-    if (res.statusCode != 200) {
-      throw Exception('Đổi mật khẩu thất bại (${res.statusCode})');
-    }
   }
 
   Future<void> forgotPassword(String email) async {
-    final res = await http.post(
-      Uri.parse('$baseUrl/cudan/forgot-password'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email}),
-    );
-
-    if (res.statusCode != 200) {
-      throw Exception(_message(res.body) ?? 'Không gửi được OTP');
+    try {
+      await AuthHttp.post(
+        '$baseUrl/cudan/forgot-password',
+        body: {'email': email},
+      );
+    } catch (e) {
+      throw Exception('Không gửi được OTP');
     }
   }
 
@@ -64,18 +56,17 @@ class AuthServices {
     required String otp,
     required String newPassword,
   }) async {
-    final res = await http.post(
-      Uri.parse('$baseUrl/cudan/reset-password'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'email': email,
-        'otp': otp,
-        'newPassword': newPassword,
-      }),
-    );
-
-    if (res.statusCode != 200) {
-      throw Exception(_message(res.body) ?? 'Đặt lại mật khẩu thất bại');
+    try {
+      await AuthHttp.post(
+        '$baseUrl/cudan/reset-password',
+        body: {
+          'email': email,
+          'otp': otp,
+          'newPassword': newPassword,
+        },
+      );
+    } catch (e) {
+      throw Exception('Đặt lại mật khẩu thất bại');
     }
   }
 
@@ -88,14 +79,13 @@ class AuthServices {
   }
 
   Future<void> verifyOtp(String email, String otp) async {
-    final res = await http.post(
-      Uri.parse('$baseUrl/cudan/verify-otp'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email, 'otp': otp}),
-    );
-
-    if (res.statusCode != 200) {
-      throw Exception(_message(res.body) ?? 'OTP không đúng');
+    try {
+      await AuthHttp.post(
+        '$baseUrl/cudan/verify-otp',
+        body: {'email': email, 'otp': otp},
+      );
+    } catch (e) {
+      throw Exception('OTP không đúng');
     }
   }
 }

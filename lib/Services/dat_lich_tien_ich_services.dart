@@ -1,15 +1,11 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:urbano/Models/dat_lich_tien_ich_model.dart';
 import 'package:urbano/core/constants/apiconfig.dart';
+import 'package:urbano/core/network/auth_http.dart';
 
 class DatLichServices {
   static const String baseUrl = ApiConfig.baseUrl;
 
-  Map<String, String> _headers(String token) => {
-    'Content-Type': 'application/json',
-    if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-  };
+
 
   // Tạo đặt lịch
   Future<DatLichTienIch> createDatLich(
@@ -22,10 +18,9 @@ class DatLichServices {
     required int soNguoi,
     String ghiChu = '',
   }) async {
-    final res = await http.post(
-      Uri.parse('$baseUrl/datlichtienich'),
-      headers: _headers(token),
-      body: jsonEncode({
+    final decoded = await AuthHttp.post(
+      '$baseUrl/datlichtienich',
+      body: {
         'cuDan': cuDan,
         'canHo': canHo,
         'tienIch': tienIch,
@@ -33,14 +28,8 @@ class DatLichServices {
         'thoiGianKetThuc': thoiGianKetThuc.toIso8601String(),
         'soNguoi': soNguoi,
         'ghiChu': ghiChu,
-      }),
+      },
     );
-    if (res.statusCode != 200 && res.statusCode != 201) {
-      throw Exception(
-        _msg(res.body) ?? 'Đặt lịch thất bại (${res.statusCode})',
-      );
-    }
-    final decoded = jsonDecode(utf8.decode(res.bodyBytes));
     final map = decoded is Map<String, dynamic>
         ? (decoded['value'] ?? decoded['data'] ?? decoded)
         : decoded;
@@ -49,14 +38,8 @@ class DatLichServices {
 
   // Danh sách đặt lịch của cư dân
   Future<List<DatLichTienIch>> fetchByCuDan(String token, int cuDanId) async {
-    final res = await http.get(
-      Uri.parse('$baseUrl/datlichtienich/cudan/$cuDanId'),
-      headers: _headers(token),
-    );
-    if (res.statusCode != 200) {
-      throw Exception('Lỗi tải lịch đặt (${res.statusCode})');
-    }
-    final data = _asList(jsonDecode(utf8.decode(res.bodyBytes)));
+    final decoded = await AuthHttp.get('$baseUrl/datlichtienich/cudan/$cuDanId');
+    final data = _asList(decoded);
     return data
         .map<DatLichTienIch>(
           (e) => DatLichTienIch.fromJson(e as Map<String, dynamic>),
@@ -66,14 +49,10 @@ class DatLichServices {
 
   // Hủy đặt lịch
   Future<void> huy(String token, int id, String lyDo) async {
-    final res = await http.put(
-      Uri.parse('$baseUrl/datlichtienich/$id/huy'),
-      headers: _headers(token),
-      body: jsonEncode({'lyDo': lyDo}),
+    await AuthHttp.put(
+      '$baseUrl/datlichtienich/$id/huy',
+      body: {'lyDo': lyDo},
     );
-    if (res.statusCode != 200) {
-      throw Exception('Hủy thất bại (${res.statusCode})');
-    }
   }
 
   String? _msg(String body) {

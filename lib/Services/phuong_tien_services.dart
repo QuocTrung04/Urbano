@@ -1,28 +1,17 @@
-import 'dart:convert';
-
 import 'package:urbano/Models/phuong_tien_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:urbano/core/constants/apiconfig.dart';
+import 'package:urbano/core/network/auth_http.dart';
 import 'package:urbano/core/constants/apiconfig.dart';
 
 class PhuongTienServices {
   static const String baseUrl = ApiConfig.baseUrl;
 
   Future<List<PhuongTien>> fetchPhuongTien(String token, int canHoId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/phuongtien/canho/$canHoId'),
-      headers: {
-        'Content-Type': 'application/json',
-        if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-      },
-    );
-    if (response.statusCode == 200) {
-      final List data = jsonDecode(utf8.decode(response.bodyBytes));
-      return data
-          .map((e) => PhuongTien.fromJson(e as Map<String, dynamic>))
-          .toList();
-    } else {
-      throw Exception('Lỗi tải phương tiện (${response.statusCode})');
-    }
+    final decoded = await AuthHttp.get('$baseUrl/phuongtien/canho/$canHoId');
+    final List data = decoded is List ? decoded : [];
+    return data
+        .map((e) => PhuongTien.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   Future<void> dangKyPhuongTien(
@@ -33,26 +22,16 @@ class PhuongTienServices {
     required String bienSo,
     required int loaiPhuongTienId,
   }) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/phuongtien/dang-ky'),
-      headers: {
-        'Content-Type': 'application/json',
-        if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode({
+    await AuthHttp.post(
+      '$baseUrl/phuongtien/dang-ky',
+      body: {
         'canHoId': canHoId,
         'cuDanId': cuDanId,
         'tenPhuongTien': tenPhuongTien,
         'bienSo': bienSo,
         'loaiPhuongTienId': loaiPhuongTienId,
-      }),
+      },
     );
-
-    if (response.statusCode != 200 && response.statusCode != 201) {
-      throw Exception(
-        _msg(response.body) ?? 'Đăng ký thất bại (${response.statusCode})',
-      );
-    }
   }
 
   String? _msg(String body) {
@@ -65,17 +44,8 @@ class PhuongTienServices {
 
   /// Danh sách loại phương tiện (id + tên) từ API.
   Future<List<LoaiPhuongTien>> fetchLoaiPhuongTien(String token) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/phuongtien/loai'),
-      headers: {
-        'Content-Type': 'application/json',
-        if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-      },
-    );
-    if (response.statusCode != 200) {
-      throw Exception('Lỗi tải loại phương tiện (${response.statusCode})');
-    }
-    final data = _asList(jsonDecode(utf8.decode(response.bodyBytes)));
+    final decoded = await AuthHttp.get('$baseUrl/phuongtien/loai');
+    final data = _asList(decoded);
     return data
         .map<LoaiPhuongTien>(
           (e) => LoaiPhuongTien(
@@ -101,16 +71,7 @@ class PhuongTienServices {
 
   /// Hủy đăng ký trực tiếp (cho xe Chờ duyệt) -> trạng thái 0.
   Future<void> huyPhuongTien(String token, int id) async {
-    final res = await http.put(
-      Uri.parse('$baseUrl/yeucaucudan/$id/huy'),
-      headers: {
-        'Content-Type': 'application/json',
-        if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-      },
-    );
-    if (res.statusCode != 200) {
-      throw Exception('Hủy thất bại (${res.statusCode})');
-    }
+    await AuthHttp.put('$baseUrl/yeucaucudan/$id/huy');
   }
 
   /// Cập nhật thông tin xe (cho xe Chờ duyệt).
@@ -124,23 +85,16 @@ class PhuongTienServices {
     int? nguoiCapNhatId,
     required int trangThai,
   }) async {
-    final res = await http.put(
-      Uri.parse('$baseUrl/phuongtien/$id'),
-      headers: {
-        'Content-Type': 'application/json',
-        if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode({
+    await AuthHttp.put(
+      '$baseUrl/phuongtien/$id',
+      body: {
         'tenPhuongTien': tenPhuongTien,
         'bienSo': bienSo,
         'loaiPhuongTienId': loaiPhuongTienId,
         'canHoId': canHoId,
         'trangThai': trangThai,
         'nguoiCapNhatId': nguoiCapNhatId,
-      }),
+      },
     );
-    if (res.statusCode != 200) {
-      throw Exception('Cập nhật thất bại (${res.statusCode})');
-    }
   }
 }

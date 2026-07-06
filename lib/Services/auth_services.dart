@@ -15,7 +15,7 @@ class AuthServices {
     );
 
     if (res.statusCode == 200) {
-      final data = jsonDecode(res.body);
+      final data = jsonDecode(utf8.decode(res.bodyBytes));
       return LoginResult.fromJson(data);
     } else {
       throw Exception('Đăng nhập thất bại (${res.statusCode})');

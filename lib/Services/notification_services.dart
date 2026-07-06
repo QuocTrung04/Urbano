@@ -21,7 +21,7 @@ class ThongbaoServices {
     );
 
     if (response.statusCode == 200) {
-      final List data = jsonDecode(response.body);
+      final List data = jsonDecode(utf8.decode(response.bodyBytes));
       return data.map((e) => ThongBao.fromJson(e)).toList();
     }
     throw Exception('Lỗi tải thông báo: (${response.statusCode})');

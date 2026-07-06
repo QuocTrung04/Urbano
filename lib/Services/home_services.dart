@@ -29,7 +29,7 @@ class HomeServices {
 
     CanHo canHo;
     try {
-      canHo = await canHoServices.fetchCanHo(canHoId, token: token);
+      canHo = await canHoServices.fetchCanHo(canHoId);
     } catch (e) {
       canHo = CanHo(id: canHoId, toaNha: 0, soCanHo: '', tenToaNha: ' ');
     }

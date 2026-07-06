@@ -22,7 +22,6 @@ class HomeServices {
     final prefs = await SharedPreferences.getInstance();
     final cuDanJson = prefs.getString('cuDan');
     final canHoId = prefs.getInt('canHoId') ?? 0;
-    final token = prefs.getString('token') ?? '';
     final cuDan = cuDanJson != null
         ? CuDan.fromJson(jsonDecode(cuDanJson))
         : CuDan(id: 0, hoTen: 'Khách');

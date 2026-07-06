@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:urbano/ViewModels/support/yeu_cau_viewmodel.dart';
+import 'package:urbano/ViewModels/yeu_cau_viewmodel.dart';
 
 void main() {
   setUp(() {
@@ -10,7 +10,7 @@ void main() {
   test('fetchYeuCaus thay đổi isLoading', () async {
     final viewModel = YeuCauViewModel();
     expect(viewModel.isLoading, false);
-    final future = viewModel.fetchYeuCaus();
+    final future = viewModel.loadData();
     expect(viewModel.isLoading, true);
     await future;
     expect(viewModel.isLoading, false);

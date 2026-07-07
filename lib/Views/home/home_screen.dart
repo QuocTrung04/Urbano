@@ -166,6 +166,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             child: _buildBillSumary(
               data,
               onTap: () {
+                context.read<SignalRService>().clearUnread('hoaDon');
                 Navigator.pushNamed(
                   context,
                   AppRoutes.invoice,
@@ -177,6 +178,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             ),
             action: 'Xem chi tiết >',
             onTap: () {
+              context.read<SignalRService>().clearUnread('hoaDon');
               Navigator.pushNamed(
                 context,
                 AppRoutes.invoice,
@@ -191,6 +193,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             child: const HomeTienIchSection(),
             action: 'Xem tất cả >',
             onTap: () {
+              context.read<SignalRService>().clearUnread('datLich');
               Navigator.pushNamed(context, AppRoutes.tienich);
             },
           ),
@@ -209,6 +212,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             child: _buildNotification(data.thongBaoList, context, vm),
             action: 'Xem tất cả >',
             onTap: () {
+              context.read<SignalRService>().clearUnread('thongBao');
               Navigator.pushNamed(
                 context,
                 AppRoutes.notification,
@@ -279,12 +283,12 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
               ),
               Consumer<SignalRService>(
                 builder: (_, signalR, __) => Badge(
-                  isLabelVisible: signalR.unreadCount > 0,
-                  label: Text('${signalR.unreadCount}'),
+                  isLabelVisible: signalR.totalUnread > 0,
+                  label: Text('${signalR.totalUnread}'),
                   child: _iconButton(
                     Icons.notifications_outlined,
                     onTap: () async {
-                      signalR.clearUnread();
+                      signalR.clearUnread('thongBao');
                       final ketQua = await Navigator.pushNamed(
                         context,
                         AppRoutes.notification,
@@ -471,6 +475,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
         'Hóa đơn',
         AppColors.tealPrimary,
         () {
+          context.read<SignalRService>().clearUnread('hoaDon');
           Navigator.pushNamed(context, AppRoutes.invoice, arguments: canHoId);
         },
       ),
@@ -479,6 +484,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
         'Yêu cầu',
         AppColors.blue,
         () {
+          context.read<SignalRService>().clearUnread('yeuCau');
           Navigator.pushNamed(context, AppRoutes.yeucau);
         },
       ),

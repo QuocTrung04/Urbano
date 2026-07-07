@@ -17,7 +17,10 @@ class LoaiTienIch {
 class TienIch {
   final int id;
   final String tenTienIch;
-  final LoaiTienIch? loaiTienIch;
+  final int? loaiTienIch;
+  final String? tenLoaiTienIch;
+  final String? tenToaNha;
+  final String? trangThaiText;
   final int? toaNha;
   final String? moTa;
   final String? viTri;
@@ -33,6 +36,9 @@ class TienIch {
     required this.id,
     required this.tenTienIch,
     this.loaiTienIch,
+    this.tenLoaiTienIch,
+    this.tenToaNha,
+    this.trangThaiText,
     this.toaNha,
     this.moTa,
     this.viTri,
@@ -49,9 +55,10 @@ class TienIch {
     return TienIch(
       id: json['id'] ?? 0,
       tenTienIch: json['tenTienIch'] ?? '',
-      loaiTienIch: json['loaiTienIch'] != null
-          ? LoaiTienIch.fromJson(json['loaiTienIch'])
-          : null,
+      loaiTienIch: json['loaiTienIch'],
+      tenLoaiTienIch: json['tenLoaiTienIch'] ?? '',
+      tenToaNha: json['tenToaNha'] ?? '',
+      trangThaiText: json['trangThaiText'] ?? '',
       toaNha: json['toaNha'],
       moTa: json['moTa'],
       viTri: json['viTri'],
@@ -66,7 +73,7 @@ class TienIch {
   }
 
   // Tên loại (danh mục) để lọc/hiển thị
-  String get danhMuc => loaiTienIch?.tenLoaiTienIch ?? 'Khác';
+  String get danhMuc => tenLoaiTienIch ?? 'Khác';
 
   // "06:00 - 21:00" (cắt bỏ giây nếu API trả "06:00:00")
   String get gioText {

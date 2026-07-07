@@ -3,6 +3,8 @@ import 'package:urbano/Models/tien_ich_model.dart';
 import 'package:urbano/Services/tien_ich_services.dart';
 import 'package:urbano/Views/utilities/tien_ich_ui.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:urbano/core/network/signalr_service.dart';
 
 /// Mục "tiện ích khác" ở Home: lấy 4 tiện ích đầu từ API,
 /// bấm vào mở đúng bottom sheet chi tiết (dùng chung với màn Tiện ích).
@@ -112,7 +114,10 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
   Widget _card(TienIch t) {
     final mau = tienIchColor(t);
     return GestureDetector(
-      onTap: () => showTienIchDetail(context, t),
+      onTap: () {
+        context.read<SignalRService>().clearUnread('datLich');
+        showTienIchDetail(context, t);
+      },
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: const EdgeInsets.all(13),

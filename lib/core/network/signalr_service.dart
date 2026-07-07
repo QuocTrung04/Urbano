@@ -6,7 +6,14 @@ import 'package:urbano/core/constants/apiconfig.dart';
 class SignalRService extends ChangeNotifier {
   HubConnection? _connection;
   bool isConnected = false;
-  int unreadCount = 0;
+  Map<String, int> unreadCounts = {
+    'yeuCau': 0,
+    'datLich': 0,
+    'hoaDon': 0,
+    'thongBao': 0,
+  };
+
+  int get totalUnread => unreadCounts.values.fold(0, (a, b) => a + b);
   List<Map<String, dynamic>> recentEvents = [];
 
   Future<void> connect() async {
@@ -72,14 +79,33 @@ class SignalRService extends ChangeNotifier {
       data['_receivedAt'] = DateTime.now().toIso8601String();
       recentEvents.insert(0, data);
       if (recentEvents.length > 50) recentEvents.removeLast(); // giữ 50 event gần nhất
-      unreadCount++;
+      
+      if (type == 'request_status' || type == 'new_request') {
+        unreadCounts['yeuCau'] = (unreadCounts['yeuCau'] ?? 0) + 1;
+      } else if (type == 'booking_status' || type == 'new_booking') {
+        unreadCounts['datLich'] = (unreadCounts['datLich'] ?? 0) + 1;
+      } else if (type == 'new_invoice') {
+        unreadCounts['hoaDon'] = (unreadCounts['hoaDon'] ?? 0) + 1;
+      } else if (type == 'notification' || type == 'system_alert') {
+        unreadCounts['thongBao'] = (unreadCounts['thongBao'] ?? 0) + 1;
+      } else {
+        unreadCounts['thongBao'] = (unreadCounts['thongBao'] ?? 0) + 1;
+      }
+
       notifyListeners();
       debugPrint('SignalR: Received $type → ${data['tieuDe'] ?? data['id'] ?? ''}');
     };
   }
 
-  void clearUnread() {
-    unreadCount = 0;
+  void clearUnread(String key) {
+    if (unreadCounts.containsKey(key)) {
+      unreadCounts[key] = 0;
+      notifyListeners();
+    }
+  }
+
+  void clearAllUnread() {
+    unreadCounts.updateAll((key, value) => 0);
     notifyListeners();
   }
 
@@ -87,7 +113,7 @@ class SignalRService extends ChangeNotifier {
     await _connection?.stop();
     isConnected = false;
     recentEvents.clear();
-    unreadCount = 0;
+    unreadCounts.updateAll((key, value) => 0);
     notifyListeners();
   }
 }

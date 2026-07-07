@@ -21,9 +21,9 @@ class DatLichServices {
     final decoded = await AuthHttp.post(
       '$baseUrl/datlichtienich',
       body: {
-        'cuDan': cuDan,
-        'canHo': canHo,
-        'tienIch': tienIch,
+        'cuDanId': cuDan,
+        'canHoId': canHo,
+        'tienIchId': tienIch,
         'thoiGianBatDau': thoiGianBatDau.toIso8601String(),
         'thoiGianKetThuc': thoiGianKetThuc.toIso8601String(),
         'soNguoi': soNguoi,

@@ -40,7 +40,7 @@ class ThemNhanKhauViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final cuDanId = prefs.getInt('cuDanId') ?? 0;
       if (cuDanId == 0) {
         error = 'Không tìm thấy cư dân. Vui lòng đăng nhập lại.';
@@ -59,7 +59,6 @@ class ThemNhanKhauViewModel extends ChangeNotifier {
           'Loại cư trú: $loaiCuTru';
 
       await _yeuCauServices.createYeuCau(
-        token,
         cuDan: cuDanId,
         loaiYeuCau: _loaiThemNhanKhau,
         tieuDe: 'Thêm nhân khẩu',

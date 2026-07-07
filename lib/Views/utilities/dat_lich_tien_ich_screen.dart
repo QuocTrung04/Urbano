@@ -116,7 +116,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
     setState(() => _dangGui = true);
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final cuDanId = prefs.getInt('cuDanId') ?? 0;
       final canHoId = prefs.getInt('canHoId');
       if (cuDanId == 0) {
@@ -126,7 +126,6 @@ class _DatLichScreenState extends State<DatLichScreen> {
       }
 
       await _services.createDatLich(
-        token,
         cuDan: cuDanId,
         canHo: canHoId,
         tienIch: t.id,

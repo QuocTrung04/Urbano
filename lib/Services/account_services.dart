@@ -5,7 +5,7 @@ import 'package:urbano/core/network/auth_http.dart';
 class AccountServices {
   static const String baseUrl = ApiConfig.baseUrl;
 
-  Future<CuDan> fetchCuDan(int cuDanId, String token) async {
+  Future<CuDan> fetchCuDan(int cuDanId) async {
     final decoded = await AuthHttp.get('$baseUrl/cudan/$cuDanId');
     final Map<String, dynamic> json = decoded is Map<String, dynamic>
         ? (decoded['value'] ?? decoded['data'] ?? decoded)
@@ -15,9 +15,8 @@ class AccountServices {
 
   Future<void> capNhatCuDan(
     int cuDanId,
-    CuDan cuDan, {
-    String token = '',
-  }) async {
+    CuDan cuDan,
+  ) async {
     final body = {
       'hoTenDem': cuDan.hoTenDem ?? '',
       'ten': cuDan.ten ?? '',

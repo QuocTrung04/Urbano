@@ -35,11 +35,11 @@ class LichSuThanhToanViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       canHoId = prefs.getInt('canHoId') ?? 0;
       if (canHoId == 0) throw Exception('Không tìm thấy căn hộ');
 
-      danhSach = await _services.fetchByCanHo(token, canHoId);
+      danhSach = await _services.fetchByCanHo(canHoId);
       isLoading = false;
       notifyListeners();
     } catch (e) {

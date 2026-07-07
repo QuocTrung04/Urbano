@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+
 import 'package:urbano/Models/yeu_cau_model.dart';
 import 'package:urbano/core/constants/apiconfig.dart';
 import 'package:urbano/core/network/auth_http.dart';
@@ -9,7 +9,7 @@ class YeuCauServices {
 
 
   // Danh sách yêu cầu của 1 cư dân
-  Future<List<YeuCauCuDan>> fetchByCuDan(String token, int cuDanId) async {
+  Future<List<YeuCauCuDan>> fetchByCuDan(int cuDanId) async {
     final decoded = await AuthHttp.get('$baseUrl/yeucaucudan/cudan/$cuDanId');
     final data = _asList(decoded);
     return data
@@ -20,7 +20,7 @@ class YeuCauServices {
   }
 
   // Danh sách loại yêu cầu (dropdown khi tạo)
-  Future<List<LoaiYeuCau>> fetchLoaiYeuCau(String token) async {
+  Future<List<LoaiYeuCau>> fetchLoaiYeuCau() async {
     final decoded = await AuthHttp.get('$baseUrl/yeucaucudan/loai-yeu-cau');
     final data = _asList(decoded);
     return data
@@ -28,8 +28,7 @@ class YeuCauServices {
         .toList();
   }
 
-  Future<YeuCauCuDan> createYeuCau(
-    String token, {
+  Future<YeuCauCuDan> createYeuCau({
     required int cuDan,
     required int loaiYeuCau,
     required String tieuDe,
@@ -65,7 +64,7 @@ class YeuCauServices {
     return const [];
   }
 
-  Future<void> HuyYeuCau(String token, int id) async {
+  Future<void> huyYeuCau(int id) async {
     await AuthHttp.put('$baseUrl/yeucaucudan/$id/huyyeucau');
   }
 }

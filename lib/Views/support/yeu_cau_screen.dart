@@ -5,8 +5,9 @@ import 'package:urbano/Models/yeu_cau_model.dart';
 import 'package:urbano/ViewModels/yeu_cau_viewmodel.dart';
 import 'package:urbano/Views/support/tao_yeu_cau_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'dart:async';
 import 'package:urbano/core/routes/app_routes.dart';
-
+import 'package:urbano/core/network/signalr_service.dart';
 class YeuCauScreen extends StatelessWidget {
   const YeuCauScreen({super.key});
 
@@ -19,9 +20,53 @@ class YeuCauScreen extends StatelessWidget {
   }
 }
 
-class _YeuVauView extends StatelessWidget {
+class _YeuVauView extends StatefulWidget {
   const _YeuVauView();
+
+  @override
+  State<_YeuVauView> createState() => _YeuVauViewState();
+}
+
+class _YeuVauViewState extends State<_YeuVauView> {
   static const _tabs = ['Tất cả', 'Chờ xử lý', 'Đang xử lý', 'Hoàn thành'];
+  late SignalRService _signalRService;
+  Timer? _debounceTimer;
+  String? _lastEventId;
+
+  @override
+  void initState() {
+    super.initState();
+    _signalRService = Provider.of<SignalRService>(context, listen: false);
+    _signalRService.addListener(_onSignalR);
+  }
+
+  void _onSignalR() {
+    if (_signalRService.recentEvents.isNotEmpty) {
+      final latest = _signalRService.recentEvents.first;
+      final currentEventId = latest['_receivedAt'] as String?;
+      
+      if (currentEventId != null && currentEventId != _lastEventId) {
+        _lastEventId = currentEventId;
+        final type = latest['_type'] as String?;
+        if (type == 'RequestStatusChanged') {
+          if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
+          _debounceTimer = Timer(const Duration(seconds: 1), () {
+            if (mounted) {
+              context.read<YeuCauViewModel>().loadData();
+            }
+          });
+        }
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    _signalRService.removeListener(_onSignalR);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(

@@ -40,10 +40,10 @@ class PhuongTienViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final canHoId = prefs.getInt('canHoId') ?? 0;
 
-      phuongTienList = await _services.fetchPhuongTien(token, canHoId);
+      phuongTienList = await _services.fetchPhuongTien(canHoId);
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -59,9 +59,9 @@ class PhuongTienViewModel extends ChangeNotifier {
     loadingLoai = true;
     notifyListeners();
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
-      loaiList = await _services.fetchLoaiPhuongTien(token);
+
+
+      loaiList = await _services.fetchLoaiPhuongTien();
     } catch (e) {
       debugPrint('Lỗi tải loại phương tiện: $e');
     }
@@ -94,7 +94,7 @@ class PhuongTienViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final canHoId = prefs.getInt('canHoId') ?? 0;
       final cuDanId = prefs.getInt('cuDanId') ?? 0;
 
@@ -106,7 +106,6 @@ class PhuongTienViewModel extends ChangeNotifier {
       }
 
       await _services.dangKyPhuongTien(
-        token,
         canHoId: canHoId,
         cuDanId: cuDanId,
         tenPhuongTien: ten.trim(),

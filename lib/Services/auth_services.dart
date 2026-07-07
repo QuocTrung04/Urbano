@@ -28,7 +28,6 @@ class AuthServices {
     int cuDanId,
     String matkhaucu,
     String matkhaumoi,
-    String token,
   ) async {
     await AuthHttp.post(
       '$baseUrl/cudan/change-password?cuDanId=$cuDanId',

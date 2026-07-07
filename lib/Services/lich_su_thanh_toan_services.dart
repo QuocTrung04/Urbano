@@ -5,7 +5,7 @@ import 'package:urbano/core/network/auth_http.dart';
 class LichSuThanhToanServices {
   static const String baseUrl = ApiConfig.baseUrl;
 
-  Future<List<LichSuThanhToan>> fetchByCanHo(String token, int canHoId) async {
+  Future<List<LichSuThanhToan>> fetchByCanHo(int canHoId) async {
     final decoded = await AuthHttp.get('$baseUrl/hoadon/lich-su-thanh-toan/canho/$canHoId');
     final data = _asList(decoded);
     return data

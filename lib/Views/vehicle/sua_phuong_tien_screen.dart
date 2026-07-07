@@ -42,9 +42,9 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
 
   Future<void> _loadLoai() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
-      final list = await _services.fetchLoaiPhuongTien(token);
+
+
+      final list = await _services.fetchLoaiPhuongTien();
       if (!mounted) return;
       setState(() {
         _loaiList = list;
@@ -96,11 +96,9 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
     setState(() => _submitting = true);
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
       final cuDanId = prefs.getInt('cuDanId');
 
       await _services.capNhatPhuongTien(
-        token,
         id: widget.xe.id,
         tenPhuongTien: _tenCtrl.text.trim(),
         bienSo: _bienSoCtrl.text.trim(),

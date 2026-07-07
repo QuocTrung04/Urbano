@@ -40,16 +40,16 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
     });
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final canHoId = prefs.getInt('canHoId') ?? 0;
       _myCuDanId = prefs.getInt('cuDanId') ?? 0;
       if (canHoId == 0) throw Exception('Không tìm thấy căn hộ');
 
       // nhân khẩu là bắt buộc; tổng quan căn hộ nếu lỗi thì bỏ qua
-      final members = await _service.fetchNhanKhau(token, canHoId);
+      final members = await _service.fetchNhanKhau(canHoId);
       CanHoTongQuan? canHo;
       try {
-        canHo = await _service.fetchCanHoTongQuan(token, canHoId);
+        canHo = await _service.fetchCanHoTongQuan(canHoId);
       } catch (_) {
         canHo = null;
       }

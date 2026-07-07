@@ -9,8 +9,7 @@ class DatLichServices {
 
 
   // Tạo đặt lịch
-  Future<DatLichTienIch> createDatLich(
-    String token, {
+  Future<DatLichTienIch> createDatLich({
     required int cuDan,
     int? canHo,
     required int tienIch,
@@ -38,7 +37,7 @@ class DatLichServices {
   }
 
   // Danh sách đặt lịch của cư dân
-  Future<List<DatLichTienIch>> fetchByCuDan(String token, int cuDanId) async {
+  Future<List<DatLichTienIch>> fetchByCuDan(int cuDanId) async {
     final decoded = await AuthHttp.get('$baseUrl/datlichtienich/cudan/$cuDanId');
     final data = _asList(decoded);
     return data
@@ -49,7 +48,7 @@ class DatLichServices {
   }
 
   // Hủy đặt lịch
-  Future<void> huy(String token, int id, String lyDo) async {
+  Future<void> huy(int id, String lyDo) async {
     await AuthHttp.put(
       '$baseUrl/datlichtienich/$id/huy',
       body: {'lyDo': lyDo},

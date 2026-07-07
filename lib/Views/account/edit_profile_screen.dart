@@ -130,9 +130,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       );
       final prefs = await SharedPreferences.getInstance();
       final cuDanId = prefs.getInt('cuDanId') ?? widget.cuDan.id;
-      final token = prefs.getString('token') ?? '';
 
-      await _accountServices.capNhatCuDan(cuDanId, cuDanMoi, token: token);
+
+      await _accountServices.capNhatCuDan(cuDanId, cuDanMoi);
       await prefs.setString('cuDan', jsonEncode(cuDanMoi.toJson()));
       if (!mounted) return;
 

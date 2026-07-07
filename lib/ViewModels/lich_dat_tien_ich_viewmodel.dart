@@ -45,11 +45,11 @@ class DatLichViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final cuDanId = prefs.getInt('cuDanId') ?? 0;
       if (cuDanId == 0) throw Exception('Không tìm thấy cư dân');
 
-      danhSach = await _services.fetchByCuDan(token, cuDanId);
+      danhSach = await _services.fetchByCuDan(cuDanId);
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -63,9 +63,9 @@ class DatLichViewModel extends ChangeNotifier {
   // Hủy đặt lịch. Trả true nếu thành công.
   Future<bool> huy(int id, String lyDo) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
-      await _services.huy(token, id, lyDo);
+
+
+      await _services.huy(id, lyDo);
       await loadData();
       return true;
     } catch (e) {

@@ -6,7 +6,7 @@ import 'package:urbano/core/network/auth_http.dart';
 class NhanKhauServices {
   static const String baseUrl = ApiConfig.baseUrl;
 
-  Future<List<NhanKhau>> fetchNhanKhau(String token, int canHoId) async {
+  Future<List<NhanKhau>> fetchNhanKhau(int canHoId) async {
     final decoded = await AuthHttp.get('$baseUrl/cudan/canho/$canHoId');
     final data = _asList(decoded);
     return data
@@ -14,7 +14,7 @@ class NhanKhauServices {
         .toList();
   }
 
-  Future<CanHoTongQuan> fetchCanHoTongQuan(String token, int canHoId) async {
+  Future<CanHoTongQuan> fetchCanHoTongQuan(int canHoId) async {
     final decoded = await AuthHttp.get('$baseUrl/canho/$canHoId/tongquan');
     final map = decoded is Map<String, dynamic>
         ? (decoded['value'] ?? decoded['data'] ?? decoded)

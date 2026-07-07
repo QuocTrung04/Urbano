@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:urbano/Models/yeu_cau_model.dart';
 import 'package:urbano/Services/yeu_cau_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
@@ -491,9 +491,9 @@ class ChiTietYeuCauScreen extends StatelessWidget {
     );
     if (dong != true) return;
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
-      await YeuCauServices().HuyYeuCau(token, yc.id);
+
+
+      await YeuCauServices().huyYeuCau(yc.id);
       if (!context.mounted) return;
       _thongBao(context, 'Đã hủy đăng ký');
       Navigator.pop(context, true);

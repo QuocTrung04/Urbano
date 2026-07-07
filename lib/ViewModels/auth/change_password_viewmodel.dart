@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:urbano/Services/auth_services.dart';
 
 class ChangePasswordViewmodel extends ChangeNotifier {
@@ -48,9 +48,8 @@ class ChangePasswordViewmodel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
-      await _services.doiMatKhau(cuDanId, matKhauCu, matKhauMoi, token);
+
+      await _services.doiMatKhau(cuDanId, matKhauCu, matKhauMoi);
       isLoading = false;
       notifyListeners();
       return true;

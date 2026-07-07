@@ -34,11 +34,11 @@ class YeuCauViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final cuDanId = prefs.getInt('cuDanId') ?? 0;
       if (cuDanId == 0) throw Exception('Không tìm thấy cư dân');
 
-      danhSach = await _services.fetchByCuDan(token, cuDanId);
+      danhSach = await _services.fetchByCuDan(cuDanId);
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -54,9 +54,9 @@ class YeuCauViewModel extends ChangeNotifier {
 
   Future<void> loadLoaiYeuCau() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
-      loaiList = await _services.fetchLoaiYeuCau(token);
+
+
+      loaiList = await _services.fetchLoaiYeuCau();
       notifyListeners();
     } catch (_) {
       // form vẫn mở được nếu lỗi
@@ -91,7 +91,7 @@ class YeuCauViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final cuDanId = prefs.getInt('cuDanId') ?? 0;
       if (cuDanId == 0) {
         error = 'Không tìm thấy cư dân. Vui lòng đăng nhập lại.';
@@ -101,7 +101,6 @@ class YeuCauViewModel extends ChangeNotifier {
       }
 
       final moi = await _services.createYeuCau(
-        token,
         cuDan: cuDanId,
         loaiYeuCau: loaiYeuCau,
         tieuDe: tieuDe.trim(),

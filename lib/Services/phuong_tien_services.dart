@@ -6,7 +6,7 @@ import 'package:urbano/core/network/auth_http.dart';
 class PhuongTienServices {
   static const String baseUrl = ApiConfig.baseUrl;
 
-  Future<List<PhuongTien>> fetchPhuongTien(String token, int canHoId) async {
+  Future<List<PhuongTien>> fetchPhuongTien(int canHoId) async {
     final decoded = await AuthHttp.get('$baseUrl/phuongtien/canho/$canHoId');
     final List data = decoded is List ? decoded : [];
     return data
@@ -14,8 +14,7 @@ class PhuongTienServices {
         .toList();
   }
 
-  Future<void> dangKyPhuongTien(
-    String token, {
+  Future<void> dangKyPhuongTien({
     required int canHoId,
     required int cuDanId,
     required String tenPhuongTien,
@@ -43,7 +42,7 @@ class PhuongTienServices {
   }
 
   /// Danh sách loại phương tiện (id + tên) từ API.
-  Future<List<LoaiPhuongTien>> fetchLoaiPhuongTien(String token) async {
+  Future<List<LoaiPhuongTien>> fetchLoaiPhuongTien() async {
     final decoded = await AuthHttp.get('$baseUrl/phuongtien/loai');
     final data = _asList(decoded);
     return data
@@ -70,13 +69,12 @@ class PhuongTienServices {
   }
 
   /// Hủy đăng ký trực tiếp (cho xe Chờ duyệt) -> trạng thái 0.
-  Future<void> huyPhuongTien(String token, int id) async {
+  Future<void> huyPhuongTien(int id) async {
     await AuthHttp.put('$baseUrl/yeucaucudan/$id/huy');
   }
 
   /// Cập nhật thông tin xe (cho xe Chờ duyệt).
-  Future<void> capNhatPhuongTien(
-    String token, {
+  Future<void> capNhatPhuongTien({
     required int id,
     required String tenPhuongTien,
     required String bienSo,

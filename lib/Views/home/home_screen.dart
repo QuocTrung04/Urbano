@@ -55,12 +55,12 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
         
         final type = latest['_type'] as String?;
         String message = 'Có cập nhật mới';
-        if (type == 'new_request' || type == 'request_status') {
+        if (type == 'RequestStatusChanged') {
            message = 'Yêu cầu của bạn đã được cập nhật';
-        } else if (type == 'new_booking' || type == 'booking_status') {
+        } else if (type == 'BookingStatusChanged') {
            message = 'Đặt lịch tiện ích đã được duyệt/từ chối';
-        } else if (type == 'new_invoice') {
-           message = 'Có hóa đơn mới';
+        } else if (type == 'NewInvoice') {
+           message = 'Bạn có hóa đơn mới';
         } else {
            message = latest['tieuDe']?.toString() ?? latest['message']?.toString() ?? 'Có thông báo mới';
         }
@@ -69,6 +69,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
           SnackBar(
             content: Text(message),
             backgroundColor: AppColors.tealPrimary,
+            duration: const Duration(seconds: 3),
           ),
         );
 
@@ -140,6 +141,22 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: _buildHeader(context, data, vm)),
+          Consumer<SignalRService>(
+            builder: (_, signalR, __) {
+              if (signalR.isConnected) return const SliverToBoxAdapter(child: SizedBox.shrink());
+              return SliverToBoxAdapter(
+                child: Container(
+                  color: Colors.red.withOpacity(0.8),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Mất kết nối',
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              );
+            },
+          ),
           _sliverSection(
             title: 'tiện ích nhanh',
             child: _buildQuickAction(context, data),

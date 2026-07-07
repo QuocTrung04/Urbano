@@ -5,6 +5,9 @@ import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/Services/notification_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
+import 'dart:async';
+import 'package:provider/provider.dart';
+import 'package:urbano/core/network/signalr_service.dart';
 
 class NotificationScreen extends StatefulWidget {
   final List<ThongBao> thongBaoList;
@@ -20,11 +23,58 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   // Danh sách làm việc cục bộ (để cập nhật daDoc tại chỗ)
   late List<ThongBao> _list;
+  late SignalRService _signalRService;
+  Timer? _debounceTimer;
+  String? _lastEventId;
 
   @override
   void initState() {
     super.initState();
     _list = List.from(widget.thongBaoList); // copy để sửa được
+    
+    _signalRService = Provider.of<SignalRService>(context, listen: false);
+    _signalRService.addListener(_onSignalR);
+  }
+
+  void _onSignalR() {
+    if (_signalRService.recentEvents.isNotEmpty) {
+      final latest = _signalRService.recentEvents.first;
+      final currentEventId = latest['_receivedAt'] as String?;
+      
+      if (currentEventId != null && currentEventId != _lastEventId) {
+        _lastEventId = currentEventId;
+        final type = latest['_type'] as String?;
+        if (type == 'ReceiveNotification') {
+          if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
+          _debounceTimer = Timer(const Duration(seconds: 1), () {
+            if (mounted) {
+              _fetchNewData();
+            }
+          });
+        }
+      }
+    }
+  }
+
+  Future<void> _fetchNewData() async {
+    try {
+      final cuDanId = await _getCuDanId();
+      final newList = await _services.fetchThongBao(cuDanId);
+      if (mounted) {
+        setState(() {
+          _list = newList;
+        });
+      }
+    } catch (e) {
+      debugPrint('Lỗi tải lại thông báo: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    _signalRService.removeListener(_onSignalR);
+    super.dispose();
   }
 
   bool _isRead(ThongBao tb) => tb.daDoc;

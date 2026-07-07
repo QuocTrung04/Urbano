@@ -380,9 +380,9 @@ class PhuongTienDetailScreen extends StatelessWidget {
     );
     if (dong != true) return;
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
-      await PhuongTienServices().huyPhuongTien(token, xe.id);
+
+
+      await PhuongTienServices().huyPhuongTien(xe.id);
       if (!context.mounted) return;
       _thongBao(context, 'Đã hủy đăng ký');
       Navigator.pop(context, true);
@@ -416,16 +416,15 @@ class PhuongTienDetailScreen extends StatelessWidget {
   }) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
-      final cuDanId = prefs.getInt('cuDanId') ?? 0;
+
+
       final noiDung =
           'Phương tiện: ${xe.tenPhuongTien ?? ''}\n'
           'Biển số: ${xe.bienSo}\n'
           'Loại: ${xe.loaiPhuongTien.tenLoaiPhuongTien}\n'
           'Mã phương tiện: ${xe.id}';
       await YeuCauServices().createYeuCau(
-        token,
-        cuDan: cuDanId,
+        cuDan: prefs.getInt('cuDanId') ?? 0,
         loaiYeuCau: loai,
         tieuDe: tieuDe,
         noiDung: noiDung,

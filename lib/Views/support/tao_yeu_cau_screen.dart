@@ -54,7 +54,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
     setState(() => _dangGui = true);
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token') ?? '';
+
       final cuDanId = prefs.getInt('cuDanId') ?? 0;
       if (cuDanId == 0) {
         if (!mounted) return;
@@ -64,7 +64,6 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
       }
 
       final yeuCauMoi = await _services.createYeuCau(
-        token,
         cuDan: cuDanId,
         loaiYeuCau: _loaiChon,
         tieuDe: tieuDe,

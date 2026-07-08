@@ -27,7 +27,7 @@ import 'package:urbano/Views/support/dieu_khoan_screen.dart';
 import 'package:urbano/Views/support/tro_giup_screen.dart';
 import 'package:urbano/Views/support/yeu_cau_detail.dart';
 import 'package:urbano/Views/support/yeu_cau_screen.dart';
-import 'package:urbano/Views/thanh_toan_screen.dart';
+import 'package:urbano/Views/thanh_toan_qr_screen.dart';
 import 'package:urbano/Views/thong_bao_thanh_toan_screen.dart';
 import 'package:urbano/Views/utilities/lich_su_dat_tien_ich_screen.dart';
 import 'package:urbano/Views/utilities/tien_ich_screen.dart';
@@ -171,7 +171,7 @@ class AppRoutes {
         );
       case thanhToan:
         final tt = settings.arguments as HoaDonModel;
-        return MaterialPageRoute(builder: (_) => ThanhToanScreen(hoaDon: tt));
+        return MaterialPageRoute(builder: (_) => ThanhToanQRScreen(hoaDon: tt));
       case datLichTienIch:
         final datLich = settings.arguments as TienIch;
         return MaterialPageRoute(

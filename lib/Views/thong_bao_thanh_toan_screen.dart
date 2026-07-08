@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/Models/hoadon_model.dart';
 import 'package:urbano/ViewModels/thong_bao_thanh_toan_viewmodel.dart';
-import 'package:urbano/Views/thanh_toan_screen.dart';
+import 'package:urbano/Views/thanh_toan_qr_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
 class ThongBaoThanhToanScreen extends StatelessWidget {
@@ -205,7 +205,7 @@ class _ThongBaoView extends StatelessWidget {
       onTap: () async {
         final ok = await Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => ThanhToanScreen(hoaDon: h)),
+          MaterialPageRoute(builder: (_) => ThanhToanQRScreen(hoaDon: h)),
         );
         if (ok == true && context.mounted) {
           context.read<ThongBaoThanhToanViewModel>().loadData();

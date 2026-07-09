@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/Services/auth_services.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -13,6 +15,9 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _newPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+
+  final _auth = AuthServices();
+  bool _loading = false;
 
   bool _obscure1 = true;
   bool _obscure2 = true;
@@ -77,6 +82,42 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     }
   }
 
+  void _snack(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  }
+
+  void _thanhCong() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.bgMid,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Thành công', style: TextStyle(color: Colors.white)),
+        content: const Text(
+          'Mật khẩu đã được đặt lại. Vui lòng đăng nhập.',
+          style: TextStyle(color: AppColors.textMuted),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.login,
+                (r) => false,
+              );
+            },
+            child: const Text(
+              'Đăng nhập',
+              style: TextStyle(color: AppColors.tealPrimary),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -85,6 +126,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         statusBarIconBrightness: Brightness.light,
       ),
     );
+
+    final args = ModalRoute.of(context)?.settings.arguments as Map?;
+    final email = (args?['email'] ?? '') as String;
+    final otp = (args?['otp'] ?? '') as String;
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -158,7 +203,36 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           SizedBox(height: 24),
                           AppButton(
                             label: 'Hoàn tất',
-                            onPressed: () {},
+                            onPressed: () async {
+                              final mk = _newPasswordController.text;
+                              final nhapLai = _confirmPasswordController.text;
+                              if (!_hasMinLength) {
+                                _snack('Mật khẩu tối thiểu 6 ký tự');
+                                return;
+                              }
+                              if (mk != nhapLai) {
+                                _snack('Mật khẩu nhập lại không khớp');
+                                return;
+                              }
+                              if (_loading) return;
+                              setState(() => _loading = true);
+                              try {
+                                await _auth.resetPassword(
+                                  email: email,
+                                  otp: otp,
+                                  newPassword: mk,
+                                );
+                                if (!mounted) return;
+                                setState(() => _loading = false);
+                                _thanhCong(); // dialog + về login
+                              } catch (e) {
+                                if (!mounted) return;
+                                setState(() => _loading = false);
+                                _snack(
+                                  e.toString().replaceFirst('Exception: ', ''),
+                                ); // "OTP sai hoặc đã hết hạn"
+                              }
+                            },
                             icon: Icons.check_outlined,
                           ),
                           SizedBox(height: 24),

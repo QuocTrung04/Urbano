@@ -8,6 +8,7 @@ import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/core/routes/app_routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -24,6 +25,13 @@ class _LoginView extends StatefulWidget {
   const _LoginView();
   @override
   State<_LoginView> createState() => _LoginViewState();
+}
+
+Future<void> _guiEmail(String email) async {
+  final uri = Uri.parse('mailto:$email');
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  }
 }
 
 class _LoginViewState extends State<_LoginView> {
@@ -230,17 +238,10 @@ class _LoginViewState extends State<_LoginView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ListTile(
-                          leading: const Icon(Icons.phone),
-                          title: const Text('Hotline'),
-                          onTap: () {
-                            // TODOL:  xử lý gọi điện
-                          },
-                        ),
-                        ListTile(
                           leading: const Icon(Icons.email),
                           title: const Text('Email'),
                           onTap: () {
-                            // TODOL: xử lý gửi email
+                            _guiEmail('urbano.support@gmail.com');
                           },
                         ),
                         SizedBox(height: 15),

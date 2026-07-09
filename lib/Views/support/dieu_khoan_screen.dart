@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 
 class DieuKhoanScreen extends StatelessWidget {
   const DieuKhoanScreen({super.key});
@@ -11,6 +13,13 @@ class DieuKhoanScreen extends StatelessWidget {
     height: 1.5,
     letterSpacing: 0.5,
   );
+
+  Future<void> _guiEmail(String email) async {
+    final uri = Uri.parse('mailto:$email');
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      debugPrint('Không mở được app email');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,34 +97,28 @@ class DieuKhoanScreen extends StatelessWidget {
                   _seletion(
                     5,
                     'Liên hệ',
-                    const Text.rich(
+                    Text.rich(
                       TextSpan(
                         style: _bodyStyle,
                         children: [
                           TextSpan(
                             text:
-                                'Mọi thắc mắc về điều khoản, vui lòng liên hệ qua hotline ',
+                                'Mọi thắc mắc về điều khoản, vui lòng liên hệ qua email ',
                           ),
                           TextSpan(
-                            text: '1900 1234',
+                            text: 'urbano.support@gmail.com',
                             style: TextStyle(
+                              fontSize: 15,
                               color: AppColors.tealPrimary,
                               fontWeight: FontWeight.w400,
                               height: 1.5,
                               letterSpacing: 0.5,
                             ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                _guiEmail('urbano.support@gmail.com');
+                              },
                           ),
-                          TextSpan(text: ' hoặc email '),
-                          TextSpan(
-                            text: 'bql@urbano.com',
-                            style: TextStyle(
-                              color: AppColors.tealPrimary,
-                              fontWeight: FontWeight.w400,
-                              height: 1.5,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                          TextSpan(text: ' . '),
                         ],
                       ),
                     ),

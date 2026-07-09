@@ -18,12 +18,12 @@ class AccountInfoViewmodel extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       final cuDanId = prefs.getInt('cuDanId') ?? 0;
-      final token = prefs.getString('token') ?? '';
+
 
       if (cuDanId == 0) {
         error = 'Không tìm thấy tài khoản';
       } else {
-        cuDan = await _services.fetchCuDan(cuDanId, token);
+        cuDan = await _services.fetchCuDan(cuDanId);
         await prefs.setString('cuDan', jsonEncode(cuDan!.toJson()));
       }
     } catch (e) {

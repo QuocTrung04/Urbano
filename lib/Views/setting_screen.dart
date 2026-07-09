@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/canho_model.dart';
 import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/Models/cudan_model.dart';
+import 'package:urbano/core/network/signalr_service.dart';
 
 class SettingScreen extends StatelessWidget {
   final CuDan cuDan;
@@ -332,6 +334,17 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
+  Future<void> logout(BuildContext context) async {
+    context.read<SignalRService>().disconnect();
+    
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    context.read<UserProvider>().clear();
+
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (_) => false);
+  }
+
   void _confirmLogout(BuildContext context) {
     showDialog(
       context: context,
@@ -351,13 +364,9 @@ class SettingScreen extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(ctx);
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRoutes.login,
-                (route) => false,
-              );
+              await logout(context);
             },
             child: const Text(
               'Đăng xuất',

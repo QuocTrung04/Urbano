@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/Models/hoadon_model.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/features/invoice/ViewModels/hoa_don_detail_viewmodel.dart';
 
 class HoaDonDetailView extends StatelessWidget {
@@ -9,13 +11,17 @@ class HoaDonDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     final vm = context.watch<HoaDonDetailViewModel>();
     final item = vm.hoaDon;
 
     final bool isPaid = item.daThanhToan;
-    final int status =
-        item.trangThai ??
-        1; // 1: Chưa thanh toán, 2: Đã thanh toán, 3: Thanh toán 1 phần
+    final int status = item.trangThai ?? 1;
 
     Color statusColor;
     String statusText;
@@ -30,7 +36,54 @@ class HoaDonDetailView extends StatelessWidget {
       statusColor = AppColors.red;
       statusText = 'Chưa thanh toán';
     }
-
+    if (vm.isLoading) {
+      if (vm.isLoading) {
+        return Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            title: const Text(
+              'CHI TIẾT HÓA ĐƠN',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+                color: Colors.white,
+              ),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.white,
+                size: 20,
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  AppColors.bgDark,
+                  AppColors.bgMid,
+                  AppColors.bgDarkest,
+                ],
+                stops: [0.0, 0.5, 1.0],
+              ),
+            ),
+            child: const Center(
+              child: CircularProgressIndicator(color: AppColors.tealPrimary),
+            ),
+          ),
+        );
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -64,6 +117,7 @@ class HoaDonDetailView extends StatelessWidget {
             stops: [0.0, 0.5, 1.0],
           ),
         ),
+
         child: SafeArea(
           child: Column(
             children: [
@@ -209,18 +263,15 @@ class HoaDonDetailView extends StatelessWidget {
   }
 
   Widget _buildDetailItem(BuildContext context, ChiTietHoaDon detail) {
-    final title = detail.loaiPhiDichVu?.tenPhiDichVu ?? 'Dịch vụ khác';
+    final title = detail.tenPhiDichVu;
     final hasReadings = detail.soCu != null && detail.soMoi != null;
-
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.borderButton.withValues(alpha: 0.5),
-        ),
+        border: Border.all(color: AppColors.borderButton),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,7 +297,7 @@ class HoaDonDetailView extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
 
           if (hasReadings) ...[
             Row(
@@ -256,7 +307,7 @@ class HoaDonDetailView extends StatelessWidget {
                 _buildSubBadge('Số mới: ${detail.soMoi}'),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
           ],
 
           Row(
@@ -410,17 +461,14 @@ class HoaDonDetailView extends StatelessWidget {
           child: ElevatedButton(
             onPressed: isPaid
                 ? null
-                : () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Tính năng thanh toán đang được phát triển.',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: AppColors.tealPrimary,
-                      ),
+                : () async {
+                    final ok = await Navigator.pushNamed(
+                      context,
+                      AppRoutes.thanhToan,
+                      arguments: item,
                     );
+                    if (ok == true)
+                      context.read<HoaDonDetailViewModel>().fetchDetail();
                   },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.tealPrimary,

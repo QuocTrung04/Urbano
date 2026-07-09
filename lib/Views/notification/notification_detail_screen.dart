@@ -76,7 +76,7 @@ class NotificationDetailScreen extends StatelessWidget {
         _buildButtonBack(context),
         SizedBox(width: 14),
         Text(
-          'chi tiết thông báo',
+          'Chi tiết thông báo',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,

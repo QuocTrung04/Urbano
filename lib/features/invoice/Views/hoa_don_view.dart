@@ -79,36 +79,83 @@ class _HoaDonViewState extends State<HoaDonView> {
       return _buildEmptyState(vm);
     }
 
-    return RefreshIndicator(
-      color: AppColors.tealPrimary,
-      backgroundColor: AppColors.bgDark,
-      onRefresh: () => vm.fetchHoaDons(widget.canHoId),
+    return Column(
+      children: [
+        _buildFilterRow(vm),
+        Expanded(
+          child: RefreshIndicator(
+            color: AppColors.tealPrimary,
+            backgroundColor: AppColors.bgDark,
+            onRefresh: () => vm.fetchHoaDons(widget.canHoId),
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              itemCount: vm.filteredList.length,
+              itemBuilder: (context, index) {
+                final item = vm.filteredList[index];
+                return _buildInvoiceItem(item);
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFilterRow(HoaDonViewModel vm) {
+    final filters = ['Tất cả', 'Chưa thanh toán', 'Thanh toán 1 phần', 'Quá hạn', 'Đã thanh toán'];
+    return SizedBox(
+      height: 50,
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        itemCount: vm.hoaDonList.length,
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        itemCount: filters.length,
         itemBuilder: (context, index) {
-          final item = vm.hoaDonList[index];
-          return _buildInvoiceItem(item);
+          final isSelected = vm.filterIndex == index;
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: ChoiceChip(
+              label: Text(filters[index]),
+              selected: isSelected,
+              onSelected: (selected) {
+                if (selected) vm.setFilter(index);
+              },
+              selectedColor: AppColors.tealPrimary.withValues(alpha: 0.2),
+              backgroundColor: AppColors.nenContainer,
+              labelStyle: TextStyle(
+                color: isSelected ? AppColors.tealPrimary : Colors.white70,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(
+                  color: isSelected ? AppColors.tealPrimary : AppColors.borderButton,
+                ),
+              ),
+            ),
+          );
         },
       ),
     );
   }
 
   Widget _buildInvoiceItem(HoaDonModel item) {
-    final bool isPaid = item.daThanhToan;
-    final int status =
-        item.trangThai ??
-        1; // 1: Chưa thanh toán, 2: Đã thanh toán, 3: Thanh toán 1 phần
+    final int status = item.trangThai ?? 1;
+    final bool isPaid = item.daThanhToan || status == 2;
+    final bool isPartial = status == 3;
+    final bool isOverdue = item.hanThanhToan != null && item.hanThanhToan!.isBefore(DateTime.now()) && !isPaid;
 
     Color statusColor;
     String statusText;
 
-    if (status == 2 || isPaid) {
+    if (isPaid) {
       statusColor = AppColors.tealPrimary;
       statusText = 'Đã thanh toán';
-    } else if (status == 3) {
+    } else if (isPartial) {
       statusColor = AppColors.amber;
       statusText = 'Thanh toán một phần';
+    } else if (isOverdue) {
+      statusColor = AppColors.red;
+      statusText = 'Quá hạn thanh toán';
     } else {
       statusColor = AppColors.red;
       statusText = 'Chưa thanh toán';

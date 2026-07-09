@@ -9,10 +9,7 @@ class HoaDonDetailViewModel extends ChangeNotifier {
   String? error;
   bool _isDisposed = false;
 
-  HoaDonDetailViewModel({
-    required this.services,
-    required this.hoaDon,
-  });
+  HoaDonDetailViewModel({required this.services, required this.hoaDon});
 
   Future<void> fetchDetail() async {
     if (isLoading) return;
@@ -22,11 +19,12 @@ class HoaDonDetailViewModel extends ChangeNotifier {
 
     try {
       final updated = await services.fetchHoaDonDetail(hoaDon.id);
+      debugPrint('ai di hoa don: ${hoaDon.id}');
       hoaDon = updated;
-    } catch (e) {
+    } catch (e, stack) {
       debugPrint('Lỗi tải chi tiết hóa đơn: $e');
-      // If we don't have detailed items yet and API fails, show error.
-      // Otherwise, keep showing initial data to prevent full-screen error blocks.
+      debugPrint(e.toString());
+      debugPrint(stack.toString());
       if (hoaDon.chiTietHoaDonList.isEmpty) {
         error = 'Không thể tải thông tin chi tiết hóa đơn.';
       }

@@ -5,10 +5,13 @@ import 'package:urbano/Models/bang_tin_model.dart';
 import 'package:urbano/Models/home_model.dart';
 import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/ViewModels/home/home_viewmodel.dart';
+import 'package:urbano/Views/thong_bao_thanh_toan_card.dart';
+import 'package:urbano/Views/utilities/home_tien_ich_section.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'dart:async';
 import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/core/routes/app_routes.dart';
-
+import 'package:urbano/core/network/signalr_service.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -21,8 +24,58 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _Homeview extends StatelessWidget {
+class _Homeview extends StatefulWidget {
   const _Homeview();
+  @override
+  State<_Homeview> createState() => _HomeviewState();
+}
+
+class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
+  late SignalRService _signalRService;
+  Timer? _debounceTimer;
+  String? _lastEventId;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    
+    _signalRService = Provider.of<SignalRService>(context, listen: false);
+    _signalRService.connect();
+    _signalRService.addListener(_onSignalREvent);
+  }
+
+  void _onSignalREvent() {
+    if (_signalRService.recentEvents.isNotEmpty) {
+      final latest = _signalRService.recentEvents.first;
+      final currentEventId = latest['_receivedAt'] as String?;
+      
+      if (currentEventId != null && currentEventId != _lastEventId) {
+        _lastEventId = currentEventId;
+        
+        // Badge tự động được cập nhật ở header
+
+        // Không gọi loadData() nữa để tránh load lại toàn trang
+        // Badge tự động được Consumer<SignalRService> cập nhật ở header
+      }
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (!_signalRService.isConnected) _signalRService.connect();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _debounceTimer?.cancel();
+    _signalRService.removeListener(_onSignalREvent);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<HomeViewModel>();
@@ -65,6 +118,22 @@ class _Homeview extends StatelessWidget {
       onRefresh: vm.loadData,
       child: CustomScrollView(
         slivers: [
+          Consumer<SignalRService>(
+            builder: (_, signalR, __) {
+              if (signalR.isConnected) return const SliverToBoxAdapter(child: SizedBox.shrink());
+              return SliverToBoxAdapter(
+                child: Container(
+                  color: Colors.red.withOpacity(0.8),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Mất kết nối',
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              );
+            },
+          ),
           SliverToBoxAdapter(child: _buildHeader(context, data, vm)),
           _sliverSection(
             title: 'tiện ích nhanh',
@@ -75,6 +144,7 @@ class _Homeview extends StatelessWidget {
             child: _buildBillSumary(
               data,
               onTap: () {
+                context.read<SignalRService>().clearUnread('hoaDon');
                 Navigator.pushNamed(
                   context,
                   AppRoutes.invoice,
@@ -86,6 +156,7 @@ class _Homeview extends StatelessWidget {
             ),
             action: 'Xem chi tiết >',
             onTap: () {
+              context.read<SignalRService>().clearUnread('hoaDon');
               Navigator.pushNamed(
                 context,
                 AppRoutes.invoice,
@@ -97,11 +168,11 @@ class _Homeview extends StatelessWidget {
           ),
           _sliverSection(
             title: 'tiện ích khác',
-            child: _buildutilities(context),
+            child: const HomeTienIchSection(),
             action: 'Xem tất cả >',
             onTap: () {
-              //TODOL: XU LY SU KIEN
-              debugPrint('tất cả tiện ích');
+              context.read<SignalRService>().clearUnread('datLich');
+              Navigator.pushNamed(context, AppRoutes.tienich);
             },
           ),
           _sliverSection(title: 'thanh toán', child: _buildPayment(context)),
@@ -114,18 +185,7 @@ class _Homeview extends StatelessWidget {
               Navigator.pushNamed(context, AppRoutes.bangTin);
             },
           ),
-          _sliverSection(
-            title: 'THÔNG BÁO MỚI',
-            child: _buildNotification(data.thongBaoList, context, vm),
-            action: 'Xem tất cả >',
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                AppRoutes.notification,
-                arguments: data.thongBaoList,
-              );
-            },
-          ),
+
         ],
       ),
     );
@@ -153,6 +213,8 @@ class _Homeview extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context, HomeData data, HomeViewModel vm) {
+    final unreadThongBaoCount = data.thongBaoList.where((tb) => !tb.daDoc).length;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
       child: Column(
@@ -187,17 +249,27 @@ class _Homeview extends StatelessWidget {
                   ],
                 ),
               ),
-              _iconButton(
-                Icons.notifications_outlined,
-                onTap: () async {
-                  final ketQua = await Navigator.pushNamed(
-                    context,
-                    AppRoutes.notification,
-                    arguments: data.thongBaoList,
+              Consumer<SignalRService>(
+                builder: (_, signalR, __) {
+                  final displayCount = unreadThongBaoCount + (signalR.unreadCounts['thongBao'] ?? 0);
+                  return Badge(
+                    isLabelVisible: displayCount > 0,
+                    label: Text('$displayCount'),
+                    child: _iconButton(
+                      Icons.notifications_outlined,
+                      onTap: () async {
+                        signalR.clearUnread('thongBao');
+                        final ketQua = await Navigator.pushNamed(
+                          context,
+                          AppRoutes.notification,
+                          arguments: data.thongBaoList,
+                        );
+                        if (ketQua is List<ThongBao>) vm.capNhatThongBao(ketQua);
+                      },
+                      hasdot: false,
+                    ),
                   );
-                  if (ketQua is List<ThongBao>) vm.capNhatThongBao(ketQua);
                 },
-                hasdot: data.thongBaoList.any((tb) => !tb.daDoc),
               ),
               SizedBox(width: 8),
               _iconButton(
@@ -219,7 +291,7 @@ class _Homeview extends StatelessWidget {
             ],
           ),
           SizedBox(height: 12),
-          _buldApartmentCard(data),
+          _buldApartmentCard(context, data),
         ],
       ),
     );
@@ -263,88 +335,93 @@ class _Homeview extends StatelessWidget {
     );
   }
 
-  Widget _buldApartmentCard(HomeData data) {
+  Widget _buldApartmentCard(BuildContext context, HomeData data) {
     final canHo = data.canHo;
     final canHoText = _buildCanHoText(data);
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-      decoration: BoxDecoration(
-        color: AppColors.tealDark.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: AppColors.borderSide),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Căn hộ của bạn',
-                  style: TextStyle(
-                    fontSize: 12,
-                    letterSpacing: 1,
-                    color: AppColors.textMuted,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  canHoText,
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                if (canHo.dienTich != null) ...[
-                  const SizedBox(height: 2),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, AppRoutes.nhanKhau);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+        decoration: BoxDecoration(
+          color: AppColors.tealDark.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: AppColors.borderSide),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    'Diện tích: ${canHo.dienTich} m²',
-                    style: const TextStyle(
-                      fontSize: 13,
+                    'Căn hộ của bạn',
+                    style: TextStyle(
+                      fontSize: 12,
+                      letterSpacing: 1,
                       color: AppColors.textMuted,
                     ),
                   ),
+                  SizedBox(height: 4),
+                  Text(
+                    canHoText,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  if (canHo.dienTich != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      'Diện tích: ${canHo.dienTich} m²',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textMuted,
+                      ),
+                    ),
+                  ],
                 ],
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.tealPrimary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              canHo.trangThaiText ?? '',
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.tealPrimary,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 1,
               ),
             ),
-          ),
-          SizedBox(width: 4),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.tealPrimary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              canHo.loaiCanHoText ?? '',
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.tealPrimary,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 1,
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: AppColors.tealPrimary.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                canHo.trangThaiText ?? '',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.tealPrimary,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1,
+                ),
               ),
             ),
-          ),
-        ],
+            SizedBox(width: 4),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: AppColors.tealPrimary.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                canHo.loaiCanHoText ?? '',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.tealPrimary,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -369,6 +446,7 @@ class _Homeview extends StatelessWidget {
         'Hóa đơn',
         AppColors.tealPrimary,
         () {
+          context.read<SignalRService>().clearUnread('hoaDon');
           Navigator.pushNamed(context, AppRoutes.invoice, arguments: canHoId);
         },
       ),
@@ -377,6 +455,7 @@ class _Homeview extends StatelessWidget {
         'Yêu cầu',
         AppColors.blue,
         () {
+          context.read<SignalRService>().clearUnread('yeuCau');
           Navigator.pushNamed(context, AppRoutes.yeucau);
         },
       ),
@@ -598,224 +677,16 @@ class _Homeview extends StatelessWidget {
     );
   }
 
-  Widget _buildNotification(
-    List<ThongBao> thongBaoList,
-    BuildContext context,
-    HomeViewModel vm,
-  ) {
-    final daDoc = thongBaoList.where((tb) => !tb.daDoc).toList();
-    debugPrint('day la trong bao $daDoc');
-    if (daDoc.isEmpty) {
-      return _boxEmpty('Không có thông báo mới');
-    }
-    return Column(
-      children: daDoc.take(3).map((tb) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: _notifiItem(
-            tb,
-            onTap: () {
-              vm.danhDauDaDoc(tb); // đánh dấu đã đọc
-              Navigator.pushNamed(
-                context,
-                AppRoutes.notificationDetail,
-                arguments: tb,
-              );
-            },
-          ),
-        );
-      }).toList(),
-    );
-  }
 
-  Widget _notifiItem(ThongBao tb, {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.tealPrimary.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderButton),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: AppColors.tealPrimary.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(
-                Icons.notifications_none_rounded,
-                color: AppColors.tealPrimary,
-              ),
-            ),
-            SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tb.tieuDe ?? 'Thông báo',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  if (tb.noiDung != null) ...[
-                    SizedBox(height: 2),
-                    Text(
-                      tb.noiDung!,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppColors.textMuted,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ],
-
-                  SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.access_time_sharp,
-                        size: 12,
-                        color: AppColors.iconMuted,
-                      ),
-                      SizedBox(width: 4),
-                      Text(
-                        tb.thoiGianHienThi,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.textMuted,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildutilities(BuildContext context) {
-    final items = [
-      (
-        Icons.fitness_center,
-        'Phòng Gym',
-        'Còn chỗ trống',
-        AppColors.tealPrimary,
-      ),
-      (Icons.pool, 'Hồ Bơi', 'Tự do', AppColors.blue),
-      (Icons.local_fire_department, 'Khu BBQ', 'Đăng ký dùng', AppColors.amber),
-      (Icons.group, 'Phòng Họp', 'Đặt phòng', AppColors.pink),
-    ];
-
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(child: _utilCard(items[0])),
-            const SizedBox(width: 9),
-            Expanded(child: _utilCard(items[1])),
-          ],
-        ),
-        const SizedBox(height: 9),
-        Row(
-          children: [
-            Expanded(child: _utilCard(items[2])),
-            const SizedBox(width: 9),
-            Expanded(child: _utilCard(items[3])),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _utilCard((IconData, String, String, Color) it) {
-    return GestureDetector(
-      onTap: () {
-        // TODOl: xử lý sự kiện
-        debugPrint(it.$2);
-      },
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(
-          color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderButton),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: it.$4.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(it.$1, color: it.$4),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    it.$2,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    it.$3,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: AppColors.textMuted,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _buildPayment(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: _paymentCard(
-            Icons.payments_outlined,
-            'Thông báo TT',
-            '2 hóa đơn đến hạn',
-            () {
-              debugPrint('thong bao thanh toan');
-            },
-          ),
-        ),
+        Expanded(child: const ThongBaoTTCard()),
         SizedBox(width: 9),
         Expanded(
           child: _paymentCard(Icons.history, 'Lịch sử TT', 'Xem giao dịch', () {
-            debugPrint('lịch sử thanh toán');
+            Navigator.pushNamed(context, AppRoutes.lichSuThanhToan);
           }),
         ),
       ],
@@ -870,17 +741,16 @@ class _Homeview extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: btList.length,
         separatorBuilder: (_, __) => SizedBox(width: 10),
-        itemBuilder: (context, index) => _bulletinCard(btList[index]),
+        itemBuilder: (context, index) => _bulletinCard(context, btList[index]),
       ),
     );
   }
 
-  Widget _bulletinCard(BangTin bt) {
+  Widget _bulletinCard(BuildContext context, BangTin bt) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        //TODOL:"XU LY SU KIEN"
-        debugPrint('chi tiet bang tin');
+        Navigator.pushNamed(context, AppRoutes.bangTinDetail, arguments: bt);
       },
       child: Container(
         width: 200,

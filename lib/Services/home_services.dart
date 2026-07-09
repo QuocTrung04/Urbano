@@ -19,18 +19,16 @@ class HomeServices {
   final BangTinServices bangTinServices = BangTinServices();
 
   Future<HomeData> fetchHomeData() async {
-    await Future.delayed(Duration(milliseconds: 500));
     final prefs = await SharedPreferences.getInstance();
     final cuDanJson = prefs.getString('cuDan');
     final canHoId = prefs.getInt('canHoId') ?? 0;
-    final token = prefs.getString('token') ?? '';
     final cuDan = cuDanJson != null
         ? CuDan.fromJson(jsonDecode(cuDanJson))
         : CuDan(id: 0, hoTen: 'Khách');
 
     CanHo canHo;
     try {
-      canHo = await canHoServices.fetchCanHo(canHoId, token: token);
+      canHo = await canHoServices.fetchCanHo(canHoId);
     } catch (e) {
       canHo = CanHo(id: canHoId, toaNha: 0, soCanHo: '', tenToaNha: ' ');
     }

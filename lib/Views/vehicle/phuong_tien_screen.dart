@@ -49,8 +49,16 @@ class _PhuongTienView extends StatelessWidget {
 
   Widget _body(BuildContext context, PhuongTienViewModel vm) {
     if (vm.isLoading) {
-      return Column();
+      return const Center(
+        child: CircularProgressIndicator(color: AppColors.tealPrimary),
+      );
     }
+
+    // Chỉ hiển thị xe Đã duyệt (1) và Chờ duyệt (2); ẩn Đã hủy/Từ chối
+    final danhSach = vm.phuongTienList
+        .where((xe) => xe.trangThai == 1 || xe.trangThai == 2)
+        .toList();
+
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
       child: Column(
@@ -58,7 +66,7 @@ class _PhuongTienView extends StatelessWidget {
         children: [
           _buildAppbar(context),
           SizedBox(height: 28),
-          _buildSumary(vm.phuongTienList.length),
+          _buildSumary(danhSach.length),
           SizedBox(height: 14),
           Divider(color: AppColors.borderButton, thickness: 2),
           SizedBox(height: 14),
@@ -72,8 +80,18 @@ class _PhuongTienView extends StatelessWidget {
             ),
           ),
           SizedBox(height: 14),
-          if (vm.phuongTienList.isNotEmpty) ...[
-            ...vm.phuongTienList.map((xe) => _buildVehicleCard(context, xe)),
+          if (danhSach.isNotEmpty) ...[
+            ...danhSach.map((xe) => _buildVehicleCard(context, xe)),
+          ] else ...[
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Center(
+                child: Text(
+                  'Chưa có phương tiện',
+                  style: TextStyle(color: AppColors.textMuted, fontSize: 14),
+                ),
+              ),
+            ),
           ],
         ],
       ),
@@ -109,8 +127,14 @@ class _PhuongTienView extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            debugPrint('dang ky phuong tien moi');
+          onTap: () async {
+            final ok = await Navigator.pushNamed(
+              context,
+              AppRoutes.addPhuongTien,
+            );
+            if (ok == true && context.mounted) {
+              context.read<PhuongTienViewModel>().loadData();
+            }
           },
           child: Container(
             height: 35,
@@ -178,7 +202,7 @@ class _PhuongTienView extends StatelessWidget {
   Widget _buildVehicleCard(BuildContext context, PhuongTien xe) {
     return GestureDetector(
       onTap: () {
-        debugPrint(xe.loaiPhuongTien!.tenLoaiPhuongTien);
+        debugPrint(xe.loaiPhuongTien.tenLoaiPhuongTien);
         debugPrint('${xe.id}');
         Navigator.pushNamed(context, AppRoutes.phuongTienDetail, arguments: xe);
       },
@@ -200,7 +224,7 @@ class _PhuongTienView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    xe.tenPhuongTien ?? xe.loaiPhuongTien!.tenLoaiPhuongTien,
+                    xe.tenPhuongTien ?? xe.loaiPhuongTien.tenLoaiPhuongTien,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -208,8 +232,8 @@ class _PhuongTienView extends StatelessWidget {
                       letterSpacing: 1,
                     ),
                   ),
-                  if (xe.loaiPhuongTien!.id != 3 &&
-                      xe.loaiPhuongTien!.id != 4) ...[
+                  if (xe.loaiPhuongTien.id != 3 &&
+                      xe.loaiPhuongTien.id != 4) ...[
                     Text(
                       xe.bienSo,
                       style: TextStyle(
@@ -250,7 +274,7 @@ class _PhuongTienView extends StatelessWidget {
             color: _color(xe).withValues(alpha: 0.25),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text(xe.trangThaiText!, style: TextStyle(color: _color(xe))),
+          child: Text(xe.trangThaiText, style: TextStyle(color: _color(xe))),
         ),
       ],
     );
@@ -270,7 +294,7 @@ class _PhuongTienView extends StatelessWidget {
   }
 
   (IconData, Color) _icon(PhuongTien xe) {
-    final idXe = xe.loaiPhuongTien!.id;
+    final idXe = xe.loaiPhuongTien.id;
     switch (idXe) {
       case 1:
         return (Icons.directions_car_rounded, AppColors.blue);

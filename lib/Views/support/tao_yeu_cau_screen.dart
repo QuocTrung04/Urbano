@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/yeu_cau_model.dart';
+import 'package:urbano/Services/yeu_cau_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
 class TaoYeuCauScreen extends StatefulWidget {
@@ -13,9 +15,10 @@ class TaoYeuCauScreen extends StatefulWidget {
 class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
   final _tieuDeCtrl = TextEditingController();
   final _noiDungCtrl = TextEditingController();
+  final YeuCauServices _services = YeuCauServices();
 
-  int _loaiChon = 1; // mặc định Sửa chữa
-  int _uuTienChon = 1; // mặc định Thấp
+  int _loaiChon = 1;
+  int _uuTienChon = 1;
   bool _dangGui = false;
 
   @override
@@ -49,24 +52,34 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
     }
 
     setState(() => _dangGui = true);
+    try {
+      final prefs = await SharedPreferences.getInstance();
 
-    await Future.delayed(const Duration(milliseconds: 500));
+      final cuDanId = prefs.getInt('cuDanId') ?? 0;
+      if (cuDanId == 0) {
+        if (!mounted) return;
+        setState(() => _dangGui = false);
+        _baoLoi('Không tìm thấy cư dân. Vui lòng đăng nhập lại.');
+        return;
+      }
 
-    // Tạo object yêu cầu mới (mock, trạng thái Chờ xử lý)
-    final yeuCauMoi = YeuCauCuDan(
-      id: DateTime.now().millisecondsSinceEpoch, // id tạm
-      loaiYeuCau: _loaiChon,
-      tieuDe: tieuDe,
-      noiDung: noiDung,
-      mucDoUuTien: _uuTienChon,
-      trangThai: 1, // Chờ xử lý
-      ngayGui: DateTime.now(),
-      createdAt: DateTime.now(),
-    );
+      final yeuCauMoi = await _services.createYeuCau(
+        cuDan: cuDanId,
+        loaiYeuCau: _loaiChon,
+        tieuDe: tieuDe,
+        noiDung: noiDung,
+        mucDoUuTien: _uuTienChon,
+      );
 
-    if (!mounted) return;
-    setState(() => _dangGui = false);
-    Navigator.pop(context, yeuCauMoi); // trả về màn danh sách
+      if (!mounted) return;
+      setState(() => _dangGui = false);
+      Navigator.pop(context, yeuCauMoi); // trả về màn danh sách
+    } catch (e) {
+      debugPrint('Lỗi gửi yêu cầu: $e');
+      if (!mounted) return;
+      setState(() => _dangGui = false);
+      _baoLoi('Gửi yêu cầu thất bại. Vui lòng thử lại.');
+    }
   }
 
   @override
@@ -177,48 +190,59 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
   }
 
   Widget _buildLoai() {
-    return Wrap(
-      spacing: 9,
-      runSpacing: 9,
-      children: LoaiYeuCau.danhSach.map((loai) {
-        final chon = _loaiChon == loai.id;
-        return GestureDetector(
-          onTap: () => setState(() => _loaiChon = loai.id),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              color: chon
-                  ? loai.color.withValues(alpha: 0.15)
-                  : AppColors.inputFill,
-              borderRadius: BorderRadius.circular(11),
-              border: Border.all(
-                color: chon
-                    ? loai.color.withValues(alpha: 0.5)
-                    : AppColors.borderSide,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  loai.icon,
-                  size: 16,
-                  color: chon ? loai.color : AppColors.textMuted,
-                ),
-                const SizedBox(width: 7),
-                Text(
-                  loai.name,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: chon ? loai.color : AppColors.textMuted,
-                  ),
-                ),
-              ],
-            ),
+    // tìm loại đang chọn (null nếu chưa chọn)
+    final loaiChon = LoaiYeuCau.danhSach
+        .where((e) => e.id == _loaiChon)
+        .cast<LoaiYeuCau?>()
+        .firstOrNull;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: AppColors.inputFill,
+        borderRadius: BorderRadius.circular(11),
+        border: Border.all(color: AppColors.borderSide),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          isExpanded: true,
+          value: loaiChon?.id,
+          hint: const Text(
+            'Chọn loại yêu cầu',
+            style: TextStyle(color: AppColors.textMuted, fontSize: 13),
           ),
-        );
-      }).toList(),
+          icon: const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: AppColors.textMuted,
+          ),
+          dropdownColor: AppColors.bgMid,
+          borderRadius: BorderRadius.circular(12),
+          style: const TextStyle(color: Colors.white, fontSize: 13),
+          items: LoaiYeuCau.danhSach.map((loai) {
+            return DropdownMenuItem<int>(
+              value: loai.id,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(loai.icon, size: 16, color: loai.color),
+                  const SizedBox(width: 8),
+                  Text(
+                    loai.name,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+          onChanged: (val) {
+            if (val != null) setState(() => _loaiChon = val);
+          },
+        ),
+      ),
     );
   }
 
@@ -289,7 +313,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
         final chon = _uuTienChon == m.$1;
         return Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(right: 9),
+            padding: EdgeInsets.only(right: m.$1 == 3 ? 0 : 9),
             child: GestureDetector(
               onTap: () => setState(() => _uuTienChon = m.$1),
               child: Container(

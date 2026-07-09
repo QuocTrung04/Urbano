@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 import 'package:urbano/core/constants/apiconfig.dart';
+import 'package:urbano/core/services/local_notification_service.dart';
 
 class SignalRService extends ChangeNotifier {
   HubConnection? _connection;
@@ -188,20 +189,43 @@ class SignalRService extends ChangeNotifier {
       if (recentEvents.length > 50) recentEvents.removeLast(); // giữ 50 event gần nhất
 
       // Cập nhật unread counts theo đúng event type
+      String notificationTitle = 'Thông báo mới';
+      String notificationBody = 'Bạn có một thông báo mới từ hệ thống.';
+
       if (type == 'request_status' || type == 'new_request') {
         unreadCounts['yeuCau'] = (unreadCounts['yeuCau'] ?? 0) + 1;
         debugPrint('[SignalR] 🔔 Unread yeuCau: ${unreadCounts['yeuCau']}');
+        notificationTitle = 'Cập nhật yêu cầu';
+        notificationBody = 'Yêu cầu của bạn vừa được cập nhật trạng thái';
       } else if (type == 'booking_status' || type == 'new_booking') {
         unreadCounts['datLich'] = (unreadCounts['datLich'] ?? 0) + 1;
         debugPrint('[SignalR] 🔔 Unread datLich: ${unreadCounts['datLich']}');
+        notificationTitle = 'Cập nhật đặt lịch';
+        notificationBody = 'Lịch tiện ích của bạn đã được cập nhật';
       } else if (type == 'new_invoice' || type == 'payment_confirmed') {
         unreadCounts['hoaDon'] = (unreadCounts['hoaDon'] ?? 0) + 1;
         debugPrint('[SignalR] 🔔 Unread hoaDon: ${unreadCounts['hoaDon']}');
+        notificationTitle = 'Hóa đơn mới';
+        notificationBody = 'Hóa đơn vừa được tạo hoặc cập nhật thanh toán';
       } else {
         // notification, system_alert, etc.
         unreadCounts['thongBao'] = (unreadCounts['thongBao'] ?? 0) + 1;
         debugPrint('[SignalR] 🔔 Unread thongBao: ${unreadCounts['thongBao']}');
+        if (type == 'system_alert') {
+          notificationTitle = 'Bảng tin mới';
+          notificationBody = data['noiDung']?.toString() ?? 'Có một bảng tin hệ thống mới';
+        } else {
+          notificationTitle = data['tieuDe']?.toString() ?? 'Thông báo';
+          notificationBody = data['noiDung']?.toString() ?? 'Bạn có một thông báo mới từ ban quản lý';
+        }
       }
+
+      LocalNotificationService.showNotification(
+        id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+        title: notificationTitle,
+        body: notificationBody,
+        payload: type,
+      );
 
       debugPrint('[SignalR] 📊 Total unread: $totalUnread');
       debugPrint('[SignalR] ════════════════════════════════════════');

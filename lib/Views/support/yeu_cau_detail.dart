@@ -1,26 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:urbano/Models/yeu_cau_model.dart';
 import 'package:urbano/Services/yeu_cau_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/network/signalr_service.dart';
 
-class ChiTietYeuCauScreen extends StatelessWidget {
+class ChiTietYeuCauScreen extends StatefulWidget {
   final YeuCauCuDan yeuCau;
   const ChiTietYeuCauScreen({super.key, required this.yeuCau});
 
-  YeuCauCuDan get yc => yeuCau;
+  @override
+  State<ChiTietYeuCauScreen> createState() => _ChiTietYeuCauScreenState();
+}
+
+class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
+  late YeuCauCuDan _yc;
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _yc = widget.yeuCau;
+  }
+
+  Future<void> _fetchDetail() async {
+    setState(() => _isLoading = true);
+    try {
+      final updated = await YeuCauServices().fetchById(_yc.id);
+      if (mounted) setState(() => _yc = updated);
+    } catch (e) {
+      debugPrint('Error fetching yeu cau detail: $e');
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // Listen to SignalR specifically for this request
+    final signalR = context.watch<SignalRService>();
+    if (signalR.recentEvents.isNotEmpty) {
+      final latest = signalR.recentEvents.first;
+      if (latest['_type'] == 'request_status' && latest['id'] == _yc.id) {
+        if (latest['trangThaiMoi'] != _yc.trangThai) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _fetchDetail();
+          });
+        }
+      }
+    }
+
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
       ),
     );
-    final loai = LoaiYeuCau.timTheoId(yc.loaiYeuCau);
-    final tenLoai = yc.tenLoaiYeuCau.isNotEmpty ? yc.tenLoaiYeuCau : loai.name;
+    final loai = LoaiYeuCau.timTheoId(_yc.loaiYeuCau);
+    final tenLoai = _yc.tenLoaiYeuCau.isNotEmpty ? _yc.tenLoaiYeuCau : loai.name;
 
     return Scaffold(
       body: Container(
@@ -45,7 +84,7 @@ class ChiTietYeuCauScreen extends StatelessWidget {
                 _buildHero(loai, tenLoai),
                 const SizedBox(height: 22),
 
-                if (yc.trangThai == 4) _bannerTuChoi() else _buildTimeline(),
+                if (_yc.trangThai == 4) _bannerTuChoi() else _buildTimeline(),
                 const SizedBox(height: 22),
 
                 _groupTitle('Nội dung'),
@@ -58,7 +97,7 @@ class ChiTietYeuCauScreen extends StatelessWidget {
                 _buildInfo(tenLoai),
 
                 const SizedBox(height: 22),
-                _buildHanhDong(context, yc),
+                _buildHanhDong(context, _yc),
               ],
             ),
           ),
@@ -98,8 +137,8 @@ class ChiTietYeuCauScreen extends StatelessWidget {
   }
 
   Widget _buildHero(LoaiYeuCau loai, String tenLoai) {
-    final (ttText, ttColor) = _trangThai(yc.trangThai);
-    final uuColor = _mauUuTien(yc.mucDoUuTien);
+    final (ttText, ttColor) = _trangThai(_yc.trangThai);
+    final uuColor = _mauUuTien(_yc.mucDoUuTien);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
@@ -145,7 +184,7 @@ class ChiTietYeuCauScreen extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           Text(
-            yc.tieuDe,
+            _yc.tieuDe,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 19,
@@ -158,7 +197,7 @@ class ChiTietYeuCauScreen extends StatelessWidget {
             children: [
               _pill(ttText, ttColor),
               const SizedBox(width: 8),
-              _pill('Ưu tiên: ${yc.uuTienText}', uuColor, icon: Icons.flag),
+              _pill('Ưu tiên: ${_yc.uuTienText}', uuColor, icon: Icons.flag),
             ],
           ),
         ],
@@ -168,7 +207,7 @@ class ChiTietYeuCauScreen extends StatelessWidget {
 
   // Timeline 3 bước: Chờ xử lý -> Đang xử lý -> Hoàn thành
   Widget _buildTimeline() {
-    final buoc = yc.trangThai.clamp(1, 3); // bước hiện tại
+    final buoc = _yc.trangThai.clamp(1, 3); // bước hiện tại
     final steps = ['Chờ xử lý', 'Đang xử lý', 'Hoàn thành'];
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 8),
@@ -265,7 +304,7 @@ class ChiTietYeuCauScreen extends StatelessWidget {
   }
 
   Widget _buildNoiDung() {
-    final noiDung = (yc.noiDung ?? '').trim();
+    final noiDung = (_yc.noiDung ?? '').trim();
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(15),
@@ -282,28 +321,28 @@ class ChiTietYeuCauScreen extends StatelessWidget {
   }
 
   Widget _buildInfo(String tenLoai) {
-    final (ttText, _) = _trangThai(yc.trangThai);
+    final (ttText, _) = _trangThai(_yc.trangThai);
     final rows = <Widget>[
       _infoRow(Icons.category_outlined, 'Loại yêu cầu', tenLoai),
-      _infoRow(Icons.flag_outlined, 'Mức độ ưu tiên', yc.uuTienText),
+      _infoRow(Icons.flag_outlined, 'Mức độ ưu tiên', _yc.uuTienText),
       _infoRow(Icons.info_outline_rounded, 'Trạng thái', ttText),
-      if (yc.nhanVienXuLy != null)
+      if (_yc.nhanVienXuLy != null)
         _infoRow(
           Icons.support_agent_outlined,
           'Nhân viên xử lý',
-          yc.tenNhanVienXuLy,
+          _yc.tenNhanVienXuLy,
         ),
-      if (yc.ngayGui != null || yc.createdAt != null)
+      if (_yc.ngayGui != null || _yc.createdAt != null)
         _infoRow(
           Icons.schedule_rounded,
           'Ngày gửi',
-          _fmt(yc.ngayGui ?? yc.createdAt),
+          _fmt(_yc.ngayGui ?? _yc.createdAt),
         ),
-      if (yc.ngayHoanThanh != null)
+      if (_yc.ngayHoanThanh != null)
         _infoRow(
           Icons.task_alt_rounded,
           'Ngày hoàn thành',
-          _fmt(yc.ngayHoanThanh),
+          _fmt(_yc.ngayHoanThanh),
         ),
     ];
     final children = <Widget>[];
@@ -435,13 +474,13 @@ class ChiTietYeuCauScreen extends StatelessWidget {
     return '$dd/$mm/${d.year} • $hh:$mi';
   }
 
-  Widget _buildHanhDong(BuildContext context, YeuCauCuDan yc) {
-    if (yc.trangThai == 1) {
+  Widget _buildHanhDong(BuildContext context, YeuCauCuDan _yc) {
+    if (_yc.trangThai == 1) {
       return _actionBtn(
         'Hủy đăng ký',
         Icons.close_rounded,
         AppColors.red,
-        () => _huyTrucTiep(context, yc),
+        () => _huyTrucTiep(context, _yc),
       );
     }
     return const SizedBox.shrink();
@@ -483,7 +522,7 @@ class ChiTietYeuCauScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _huyTrucTiep(BuildContext context, YeuCauCuDan yc) async {
+  Future<void> _huyTrucTiep(BuildContext context, YeuCauCuDan _yc) async {
     final dong = await _confirm(
       context,
       'Hủy đăng ký',
@@ -493,7 +532,7 @@ class ChiTietYeuCauScreen extends StatelessWidget {
     try {
 
 
-      await YeuCauServices().huyYeuCau(yc.id);
+      await YeuCauServices().huyYeuCau(_yc.id);
       if (!context.mounted) return;
       _thongBao(context, 'Đã hủy đăng ký');
       Navigator.pop(context, true);

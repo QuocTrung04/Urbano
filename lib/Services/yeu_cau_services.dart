@@ -19,6 +19,15 @@ class YeuCauServices {
         .toList();
   }
 
+  // Chi tiết 1 yêu cầu
+  Future<YeuCauCuDan> fetchById(int id) async {
+    final decoded = await AuthHttp.get('$baseUrl/yeucaucudan/$id');
+    final map = decoded is Map<String, dynamic>
+        ? (decoded['value'] ?? decoded['data'] ?? decoded)
+        : decoded;
+    return YeuCauCuDan.fromJson(map as Map<String, dynamic>);
+  }
+
   // Danh sách loại yêu cầu (dropdown khi tạo)
   Future<List<LoaiYeuCau>> fetchLoaiYeuCau() async {
     final decoded = await AuthHttp.get('$baseUrl/yeucaucudan/loai-yeu-cau');

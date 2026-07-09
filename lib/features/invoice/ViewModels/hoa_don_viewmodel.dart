@@ -7,7 +7,29 @@ class HoaDonViewModel extends ChangeNotifier {
   bool isLoading = false;
   String? error;
   List<HoaDonModel> hoaDonList = [];
+  int filterIndex = 0; // 0: Tất cả, 1: Chưa TT, 2: 1 phần, 3: Quá hạn, 4: Đã TT
   bool _isDisposed = false;
+
+  void setFilter(int index) {
+    filterIndex = index;
+    notifyListeners();
+  }
+
+  List<HoaDonModel> get filteredList {
+    if (filterIndex == 0) return hoaDonList;
+    final now = DateTime.now();
+    return hoaDonList.where((item) {
+      final isPaid = item.daThanhToan || item.trangThai == 2;
+      final isPartial = item.trangThai == 3;
+      final isOverdue = item.hanThanhToan != null && item.hanThanhToan!.isBefore(now) && !isPaid;
+
+      if (filterIndex == 1) return !isPaid && !isPartial && !isOverdue; // Chưa thanh toán
+      if (filterIndex == 2) return isPartial && !isPaid; // Thanh toán 1 phần
+      if (filterIndex == 3) return isOverdue; // Quá hạn
+      if (filterIndex == 4) return isPaid; // Đã thanh toán
+      return true;
+    }).toList();
+  }
 
   Future<void> fetchHoaDons(int canHoId) async {
     // Prevent duplicate concurrent requests

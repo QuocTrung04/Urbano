@@ -9,6 +9,7 @@ import 'package:urbano/Views/account/add_nhan_khau_screen.dart';
 import 'package:urbano/Views/account/edit_profile_screen.dart';
 import 'package:urbano/Views/auth/change_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
+import 'package:urbano/Views/auth/splash_screen.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/Views/utilities/dat_lich_tien_ich_screen.dart';
 import 'package:urbano/Views/home/home_screen.dart';
@@ -44,6 +45,7 @@ import 'package:urbano/features/invoice/Views/hoa_don_view.dart';
 class AppRoutes {
   AppRoutes._();
 
+  static const String splash = '/splash';
   static const String login = '/login';
   static const String forgotPassword = '/forgot-password';
   static const String home = '/home';
@@ -77,6 +79,7 @@ class AppRoutes {
   static const String themNhanKhau = '/them-nhan-khau';
 
   static Map<String, WidgetBuilder> get routes => {
+    splash: (_) => const SplashScreen(),
     login: (_) => const LoginScreen(),
     forgotPassword: (_) => const ForgotPasswordScreen(),
     home: (_) => const HomeScreen(),

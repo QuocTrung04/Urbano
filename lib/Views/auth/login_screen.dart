@@ -206,7 +206,11 @@ class _LoginViewState extends State<_LoginView> {
               );
               if (!mounted) return;
               if (result) {
-                Navigator.pushReplacementNamed(context, AppRoutes.home);
+                if (vm.cuDan?.trangThai == 1) {
+                  Navigator.pushReplacementNamed(context, AppRoutes.pending);
+                } else {
+                  Navigator.pushReplacementNamed(context, AppRoutes.home);
+                }
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(vm.error ?? 'Đăng nhập thất bại')),

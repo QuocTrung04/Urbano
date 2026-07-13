@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'dart:convert';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,6 +31,21 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!mounted) return;
 
       if (token != null && token.isNotEmpty) {
+        // Kiểm tra trạng thái
+        final cuDanStr = prefs.getString('cuDan');
+        if (cuDanStr != null) {
+          try {
+            final cuDanMap = jsonDecode(cuDanStr);
+            final trangThai = cuDanMap['trangThai'] ?? 0;
+            if (trangThai == 1) {
+              Navigator.pushReplacementNamed(context, AppRoutes.pending);
+              return;
+            }
+          } catch (e) {
+            debugPrint('Error parsing cuDan: $e');
+          }
+        }
+        
         // Có token -> Tự động đăng nhập, chuyển vào trang chủ
         Navigator.pushReplacementNamed(context, AppRoutes.home);
       } else {

@@ -140,7 +140,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             child: _buildQuickAction(context, data),
           ),
           _sliverSection(
-            title: 'hóa đơn tháng ${DateTime.now().month - 1}',
+            title: 'hóa đơn tháng ${DateTime.now().month == 1 ? 12 : DateTime.now().month - 1}',
             child: _buildBillSumary(
               data,
               onTap: () {

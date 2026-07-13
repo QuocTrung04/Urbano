@@ -50,7 +50,7 @@ class HomeData {
       thongBaoList: (json['thong_bao_list'] as List? ?? [])
           .map((item) => ThongBao.fromJson(item))
           .toList(),
-      bangTinList: (json['thong_bao-list'] as List? ?? [])
+      bangTinList: (json['bang_tin_list'] as List? ?? [])
           .map((item) => BangTin.fromJson(item))
           .toList(),
     );

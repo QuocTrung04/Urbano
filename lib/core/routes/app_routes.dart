@@ -11,6 +11,7 @@ import 'package:urbano/Views/auth/change_password_screen.dart';
 import 'package:urbano/Views/auth/login_screen.dart';
 import 'package:urbano/Views/auth/splash_screen.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
+import 'package:urbano/Views/auth/pending_screen.dart';
 import 'package:urbano/Views/utilities/dat_lich_tien_ich_screen.dart';
 import 'package:urbano/Views/home/home_screen.dart';
 import 'package:urbano/Views/auth/reset_password_screen.dart';
@@ -49,6 +50,7 @@ class AppRoutes {
   static const String login = '/login';
   static const String forgotPassword = '/forgot-password';
   static const String home = '/home';
+  static const String pending = '/pending';
   static const String resetPassword = '/reset-password';
   static const String verifyOtp = '/verify-otp';
   static const String setting = '/setting';
@@ -81,6 +83,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> get routes => {
     splash: (_) => const SplashScreen(),
     login: (_) => const LoginScreen(),
+    pending: (_) => const PendingScreen(),
     forgotPassword: (_) => const ForgotPasswordScreen(),
     home: (_) => const HomeScreen(),
     resetPassword: (_) => const ResetPasswordScreen(),

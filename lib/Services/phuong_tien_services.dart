@@ -70,7 +70,7 @@ class PhuongTienServices {
 
   /// Hủy đăng ký trực tiếp (cho xe Chờ duyệt) -> trạng thái 0.
   Future<void> huyPhuongTien(int id) async {
-    await AuthHttp.put('$baseUrl/yeucaucudan/$id/huy');
+    await AuthHttp.put('$baseUrl/phuongtien/$id/huy');
   }
 
   /// Cập nhật thông tin xe (cho xe Chờ duyệt).

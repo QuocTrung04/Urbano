@@ -22,6 +22,7 @@ class ThemNhanKhauViewModel extends ChangeNotifier {
     required String loaiCuTru,
     String sdt = '',
     String email = '',
+    String diaChi = '',
   }) async {
     error = null;
 
@@ -53,46 +54,71 @@ class ThemNhanKhauViewModel extends ChangeNotifier {
         return false;
       }
 
-      final ns = _fmtNgay(ngaySinh);
-      final gt = gioiTinh == 1 ? 'Nam' : 'Nữ';
-      final noiDung =
-          'Họ tên: ${hoTen.trim()}\n'
-          'Ngày sinh: $ns\n'
-          'Giới tính: $gt\n'
-          'SĐT: ${sdt.trim().isEmpty ? '(chưa có)' : sdt.trim()}\n'
-          'Email: ${email.trim().isEmpty ? '(chưa có)' : email.trim()}\n'
-          'CCCD: ${cccd.trim().isEmpty ? '(chưa có)' : cccd.trim()}\n'
-          'Loại cư trú: $loaiCuTru';
+      final checkResult = await _cuDanServices.checkExists(cccd: cccd.trim(), sdt: sdt.trim(), email: email.trim());
+      final bool exists = checkResult['exists'] == true;
+      final int? existingId = checkResult['cuDanId'];
 
-      await _yeuCauServices.createYeuCau(
-        cuDan: cuDanId,
-        loaiYeuCau: _loaiThemNhanKhau,
-        tieuDe: 'Thêm nhân khẩu',
-        noiDung: noiDung,
-        mucDoUuTien: 1,
-      );
+      if (exists) {
+        final noiDung = 'Thông báo: Cư dân ĐÃ CÓ tài khoản trên hệ thống (ID: $existingId).\n'
+            'Họ tên: ${hoTen.trim()}\n'
+            'SĐT: ${sdt.trim().isEmpty ? '(chưa có)' : sdt.trim()}\n'
+            'Email: ${email.trim().isEmpty ? '(chưa có)' : email.trim()}\n'
+            'CCCD: ${cccd.trim().isEmpty ? '(chưa có)' : cccd.trim()}\n'
+            'Loại cư trú: $loaiCuTru\n'
+            '-----\n'
+            'Vui lòng ban quản lý sử dụng chức năng tìm kiếm cư dân theo CCCD/SĐT và thêm trực tiếp vào căn hộ.';
 
-      // Tạo cư dân với trạng thái 1 (Chưa xác thực)
-      final parts = hoTen.trim().split(RegExp(r'\s+'));
-      String ten = parts.isNotEmpty ? parts.last : '';
-      String hoTenDem = parts.length > 1 ? parts.sublist(0, parts.length - 1).join(' ') : '';
-      
-      int? backendGioiTinh;
-      if (gioiTinh == 1) {
-        backendGioiTinh = 0; // Nam
-      } else if (gioiTinh == 2) {
-        backendGioiTinh = 1; // Nữ
+        await _yeuCauServices.createYeuCau(
+          cuDan: cuDanId,
+          loaiYeuCau: _loaiThemNhanKhau,
+          tieuDe: 'Thêm nhân khẩu (đã có tài khoản)',
+          noiDung: noiDung,
+          mucDoUuTien: 1,
+        );
+      } else {
+        final ns = _fmtNgay(ngaySinh);
+        final gt = gioiTinh == 1 ? 'Nam' : 'Nữ';
+        final noiDung =
+            'Họ tên: ${hoTen.trim()}\n'
+            'Ngày sinh: $ns\n'
+            'Giới tính: $gt\n'
+            'SĐT: ${sdt.trim().isEmpty ? '(chưa có)' : sdt.trim()}\n'
+            'Email: ${email.trim().isEmpty ? '(chưa có)' : email.trim()}\n'
+            'CCCD: ${cccd.trim().isEmpty ? '(chưa có)' : cccd.trim()}\n'
+            'Loại cư trú: $loaiCuTru\n'
+            'Địa chỉ/Quê quán: ${diaChi.trim()}';
+
+        await _yeuCauServices.createYeuCau(
+          cuDan: cuDanId,
+          loaiYeuCau: _loaiThemNhanKhau,
+          tieuDe: 'Thêm nhân khẩu',
+          noiDung: noiDung,
+          mucDoUuTien: 1,
+        );
+
+        // Tạo cư dân với trạng thái 1 (Chưa xác thực)
+        final parts = hoTen.trim().split(RegExp(r'\s+'));
+        String ten = parts.isNotEmpty ? parts.last : '';
+        String hoTenDem = parts.length > 1 ? parts.sublist(0, parts.length - 1).join(' ') : '';
+        
+        int? backendGioiTinh;
+        if (gioiTinh == 1) {
+          backendGioiTinh = 0; // Nam
+        } else if (gioiTinh == 2) {
+          backendGioiTinh = 1; // Nữ
+        }
+
+        await _cuDanServices.createCuDan(
+          hoTenDem: hoTenDem,
+          ten: ten,
+          sdt: sdt.trim(),
+          email: email.trim(),
+          cccd: cccd.trim(),
+          ngaySinh: ngaySinh,
+          gioiTinh: backendGioiTinh,
+          diaChi: diaChi.trim(),
+        );
       }
-
-      await _cuDanServices.createCuDan(
-        hoTenDem: hoTenDem,
-        ten: ten,
-        sdt: sdt.trim(),
-        email: email.trim(),
-        cccd: cccd.trim(),
-        ngaySinh: ngaySinh,
-        gioiTinh: backendGioiTinh,
-      );
 
       submitting = false;
       notifyListeners();

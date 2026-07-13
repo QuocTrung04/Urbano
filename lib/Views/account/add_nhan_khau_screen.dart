@@ -28,6 +28,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
   final _cccdCtrl = TextEditingController();
   final _sdtCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
+  final _diaChiCtrl = TextEditingController();
 
   DateTime? _ngaySinh;
   int? _gioiTinh = 1;
@@ -39,6 +40,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
     _cccdCtrl.dispose();
     _sdtCtrl.dispose();
     _emailCtrl.dispose();
+    _diaChiCtrl.dispose();
     super.dispose();
   }
 
@@ -91,6 +93,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
       loaiCuTru: _loaiCuTru,
       sdt: _sdtCtrl.text,
       email: _emailCtrl.text,
+      diaChi: _diaChiCtrl.text,
     );
     if (!mounted) return;
     if (ok) {
@@ -226,6 +229,14 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
                       _label('Loại cư trú'),
                       const SizedBox(height: 10),
                       _buildLoaiCuTru(),
+                      const SizedBox(height: 20),
+                      _label('Địa chỉ/Quê quán'),
+                      const SizedBox(height: 10),
+                      _textField(
+                        _diaChiCtrl,
+                        'Nhập địa chỉ hoặc quê quán',
+                        Icons.home_outlined,
+                      ),
                     ],
                   ),
                 ),

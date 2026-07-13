@@ -19,6 +19,7 @@ class AuthHttp {
   static Future<dynamic> get(String url) async {
     final res = await http.get(Uri.parse(url), headers: await getHeaders());
     _checkAuth(res.statusCode);
+    _checkError(res.statusCode, res.bodyBytes);
     return jsonDecode(utf8.decode(res.bodyBytes));
   }
 
@@ -27,6 +28,7 @@ class AuthHttp {
     final res = await http.post(Uri.parse(url),
         headers: await getHeaders(), body: body != null ? jsonEncode(body) : null);
     _checkAuth(res.statusCode);
+    _checkError(res.statusCode, res.bodyBytes);
     if (res.bodyBytes.isEmpty) return null;
     return jsonDecode(utf8.decode(res.bodyBytes));
   }
@@ -36,6 +38,7 @@ class AuthHttp {
     final res = await http.put(Uri.parse(url),
         headers: await getHeaders(), body: body != null ? jsonEncode(body) : null);
     _checkAuth(res.statusCode);
+    _checkError(res.statusCode, res.bodyBytes);
     if (res.bodyBytes.isEmpty) return null;
     return jsonDecode(utf8.decode(res.bodyBytes));
   }
@@ -44,6 +47,7 @@ class AuthHttp {
   static Future<bool> delete(String url) async {
     final res = await http.delete(Uri.parse(url), headers: await getHeaders());
     _checkAuth(res.statusCode);
+    _checkError(res.statusCode, res.bodyBytes);
     return res.statusCode == 200 || res.statusCode == 204;
   }
 
@@ -51,6 +55,27 @@ class AuthHttp {
     if (statusCode == 401 || statusCode == 403) {
       _handleUnauthorized();
       throw AuthException('Phiên đăng nhập đã hết hạn hoặc bạn không có quyền');
+    }
+  }
+
+  static void _checkError(int statusCode, List<int> bodyBytes) {
+    if (statusCode >= 400) {
+      if (bodyBytes.isEmpty) throw Exception('Có lỗi xảy ra, vui lòng thử lại sau.');
+      
+      String? errorMessage;
+      try {
+        final decoded = jsonDecode(utf8.decode(bodyBytes));
+        if (decoded is Map<String, dynamic> && decoded['message'] != null) {
+          errorMessage = decoded['message'].toString();
+        }
+      } catch (_) {
+        // ignore parse errors
+      }
+
+      if (errorMessage != null && errorMessage.isNotEmpty) {
+        throw Exception(errorMessage);
+      }
+      throw Exception('Lỗi hệ thống ($statusCode)');
     }
   }
 

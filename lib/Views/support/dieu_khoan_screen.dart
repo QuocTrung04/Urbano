@@ -142,7 +142,7 @@ class DieuKhoanScreen extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -167,7 +167,7 @@ class DieuKhoanScreen extends StatelessWidget {
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.tealPrimary.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: AppColors.tealPrimary.withValues(alpha: 0.25),
         ),
@@ -179,7 +179,7 @@ class DieuKhoanScreen extends StatelessWidget {
             width: 50,
             decoration: BoxDecoration(
               color: AppColors.tealPrimary.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
               Icons.live_help_sharp,

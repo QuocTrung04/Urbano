@@ -81,7 +81,7 @@ class _BangTinView extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -157,7 +157,7 @@ class _BangTinView extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: AppColors.borderButton.withValues(alpha: 0.25),
           ),
@@ -290,7 +290,7 @@ class _BangTinView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: AppColors.tealPrimary.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.3)),
       ),
       child: Row(

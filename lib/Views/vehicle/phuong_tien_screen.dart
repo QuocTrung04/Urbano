@@ -108,7 +108,7 @@ class _PhuongTienView extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -140,7 +140,7 @@ class _PhuongTienView extends StatelessWidget {
             height: 35,
             width: 35,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               color: AppColors.tealPrimary.withValues(alpha: 0.15),
             ),
             child: Icon(Icons.add, color: AppColors.tealPrimary),
@@ -158,7 +158,7 @@ class _PhuongTienView extends StatelessWidget {
           color: AppColors.tealPrimary.withValues(alpha: 0.25),
         ),
         color: AppColors.tealPrimary.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
@@ -167,7 +167,7 @@ class _PhuongTienView extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
               color: AppColors.tealPrimary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
               Icons.local_parking_rounded,
@@ -212,7 +212,7 @@ class _PhuongTienView extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 14),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Row(
@@ -272,7 +272,7 @@ class _PhuongTienView extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
           decoration: BoxDecoration(
             color: _color(xe).withValues(alpha: 0.25),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Text(xe.trangThaiText, style: TextStyle(color: _color(xe))),
         ),
@@ -287,7 +287,7 @@ class _PhuongTienView extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(icon, size: 28, color: color),
     );

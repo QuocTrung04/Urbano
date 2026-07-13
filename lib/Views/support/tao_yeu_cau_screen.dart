@@ -155,7 +155,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
             height: 38,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(11),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 19, color: Colors.white),
@@ -200,7 +200,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: AppColors.inputFill,
-        borderRadius: BorderRadius.circular(11),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderSide),
       ),
       child: DropdownButtonHideUnderline(
@@ -216,7 +216,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
             color: AppColors.textMuted,
           ),
           dropdownColor: AppColors.bgMid,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           style: const TextStyle(color: Colors.white, fontSize: 13),
           items: LoaiYeuCau.danhSach.map((loai) {
             return DropdownMenuItem<int>(
@@ -262,11 +262,11 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
         fillColor: AppColors.inputFill,
         contentPadding: const EdgeInsets.symmetric(vertical: 14),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.borderSide, width: 1.5),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
             color: AppColors.tealPrimary,
             width: 1.5,
@@ -288,11 +288,11 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
         fillColor: AppColors.inputFill,
         contentPadding: const EdgeInsets.all(14),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.borderSide, width: 1.5),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
             color: AppColors.tealPrimary,
             width: 1.5,
@@ -322,7 +322,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
                   color: chon
                       ? m.$3.withValues(alpha: 0.15)
                       : AppColors.inputFill,
-                  borderRadius: BorderRadius.circular(11),
+                  borderRadius: BorderRadius.circular(8),
                   border: Border.all(
                     color: chon
                         ? m.$3.withValues(alpha: 0.5)
@@ -366,12 +366,12 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
           gradient: const LinearGradient(
             colors: [AppColors.tealPrimary, AppColors.tealDark],
           ),
-          borderRadius: BorderRadius.circular(13),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: AppColors.tealPrimary.withValues(alpha: 0.3),
-              blurRadius: 18,
-              offset: const Offset(0, 6),
+              color: AppColors.tealPrimary.withValues(alpha: 0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
           ],
         ),

@@ -209,7 +209,7 @@
 //             height: 40,
 //             decoration: BoxDecoration(
 //               color: AppColors.inputFill,
-//               borderRadius: BorderRadius.circular(12),
+//               borderRadius: BorderRadius.circular(8),
 //               border: Border.all(color: AppColors.borderButton),
 //             ),
 //             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -242,7 +242,7 @@
 //             height: 40,
 //             decoration: BoxDecoration(
 //               color: AppColors.tealPrimary.withValues(alpha: 0.15),
-//               borderRadius: BorderRadius.circular(12),
+//               borderRadius: BorderRadius.circular(8),
 //               border: Border.all(
 //                 color: AppColors.tealPrimary.withValues(alpha: 0.2),
 //               ),
@@ -270,7 +270,7 @@
 //             AppColors.blue.withValues(alpha: 0.08),
 //           ],
 //         ),
-//         borderRadius: BorderRadius.circular(24),
+//         borderRadius: BorderRadius.circular(8),
 //         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.2)),
 //       ),
 //       child: Column(
@@ -280,7 +280,7 @@
 //             width: 100,
 //             decoration: BoxDecoration(
 //               color: AppColors.nenContainer,
-//               borderRadius: BorderRadius.circular(20),
+//               borderRadius: BorderRadius.circular(8),
 //             ),
 //             child: Icon(Icons.person, color: AppColors.iconMuted, size: 50),
 //           ),
@@ -302,7 +302,7 @@
 //                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
 //                 decoration: BoxDecoration(
 //                   color: AppColors.nenContainer,
-//                   borderRadius: BorderRadius.circular(12),
+//                   borderRadius: BorderRadius.circular(8),
 //                 ),
 //                 child: Row(
 //                   children: [
@@ -329,7 +329,7 @@
 //                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
 //                 decoration: BoxDecoration(
 //                   color: AppColors.tealPrimary.withValues(alpha: 0.2),
-//                   borderRadius: BorderRadius.circular(12),
+//                   borderRadius: BorderRadius.circular(8),
 //                 ),
 //                 child: Row(
 //                   children: [
@@ -365,7 +365,7 @@
 //       padding: EdgeInsets.all(13),
 //       decoration: BoxDecoration(
 //         color: AppColors.nenContainer,
-//         borderRadius: BorderRadius.circular(12),
+//         borderRadius: BorderRadius.circular(8),
 //         border: Border.all(color: AppColors.borderButton),
 //       ),
 //       child: Row(
@@ -375,7 +375,7 @@
 //             width: 40,
 //             decoration: BoxDecoration(
 //               color: color.withValues(alpha: 0.15),
-//               borderRadius: BorderRadius.circular(12),
+//               borderRadius: BorderRadius.circular(8),
 //             ),
 //             child: Icon(icon, size: 20, color: color),
 //           ),
@@ -665,7 +665,7 @@ class _AccountInfoView extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -698,7 +698,7 @@ class _AccountInfoView extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.tealPrimary.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: AppColors.tealPrimary.withValues(alpha: 0.2),
               ),
@@ -726,7 +726,7 @@ class _AccountInfoView extends StatelessWidget {
             AppColors.blue.withValues(alpha: 0.08),
           ],
         ),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.2)),
       ),
       child: Column(
@@ -736,7 +736,7 @@ class _AccountInfoView extends StatelessWidget {
             width: 100,
             decoration: BoxDecoration(
               color: AppColors.nenContainer,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(Icons.person, color: AppColors.iconMuted, size: 50),
           ),
@@ -758,7 +758,7 @@ class _AccountInfoView extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                 decoration: BoxDecoration(
                   color: AppColors.nenContainer,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
@@ -785,7 +785,7 @@ class _AccountInfoView extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                 decoration: BoxDecoration(
                   color: AppColors.tealPrimary.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
@@ -821,7 +821,7 @@ class _AccountInfoView extends StatelessWidget {
       padding: EdgeInsets.all(13),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Row(
@@ -831,7 +831,7 @@ class _AccountInfoView extends StatelessWidget {
             width: 40,
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, size: 20, color: color),
           ),

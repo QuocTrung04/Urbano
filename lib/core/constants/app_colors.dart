@@ -28,4 +28,6 @@ class AppColors {
   static const Color amber = Color(0xFFEF9F27);
   static const Color pink = Color(0xFFED93B1);
   static const Color red = Color(0xFFE06363);
+  static const Color warning = Color(0xFFEF9F27);
+  static const Color surface = Color(0xFF1A3147);
 }

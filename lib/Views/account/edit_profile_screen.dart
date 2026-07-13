@@ -249,7 +249,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -276,7 +276,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         width: 90,
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(Icons.person, color: AppColors.iconMuted, size: 48),
       ),
@@ -352,7 +352,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ? AppColors.tealPrimary.withValues(alpha: 0.3)
                   : AppColors.borderButton,
             ),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -386,7 +386,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
           border: Border.all(color: AppColors.borderButton),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           children: [
@@ -417,7 +417,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       decoration: BoxDecoration(
         color: AppColors.inputFill,
         border: Border.all(color: AppColors.borderButton),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
@@ -450,7 +450,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           gradient: LinearGradient(
             colors: [AppColors.tealPrimary, AppColors.tealDark],
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
           child: _dangLuu

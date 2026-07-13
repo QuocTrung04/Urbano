@@ -35,4 +35,8 @@ class UserProvider extends ChangeNotifier {
     _cuDan = null;
     notifyListeners();
   }
+
+  void logout() {
+    clear();
+  }
 }

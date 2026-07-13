@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:urbano/Models/tien_ich_model.dart';
 import 'package:urbano/Services/tien_ich_services.dart';
-import 'package:urbano/Views/utilities/lich_su_dat_tien_ich_screen.dart';
+// import 'package:urbano/Views/utilities/lich_su_dat_tien_ich_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 
@@ -252,7 +252,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -279,7 +279,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(
@@ -306,7 +306,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
             AppColors.blue.withValues(alpha: 0.10),
           ],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.2)),
       ),
       child: Row(
@@ -316,7 +316,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
             width: 52,
             decoration: BoxDecoration(
               color: AppColors.tealPrimary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
               Icons.apartment_rounded,
@@ -373,7 +373,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
                 color: chon
                     ? AppColors.tealPrimary.withValues(alpha: 0.18)
                     : AppColors.nenContainer,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: chon
                       ? AppColors.tealPrimary.withValues(alpha: 0.4)
@@ -405,7 +405,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Column(
@@ -418,7 +418,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
                   width: 44,
                   decoration: BoxDecoration(
                     color: mau.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(_iconCho(t), color: mau, size: 22),
                 ),
@@ -491,7 +491,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
       padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         text,
@@ -538,7 +538,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
                   width: 56,
                   decoration: BoxDecoration(
                     color: mau.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(_iconCho(t), color: mau, size: 28),
                 ),
@@ -633,7 +633,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: const Center(
           child: Text(
@@ -655,7 +655,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: AppColors.tealPrimary.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: AppColors.tealPrimary.withValues(alpha: 0.3),
           ),
@@ -694,7 +694,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
           gradient: const LinearGradient(
             colors: [AppColors.tealPrimary, AppColors.tealDark],
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: const Center(
           child: Text(

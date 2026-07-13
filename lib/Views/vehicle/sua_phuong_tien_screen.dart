@@ -191,7 +191,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -255,7 +255,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
               color: chon
                   ? mau.withValues(alpha: 0.18)
                   : AppColors.nenContainer,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: chon
                     ? mau.withValues(alpha: 0.5)
@@ -310,11 +310,11 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
           horizontal: 14,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.borderButton),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.tealPrimary),
         ),
       ),
@@ -340,7 +340,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
                     colors: [AppColors.tealPrimary, AppColors.tealDark],
                   ),
             color: _submitting ? AppColors.inputFill : null,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Center(
             child: _submitting

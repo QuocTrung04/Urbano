@@ -95,7 +95,7 @@ class TroGiupScreen extends StatelessWidget {
               height: 38,
               decoration: BoxDecoration(
                 color: AppColors.inputFill,
-                borderRadius: BorderRadius.circular(11),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.borderButton),
               ),
               child: const Icon(
@@ -129,7 +129,7 @@ class TroGiupScreen extends StatelessWidget {
             AppColors.tealDark.withValues(alpha: 0.06),
           ],
         ),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.2)),
       ),
       child: Row(
@@ -139,7 +139,7 @@ class TroGiupScreen extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(
               color: AppColors.tealPrimary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
               Icons.support_agent,
@@ -203,7 +203,7 @@ class TroGiupScreen extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       clipBehavior: Clip.antiAlias,
@@ -276,7 +276,7 @@ class TroGiupScreen extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: iconColor.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: iconColor.withValues(alpha: 0.18)),
         ),
         child: Column(
@@ -286,7 +286,7 @@ class TroGiupScreen extends StatelessWidget {
               height: 50,
               decoration: BoxDecoration(
                 color: iconColor.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icon, size: 28, color: iconColor),
             ),

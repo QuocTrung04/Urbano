@@ -82,7 +82,7 @@ Widget tienIchStatusPill(String text, Color color) {
     padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
     decoration: BoxDecoration(
       color: color.withValues(alpha: 0.15),
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(8),
     ),
     child: Text(
       text,
@@ -126,7 +126,7 @@ void showTienIchDetail(BuildContext context, TienIch t) {
                 width: 56,
                 decoration: BoxDecoration(
                   color: mau.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(tienIchIcon(t), color: mau, size: 28),
               ),
@@ -224,7 +224,7 @@ Widget _nutDangKy(BuildContext context, TienIch t) {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: AppColors.inputFill,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: const Center(
         child: Text(
@@ -246,7 +246,7 @@ Widget _nutDangKy(BuildContext context, TienIch t) {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: AppColors.tealPrimary.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.3)),
       ),
       child: const Row(
@@ -283,7 +283,7 @@ Widget _nutDangKy(BuildContext context, TienIch t) {
         gradient: const LinearGradient(
           colors: [AppColors.tealPrimary, AppColors.tealDark],
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: const Center(
         child: Text(

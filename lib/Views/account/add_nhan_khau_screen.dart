@@ -26,15 +26,19 @@ class _ThemNhanKhauView extends StatefulWidget {
 class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
   final _hoTenCtrl = TextEditingController();
   final _cccdCtrl = TextEditingController();
+  final _sdtCtrl = TextEditingController();
+  final _emailCtrl = TextEditingController();
 
   DateTime? _ngaySinh;
-  int? _gioiTinh;
+  int? _gioiTinh = 1;
   String _loaiCuTru = 'Thường trú';
 
   @override
   void dispose() {
     _hoTenCtrl.dispose();
     _cccdCtrl.dispose();
+    _sdtCtrl.dispose();
+    _emailCtrl.dispose();
     super.dispose();
   }
 
@@ -78,12 +82,15 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
 
   Future<void> _onSubmit() async {
     final vm = context.read<ThemNhanKhauViewModel>();
+
     final ok = await vm.submit(
       hoTen: _hoTenCtrl.text,
       ngaySinh: _ngaySinh,
       gioiTinh: _gioiTinh,
       cccd: _cccdCtrl.text,
       loaiCuTru: _loaiCuTru,
+      sdt: _sdtCtrl.text,
+      email: _emailCtrl.text,
     );
     if (!mounted) return;
     if (ok) {
@@ -98,7 +105,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: const Row(
           children: [
             Icon(
@@ -198,7 +205,23 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
                         keyboardType: TextInputType.number,
                       ),
                       const SizedBox(height: 20),
-                      _label('Quan hệ với chủ hộ'),
+                      _label('SĐT (nếu có)'),
+                      const SizedBox(height: 10),
+                      _textField(
+                        _sdtCtrl,
+                        'Số điện thoại',
+                        Icons.phone_rounded,
+                        keyboardType: TextInputType.phone,
+                      ),
+                      const SizedBox(height: 20),
+                      _label('Email (nếu có)'),
+                      const SizedBox(height: 10),
+                      _textField(
+                        _emailCtrl,
+                        'Địa chỉ email',
+                        Icons.email_outlined,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
                       const SizedBox(height: 20),
                       _label('Loại cư trú'),
                       const SizedBox(height: 10),
@@ -225,7 +248,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -276,11 +299,11 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
           horizontal: 14,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.borderButton),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.tealPrimary),
         ),
       ),
@@ -300,7 +323,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Row(
@@ -343,7 +366,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
             color: chon
                 ? AppColors.tealPrimary.withValues(alpha: 0.15)
                 : AppColors.inputFill,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: chon
                   ? AppColors.tealPrimary.withValues(alpha: 0.5)
@@ -398,7 +421,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
             color: chon
                 ? AppColors.tealPrimary.withValues(alpha: 0.15)
                 : AppColors.inputFill,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: chon
                   ? AppColors.tealPrimary.withValues(alpha: 0.5)
@@ -438,7 +461,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
                     colors: [AppColors.tealPrimary, AppColors.tealDark],
                   ),
             color: submitting ? AppColors.inputFill : null,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Center(
             child: submitting

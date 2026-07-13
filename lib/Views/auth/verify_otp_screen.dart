@@ -198,7 +198,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             height: 80,
             decoration: BoxDecoration(
               color: AppColors.tealDark.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderSide, width: 1.5),
             ),
             child: Icon(
@@ -289,14 +289,14 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   : AppColors.inputFill,
               contentPadding: EdgeInsets.zero,
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
                   color: filled ? AppColors.tealPrimary : AppColors.inputFill,
                   width: 1.5,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(color: AppColors.tealPrimary, width: 2),
               ),
             ),
@@ -380,7 +380,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         height: 40,
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Icon(Icons.arrow_back, size: 20, color: Colors.white),

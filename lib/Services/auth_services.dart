@@ -69,13 +69,13 @@ class AuthServices {
     }
   }
 
-  String? _message(String body) {
-    try {
-      final m = jsonDecode(body);
-      if (m is Map && m['message'] != null) return m['message'].toString();
-    } catch (_) {}
-    return null;
-  }
+//   String? _message(String body) {
+//     try {
+//       final m = jsonDecode(body);
+//       if (m is Map && m['message'] != null) return m['message'].toString();
+//     } catch (_) {}
+//     return null;
+//   }
 
   Future<void> verifyOtp(String email, String otp) async {
     try {

@@ -193,7 +193,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
                   backgroundColor: AppColors.tealPrimary,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: const Text('Quay lại', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -229,17 +229,17 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               child: Image.network(
                 qrUrl,
                 width: 240,
@@ -285,7 +285,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: AppColors.nenContainer,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Column(
@@ -433,7 +433,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
               backgroundColor: AppColors.tealPrimary,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               elevation: 0,
             ),

@@ -83,7 +83,7 @@ class _ThongBaoTTCardState extends State<ThongBaoTTCard> {
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
           border: Border.all(color: AppColors.borderButton),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

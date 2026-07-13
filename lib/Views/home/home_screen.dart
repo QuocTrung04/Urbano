@@ -311,7 +311,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             height: 40,
             decoration: BoxDecoration(
               color: Color(0x14FFFFFF),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(icon, color: Color(0xB3FFFFFF), size: 18),
@@ -346,7 +346,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
         padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
         decoration: BoxDecoration(
           color: AppColors.tealDark.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderSide),
         ),
         child: Row(
@@ -501,7 +501,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
         padding: EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Color(0x14FFFFFF)),
         ),
         child: Column(
@@ -575,7 +575,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
       padding: EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Text(
@@ -598,7 +598,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Row(
@@ -656,7 +656,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                   decoration: BoxDecoration(
                     color: (daThanhToan ? AppColors.tealPrimary : AppColors.red)
                         .withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     daThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán',
@@ -707,7 +707,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
           border: Border.all(color: AppColors.borderButton),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -755,7 +755,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           color: AppColors.nenContainer,
           border: Border.all(color: AppColors.borderButton),
         ),

@@ -116,7 +116,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -151,7 +151,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
             AppColors.bgMid.withValues(alpha: 0.3),
           ],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: loai.color.withValues(alpha: 0.25)),
       ),
       child: Column(
@@ -165,7 +165,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: loai.color.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(loai.icon, color: loai.color, size: 26),
               ),
@@ -213,7 +213,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 8),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Row(
@@ -281,7 +281,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppColors.red.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.red.withValues(alpha: 0.3)),
       ),
       child: Row(
@@ -310,7 +310,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Text(
@@ -362,7 +362,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Column(children: children),
@@ -404,7 +404,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 11),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.35)),
       ),
       child: Row(
@@ -500,7 +500,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
           color: mau.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: mau.withValues(alpha: 0.4)),
         ),
         child: Row(
@@ -547,7 +547,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: Text(
           title,
           style: const TextStyle(color: Colors.white, fontSize: 18),

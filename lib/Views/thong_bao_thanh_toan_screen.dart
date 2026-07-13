@@ -112,7 +112,7 @@ class _ThongBaoView extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -145,7 +145,7 @@ class _ThongBaoView extends StatelessWidget {
             AppColors.bgMid.withValues(alpha: 0.3),
           ],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.red.withValues(alpha: 0.25)),
       ),
       child: Row(
@@ -156,7 +156,7 @@ class _ThongBaoView extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.red.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
               Icons.notifications_active_rounded,
@@ -216,7 +216,7 @@ class _ThongBaoView extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Column(
@@ -230,7 +230,7 @@ class _ThongBaoView extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: khanColor.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(khanIcon, color: khanColor, size: 22),
                 ),
@@ -317,7 +317,7 @@ class _ThongBaoView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 44, horizontal: 16),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: const Column(

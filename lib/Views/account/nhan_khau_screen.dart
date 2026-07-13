@@ -169,7 +169,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.tealPrimary.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: AppColors.tealPrimary.withValues(alpha: 0.4),
                         ),
@@ -213,7 +213,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -252,7 +252,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
             AppColors.bgMid.withValues(alpha: 0.30),
           ],
         ),
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.2)),
       ),
       child: Column(
@@ -266,7 +266,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: AppColors.tealPrimary.withValues(alpha: 0.22),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.home_rounded,
@@ -321,7 +321,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -381,7 +381,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
             color: nk.laChuHo
                 ? AppColors.tealPrimary.withValues(alpha: 0.2)
                 : AppColors.nenContainer,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: nk.laChuHo
                   ? AppColors.tealPrimary.withValues(alpha: 0.25)
@@ -396,7 +396,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: mau.withValues(alpha: 0.18),
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   nk.chuCaiDau,
@@ -479,7 +479,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.4)),
       ),
       child: Text(
@@ -529,7 +529,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
       padding: const EdgeInsets.symmetric(vertical: 30),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: const Text(
@@ -577,7 +577,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: mau.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     nk.chuCaiDau,

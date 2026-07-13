@@ -80,7 +80,7 @@ class BangTinDetailScreen extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -105,7 +105,7 @@ class BangTinDetailScreen extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
             clipBehavior: Clip.antiAlias,
             child: AspectRatio(
               aspectRatio: 16 / 9,

@@ -163,7 +163,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
             height: 80,
             decoration: BoxDecoration(
               color: AppColors.tealDark.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderSide, width: 1.5),
             ),
             child: Icon(
@@ -246,7 +246,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
             color: selected
                 ? AppColors.tealPrimary.withValues(alpha: 0.2)
                 : Color(0x0DFFFFFF),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: selected ? AppColors.borderSide : Color(0x1AFFFFFF),
               width: 1.5,
@@ -310,7 +310,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
         height: 40,
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Icon(Icons.arrow_back, size: 20, color: Colors.white),

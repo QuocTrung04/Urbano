@@ -97,7 +97,7 @@ class NotificationDetailScreen extends StatelessWidget {
             width: 80,
             decoration: BoxDecoration(
               color: AppColors.tealPrimary.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderSide),
             ),
             child: Icon(
@@ -148,7 +148,7 @@ class NotificationDetailScreen extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Icon(Icons.arrow_back, size: 20, color: Colors.white),

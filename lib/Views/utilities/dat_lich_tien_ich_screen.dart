@@ -150,7 +150,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: const Row(
           children: [
             Icon(
@@ -284,7 +284,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -317,7 +317,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
             AppColors.bgMid.withValues(alpha: 0.3),
           ],
         ),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: AppColors.tealPrimary.withValues(alpha: 0.25),
         ),
@@ -330,7 +330,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.tealPrimary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
               Icons.event_available_rounded,
@@ -390,7 +390,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Row(
@@ -420,7 +420,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
       decoration: BoxDecoration(
         color: AppColors.inputFill,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Row(
@@ -472,7 +472,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: AppColors.tealPrimary.withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(9),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(icon, size: 18, color: AppColors.tealPrimary),
       ),
@@ -491,11 +491,11 @@ class _DatLichScreenState extends State<DatLichScreen> {
         fillColor: AppColors.inputFill,
         contentPadding: const EdgeInsets.all(14),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.borderButton),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.tealPrimary),
         ),
       ),
@@ -543,7 +543,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
                         colors: [AppColors.tealPrimary, AppColors.tealDark],
                       ),
                 color: _dangGui ? AppColors.inputFill : null,
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
                 child: _dangGui

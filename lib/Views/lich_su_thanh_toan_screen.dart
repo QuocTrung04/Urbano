@@ -111,7 +111,7 @@ class _LichSuView extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -157,15 +157,15 @@ class _LichSuView extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [AppColors.tealDark, AppColors.bgMid],
         ),
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: AppColors.tealPrimary.withValues(alpha: 0.25),
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.tealPrimary.withValues(alpha: 0.15),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
+            color: AppColors.tealPrimary.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -180,7 +180,7 @@ class _LichSuView extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: AppColors.tealPrimary.withValues(alpha: 0.25),
-                  borderRadius: BorderRadius.circular(13),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.account_balance_wallet_rounded,
@@ -358,7 +358,7 @@ class _LichSuView extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Column(
@@ -399,7 +399,7 @@ class _LichSuView extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.red.withValues(alpha: 0.14),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     '-${gd.soTienText}',
@@ -475,7 +475,7 @@ class _LichSuView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 36),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: const Column(

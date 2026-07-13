@@ -70,7 +70,7 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
         padding: const EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: const Text(
@@ -105,7 +105,7 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
       height: 66,
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
     );
@@ -123,7 +123,7 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
         padding: const EdgeInsets.all(13),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Row(
@@ -133,7 +133,7 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
               height: 40,
               decoration: BoxDecoration(
                 color: mau.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(tienIchIcon(t), color: mau),
             ),

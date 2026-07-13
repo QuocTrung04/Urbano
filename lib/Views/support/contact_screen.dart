@@ -120,7 +120,7 @@ class ContactScreen extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -145,7 +145,7 @@ class ContactScreen extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: AppColors.tealPrimary.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.3)),
       ),
 
@@ -159,7 +159,7 @@ class ContactScreen extends StatelessWidget {
               width: 60,
               decoration: BoxDecoration(
                 color: AppColors.tealPrimary.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 Icons.apartment_rounded,
@@ -191,7 +191,7 @@ class ContactScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
               decoration: BoxDecoration(
                 color: AppColors.nenContainer,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -228,7 +228,7 @@ class ContactScreen extends StatelessWidget {
         padding: EdgeInsets.all(13),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Row(
@@ -238,7 +238,7 @@ class ContactScreen extends StatelessWidget {
               width: 40,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icon, size: 28, color: color),
             ),
@@ -273,7 +273,7 @@ class ContactScreen extends StatelessWidget {
               width: 30,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(actionIcon, size: 20, color: color),
             ),

@@ -92,7 +92,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: const Text('Thành công', style: TextStyle(color: Colors.white)),
         content: const Text(
           'Mật khẩu đã được đặt lại. Vui lòng đăng nhập.',
@@ -258,7 +258,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             height: 80,
             decoration: BoxDecoration(
               color: AppColors.tealDark.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderSide, width: 1.5),
             ),
             child: Icon(
@@ -356,7 +356,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         height: 40,
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Icon(Icons.arrow_back, size: 20, color: Colors.white),

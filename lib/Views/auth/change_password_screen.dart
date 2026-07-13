@@ -241,7 +241,7 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(8),
               color: AppColors.tealPrimary.withValues(alpha: 0.15),
               border: Border.all(color: AppColors.borderSide),
             ),
@@ -267,7 +267,7 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
       padding: EdgeInsets.all(13),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Column(
@@ -321,7 +321,7 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
         height: 40,
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: Icon(Icons.arrow_back, size: 20, color: Colors.white),

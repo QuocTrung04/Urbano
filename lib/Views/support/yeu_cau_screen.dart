@@ -120,7 +120,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
               height: 40,
               decoration: BoxDecoration(
                 color: AppColors.inputFill,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.borderButton),
               ),
               child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -153,7 +153,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
               height: 40,
               decoration: BoxDecoration(
                 color: AppColors.tealPrimary.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: AppColors.tealPrimary.withValues(alpha: 0.2),
                 ),
@@ -190,7 +190,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
                       ? AppColors.tealPrimary.withValues(alpha: 0.25)
                       : AppColors.borderButton,
                 ),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
                 _tabs[i],
@@ -293,7 +293,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
         margin: const EdgeInsets.only(bottom: 13),
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         clipBehavior: Clip.antiAlias,

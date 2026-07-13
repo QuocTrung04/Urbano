@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:urbano/Models/canho_model.dart';
+// import 'package:urbano/Models/canho_model.dart';
 import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
@@ -117,7 +117,7 @@ class SettingScreen extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -149,7 +149,7 @@ class SettingScreen extends StatelessWidget {
         padding: EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: AppColors.tealPrimary.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: AppColors.borderSide.withValues(alpha: 0.2),
           ),
@@ -162,7 +162,7 @@ class SettingScreen extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.tealPrimary.withValues(alpha: 0.17),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 Icons.person_outline_rounded,
@@ -208,7 +208,7 @@ class SettingScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: AppColors.tealPrimary.withValues(alpha: 0.17),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Icons.drive_file_rename_outline_outlined,
@@ -248,7 +248,7 @@ class SettingScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Column(children: children),
@@ -312,7 +312,7 @@ class SettingScreen extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: AppColors.red.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.red.withValues(alpha: 0.25)),
         ),
         child: const Row(
@@ -385,7 +385,7 @@ class SettingScreen extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(icon, color: color),
     );

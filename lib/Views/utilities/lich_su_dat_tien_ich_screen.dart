@@ -72,7 +72,7 @@ class _LichSuView extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -111,7 +111,7 @@ class _LichSuView extends StatelessWidget {
                 color: chon
                     ? AppColors.tealPrimary.withValues(alpha: 0.18)
                     : AppColors.nenContainer,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: chon
                       ? AppColors.tealPrimary.withValues(alpha: 0.5)
@@ -204,7 +204,7 @@ class _LichSuView extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Column(
@@ -218,7 +218,7 @@ class _LichSuView extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: ttColor.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(ttIcon, color: ttColor, size: 22),
               ),
@@ -294,7 +294,7 @@ class _LichSuView extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: AppColors.red.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                   border: Border.all(
                     color: AppColors.red.withValues(alpha: 0.3),
                   ),
@@ -340,7 +340,7 @@ class _LichSuView extends StatelessWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: const Text(
           'Hủy đặt lịch',
           style: TextStyle(color: Colors.white, fontSize: 18),
@@ -354,11 +354,11 @@ class _LichSuView extends StatelessWidget {
             filled: true,
             fillColor: AppColors.inputFill,
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.borderButton),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.tealPrimary),
             ),
           ),

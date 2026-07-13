@@ -34,6 +34,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
     
     _signalRService = Provider.of<SignalRService>(context, listen: false);
     _signalRService.addListener(_onSignalR);
+
+    // Fetch fresh data when screen opens
+    _fetchNewData();
   }
 
   void _onSignalR() {
@@ -44,7 +47,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       if (currentEventId != null && currentEventId != _lastEventId) {
         _lastEventId = currentEventId;
         final type = latest['_type'] as String?;
-        if (type == 'ReceiveNotification') {
+        if (type == 'notification' || type == 'system_alert') {
           if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
           _debounceTimer = Timer(const Duration(seconds: 1), () {
             if (mounted) {
@@ -221,7 +224,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           color: selected
               ? AppColors.tealPrimary.withValues(alpha: 0.15)
               : AppColors.nenContainer,
@@ -344,7 +347,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           color: chuaDoc
               ? AppColors.tealPrimary.withValues(alpha: 0.1)
               : AppColors.nenContainer,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: chuaDoc
                 ? AppColors.tealPrimary.withValues(alpha: 0.2)
@@ -362,7 +365,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     color: chuaDoc
                         ? AppColors.tealPrimary.withValues(alpha: 0.2)
                         : AppColors.inputFill,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Icons.notifications_none_rounded,
@@ -451,7 +454,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         height: 40,
         decoration: BoxDecoration(
           color: AppColors.inputFill,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
         child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),

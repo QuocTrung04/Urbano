@@ -6,7 +6,7 @@ import 'package:urbano/Models/phuong_tien_model.dart';
 import 'package:urbano/Services/phuong_tien_services.dart';
 import 'package:urbano/Services/yeu_cau_services.dart';
 import 'package:urbano/ViewModels/auth/user_provider.dart';
-import 'package:urbano/Views/vehicle/sua_phuong_tien_screen.dart';
+// import 'package:urbano/Views/vehicle/sua_phuong_tien_screen.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 
 class PhuongTienDetailScreen extends StatelessWidget {
@@ -121,7 +121,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.nenContainer,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
       child: Column(children: children),
@@ -139,7 +139,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.iconMuted.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: AppColors.iconMuted, size: 20),
           ),
@@ -184,7 +184,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
@@ -219,7 +219,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
             color.withValues(alpha: 0.06),
           ],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Padding(
@@ -232,7 +232,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.22),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icon, size: 46, color: color),
             ),
@@ -272,7 +272,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 14),
       decoration: BoxDecoration(
         color: mau.withValues(alpha: 0.22),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         xe.trangThaiText,
@@ -349,7 +349,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
           color: mau.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: mau.withValues(alpha: 0.4)),
         ),
         child: Row(
@@ -444,7 +444,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: Text(
           title,
           style: const TextStyle(color: Colors.white, fontSize: 18),

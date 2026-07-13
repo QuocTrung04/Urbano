@@ -33,13 +33,13 @@ class PhuongTienServices {
     );
   }
 
-  String? _msg(String body) {
-    try {
-      final m = jsonDecode(body);
-      if (m is Map && m['message'] != null) return m['message'].toString();
-    } catch (_) {}
-    return null;
-  }
+//   String? _msg(String body) {
+//     try {
+//       final m = jsonDecode(body);
+//       if (m is Map && m['message'] != null) return m['message'].toString();
+//     } catch (_) {}
+//     return null;
+//   }
 
   /// Danh sách loại phương tiện (id + tên) từ API.
   Future<List<LoaiPhuongTien>> fetchLoaiPhuongTien() async {

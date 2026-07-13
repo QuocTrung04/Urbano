@@ -67,7 +67,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: const Row(
           children: [
             Icon(
@@ -232,7 +232,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
               color: chon
                   ? mau.withValues(alpha: 0.18)
                   : AppColors.nenContainer,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: chon
                     ? mau.withValues(alpha: 0.5)
@@ -287,11 +287,11 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
           horizontal: 14,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.borderButton),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.tealPrimary),
         ),
       ),
@@ -311,7 +311,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
                   colors: [AppColors.tealPrimary, AppColors.tealDark],
                 ),
           color: submitting ? AppColors.inputFill : null,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
           child: submitting
@@ -347,7 +347,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColors.inputFill,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
             child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),

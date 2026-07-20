@@ -28,22 +28,22 @@ class _HoaDonViewState extends State<HoaDonView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'DANH SÁCH HÓA ĐƠN',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             size: 20,
           ),
           onPressed: () => Navigator.pop(context),
@@ -51,7 +51,7 @@ class _HoaDonViewState extends State<HoaDonView> {
       ),
       extendBodyBehindAppBar: true,
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -66,7 +66,7 @@ class _HoaDonViewState extends State<HoaDonView> {
 
   Widget _buildBody(BuildContext context, HoaDonViewModel vm) {
     if (vm.isLoading && vm.hoaDonList.isEmpty) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -112,7 +112,7 @@ class _HoaDonViewState extends State<HoaDonView> {
         itemBuilder: (context, index) {
           final isSelected = vm.filterIndex == index;
           return Padding(
-            padding: const EdgeInsets.only(right: 8),
+            padding: EdgeInsets.only(right: 8),
             child: ChoiceChip(
               label: Text(filters[index]),
               selected: isSelected,
@@ -122,7 +122,7 @@ class _HoaDonViewState extends State<HoaDonView> {
               selectedColor: AppColors.tealPrimary.withValues(alpha: 0.2),
               backgroundColor: AppColors.nenContainer,
               labelStyle: TextStyle(
-                color: isSelected ? AppColors.tealPrimary : Colors.white70,
+                color: isSelected ? AppColors.tealPrimary : AppColors.textPrimary70,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
               shape: RoundedRectangleBorder(
@@ -200,7 +200,7 @@ class _HoaDonViewState extends State<HoaDonView> {
                   ),
                   child: Text(
                     item.kyThanhToan,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                       color: AppColors.tealPrimary,
@@ -230,10 +230,10 @@ class _HoaDonViewState extends State<HoaDonView> {
             const SizedBox(height: 14),
             Text(
               item.maThanhToan ?? 'Mã Hóa Đơn #${item.id}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 letterSpacing: 0.5,
               ),
             ),
@@ -244,7 +244,7 @@ class _HoaDonViewState extends State<HoaDonView> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Tổng tiền cần thanh toán',
                       style: TextStyle(
                         fontSize: 12,
@@ -254,10 +254,10 @@ class _HoaDonViewState extends State<HoaDonView> {
                     const SizedBox(height: 4),
                     Text(
                       item.tongTienHienThi,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -266,7 +266,7 @@ class _HoaDonViewState extends State<HoaDonView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
+                      Text(
                         'Hạn thanh toán',
                         style: TextStyle(
                           fontSize: 12,
@@ -276,7 +276,7 @@ class _HoaDonViewState extends State<HoaDonView> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.calendar_today_rounded,
                             size: 13,
                             color: AppColors.amber,
@@ -284,10 +284,10 @@ class _HoaDonViewState extends State<HoaDonView> {
                           const SizedBox(width: 4),
                           Text(
                             _formatDate(item.hanThanhToan!),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              color: AppColors.textPrimary,
                             ),
                           ),
                         ],
@@ -299,20 +299,20 @@ class _HoaDonViewState extends State<HoaDonView> {
             if (item.soTienDaThanhToan != null &&
                 item.soTienDaThanhToan! > 0 &&
                 !isPaid) ...[
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
                 child: Divider(color: AppColors.borderButton, height: 1),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Đã thanh toán trước đó:',
                     style: TextStyle(fontSize: 12, color: AppColors.textMuted),
                   ),
                   Text(
                     _formatPrice(item.soTienDaThanhToan!),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                       color: AppColors.tealPrimary,
@@ -334,30 +334,30 @@ class _HoaDonViewState extends State<HoaDonView> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.cloud_off_rounded, color: AppColors.red, size: 64),
+            Icon(Icons.cloud_off_rounded, color: AppColors.red, size: 64),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Tải Dữ Liệu Thất Bại',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               vm.error ?? 'Đã xảy ra lỗi không xác định',
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, color: AppColors.textMuted),
+              style: TextStyle(fontSize: 14, color: AppColors.textMuted),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () => vm.fetchHoaDons(widget.canHoId),
-              icon: const Icon(Icons.refresh_rounded),
+              icon: Icon(Icons.refresh_rounded),
               label: const Text('Thử lại ngay'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.tealPrimary,
-                foregroundColor: Colors.white,
+                foregroundColor: AppColors.textPrimary,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 12,
@@ -392,23 +392,23 @@ class _HoaDonViewState extends State<HoaDonView> {
                     color: AppColors.nenContainer,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.receipt_long_rounded,
                     color: AppColors.textMuted,
                     size: 64,
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
+                Text(
                   'Không Có Hóa Đơn',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.0),
                   child: Text(
                     'Hiện tại bạn không có hóa đơn nào cần thanh toán hoặc xử lý.',

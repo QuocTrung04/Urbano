@@ -28,9 +28,9 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
@@ -179,7 +179,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
           style: TextStyle(
             fontSize: 26,
             letterSpacing: 1,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -262,7 +262,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
               Text(
                 titel,
                 style: TextStyle(
-                  color: selected ? Colors.white : AppColors.textMuted,
+                  color: selected ? AppColors.textPrimary : AppColors.textMuted,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 1,
                 ),
@@ -313,7 +313,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
-        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+        child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
       ),
     );
   }

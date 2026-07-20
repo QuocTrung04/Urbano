@@ -137,8 +137,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.light,
+      SystemUiOverlayStyle(
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
         statusBarColor: Colors.transparent,
       ),
     );
@@ -146,7 +146,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -176,13 +176,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
         children: [
           _buildButtonBack(context),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Text(
               'Thông báo',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 letterSpacing: 1,
               ),
             ),
@@ -190,7 +190,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           if (_soChuaDoc > 0)
             GestureDetector(
               onTap: _markAllRead,
-              child: const Text(
+              child: Text(
                 'Đánh dấu là đã đọc',
                 style: TextStyle(
                   fontSize: 12,
@@ -287,7 +287,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       }
     }
     if (list.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'Không có thông báo',
           style: TextStyle(
@@ -314,7 +314,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         padding: const EdgeInsets.fromLTRB(4, 14, 4, 9),
         child: Text(
           title.toUpperCase(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
             color: Color(0x66FFFFFF),
@@ -396,7 +396,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           tb.noiDung!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppColors.textMuted,
                             fontSize: 13,
                           ),
@@ -405,7 +405,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.access_time_sharp,
                             size: 12,
                             color: AppColors.iconMuted,
@@ -413,7 +413,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           const SizedBox(width: 4),
                           Text(
                             tb.thoiGianHienThi,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               color: AppColors.textMuted,
                             ),
@@ -457,7 +457,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
-        child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+        child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
       ),
     );
   }

@@ -25,9 +25,9 @@ class _LichSuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final vm = context.watch<LichSuThanhToanViewModel>();
@@ -36,7 +36,7 @@ class _LichSuView extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -51,7 +51,7 @@ class _LichSuView extends StatelessWidget {
 
   Widget _body(BuildContext context, LichSuThanhToanViewModel vm) {
     if (vm.isLoading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -60,13 +60,13 @@ class _LichSuView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
+            Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
             const SizedBox(height: 12),
-            Text(vm.error!, style: const TextStyle(color: AppColors.textMuted)),
+            Text(vm.error!, style: TextStyle(color: AppColors.textMuted)),
             const SizedBox(height: 16),
             TextButton(
               onPressed: vm.loadData,
-              child: const Text(
+              child: Text(
                 'Thử lại',
                 style: TextStyle(color: AppColors.tealPrimary),
               ),
@@ -114,16 +114,16 @@ class _LichSuView extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Lịch sử thanh toán',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -152,7 +152,7 @@ class _LichSuView extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [AppColors.tealDark, AppColors.bgMid],
@@ -182,7 +182,7 @@ class _LichSuView extends StatelessWidget {
                   color: AppColors.tealPrimary.withValues(alpha: 0.25),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.account_balance_wallet_rounded,
                   color: AppColors.tealPrimary,
                   size: 24,
@@ -191,7 +191,7 @@ class _LichSuView extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 'Đã đóng năm $nam',
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.textMuted,
                   fontSize: 13,
                 ),
@@ -201,15 +201,15 @@ class _LichSuView extends StatelessWidget {
           const SizedBox(height: 14),
           Text(
             tong,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: AppColors.textPrimary,
               fontSize: 30,
               fontWeight: FontWeight.w800,
               letterSpacing: 0.5,
             ),
           ),
           const SizedBox(height: 16),
-          Container(height: 1, color: Colors.white.withValues(alpha: 0.08)),
+          Container(height: 1, color: AppColors.textPrimary.withValues(alpha: 0.08)),
           const SizedBox(height: 14),
           Row(
             children: [
@@ -223,7 +223,7 @@ class _LichSuView extends StatelessWidget {
               Container(
                 width: 1,
                 height: 34,
-                color: Colors.white.withValues(alpha: 0.08),
+                color: AppColors.textPrimary.withValues(alpha: 0.08),
               ),
               Expanded(
                 child: _heroStat(
@@ -235,11 +235,11 @@ class _LichSuView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          Container(height: 1, color: Colors.white.withValues(alpha: 0.06)),
+          Container(height: 1, color: AppColors.textPrimary.withValues(alpha: 0.06)),
           const SizedBox(height: 10),
           Text(
             'Tổng từ trước đến nay: $tongLuyKe',
-            style: const TextStyle(color: AppColors.textMuted, fontSize: 11.5),
+            style: TextStyle(color: AppColors.textMuted, fontSize: 11.5),
           ),
         ],
       ),
@@ -261,8 +261,8 @@ class _LichSuView extends StatelessWidget {
                   value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: AppColors.textPrimary,
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                   ),
@@ -273,7 +273,7 @@ class _LichSuView extends StatelessWidget {
           const SizedBox(height: 3),
           Text(
             label,
-            style: const TextStyle(color: AppColors.textMuted, fontSize: 11.5),
+            style: TextStyle(color: AppColors.textMuted, fontSize: 11.5),
           ),
         ],
       ),
@@ -375,8 +375,8 @@ class _LichSuView extends StatelessWidget {
                         gd.kyText.isNotEmpty
                             ? gd.kyText
                             : 'Hóa đơn #${gd.hoaDonId}',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
                         ),
@@ -384,7 +384,7 @@ class _LichSuView extends StatelessWidget {
                       const SizedBox(height: 3),
                       Text(
                         _fmtDayGio(gd.ngayThanhToan),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.textMuted,
                           fontSize: 12,
                         ),
@@ -403,7 +403,7 @@ class _LichSuView extends StatelessWidget {
                   ),
                   child: Text(
                     '-${gd.soTienText}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppColors.red,
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -450,7 +450,7 @@ class _LichSuView extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             text,
-            style: const TextStyle(color: AppColors.textMuted, fontSize: 12),
+            style: TextStyle(color: AppColors.textMuted, fontSize: 12),
           ),
         ],
       ),
@@ -460,7 +460,7 @@ class _LichSuView extends StatelessWidget {
   Widget _groupTitle(String text) {
     return Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         color: AppColors.textMuted,
         fontSize: 15,
         fontWeight: FontWeight.w600,
@@ -478,7 +478,7 @@ class _LichSuView extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
-      child: const Column(
+      child: Column(
         children: [
           Icon(
             Icons.receipt_long_outlined,

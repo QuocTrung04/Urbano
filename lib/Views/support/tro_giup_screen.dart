@@ -33,9 +33,9 @@ class TroGiupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
 
@@ -44,7 +44,7 @@ class TroGiupScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -98,20 +98,20 @@ class TroGiupScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.borderButton),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back,
                 size: 19,
-                color: Colors.white,
+                color: AppColors.textPrimary,
               ),
             ),
           ),
           const SizedBox(width: 14),
-          const Text(
+          Text(
             'Trung tâm trợ giúp',
             style: TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: AppColors.textPrimary,
             ),
           ),
         ],
@@ -141,14 +141,14 @@ class TroGiupScreen extends StatelessWidget {
               color: AppColors.tealPrimary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.support_agent,
               size: 24,
               color: AppColors.tealPrimary,
             ),
           ),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -157,7 +157,7 @@ class TroGiupScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 SizedBox(height: 3),
@@ -187,7 +187,7 @@ class TroGiupScreen extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w700,
             color: AppColors.textMuted,
@@ -224,10 +224,10 @@ class TroGiupScreen extends StatelessWidget {
             leading: Icon(faq.$1, size: 19, color: AppColors.tealPrimary),
             title: Text(
               faq.$2,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: Colors.white,
+                color: AppColors.textPrimary,
               ),
             ),
             iconColor: AppColors.tealPrimary,
@@ -238,7 +238,7 @@ class TroGiupScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   faq.$3,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     color: AppColors.textMuted,
                     height: 1.6,
@@ -293,16 +293,16 @@ class TroGiupScreen extends StatelessWidget {
             const SizedBox(height: 9),
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 2),
             Text(
               value,
-              style: const TextStyle(fontSize: 13, color: AppColors.textMuted),
+              style: TextStyle(fontSize: 13, color: AppColors.textMuted),
             ),
           ],
         ),

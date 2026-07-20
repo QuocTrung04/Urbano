@@ -24,7 +24,7 @@ class _PhuongTienView extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
 
@@ -49,7 +49,7 @@ class _PhuongTienView extends StatelessWidget {
 
   Widget _body(BuildContext context, PhuongTienViewModel vm) {
     if (vm.isLoading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -111,7 +111,7 @@ class _PhuongTienView extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         SizedBox(width: 14),
@@ -121,7 +121,7 @@ class _PhuongTienView extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: AppColors.textPrimary,
               letterSpacing: 1,
             ),
           ),
@@ -183,7 +183,7 @@ class _PhuongTienView extends StatelessWidget {
                 '$soLuong phương tiện',
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -227,7 +227,7 @@ class _PhuongTienView extends StatelessWidget {
                     xe.tenPhuongTien ?? xe.loaiPhuongTien.tenLoaiPhuongTien,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1,
                     ),

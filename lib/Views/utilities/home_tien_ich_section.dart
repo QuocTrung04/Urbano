@@ -73,7 +73,7 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
-        child: const Text(
+        child: Text(
           'Chưa có tiện ích',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 14, color: AppColors.textMuted),
@@ -147,8 +147,8 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
                     t.tenTienIch,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: AppColors.textPrimary,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 1,
@@ -159,7 +159,7 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
                     tienIchTrangThaiText(t),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
                       color: AppColors.textMuted,
                     ),

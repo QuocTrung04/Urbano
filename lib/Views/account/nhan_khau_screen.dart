@@ -72,16 +72,16 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -96,7 +96,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
 
   Widget _buildBody() {
     if (_loading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -105,13 +105,13 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
+            Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
             const SizedBox(height: 12),
-            Text(_error!, style: const TextStyle(color: AppColors.textMuted)),
+            Text(_error!, style: TextStyle(color: AppColors.textMuted)),
             const SizedBox(height: 16),
             TextButton(
               onPressed: _load,
-              child: const Text(
+              child: Text(
                 'Thử lại',
                 style: TextStyle(color: AppColors.tealPrimary),
               ),
@@ -174,7 +174,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                           color: AppColors.tealPrimary.withValues(alpha: 0.4),
                         ),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
@@ -216,16 +216,16 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Căn hộ của tôi',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -268,7 +268,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                   color: AppColors.tealPrimary.withValues(alpha: 0.22),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.home_rounded,
                   color: AppColors.tealPrimary,
                   size: 30,
@@ -281,8 +281,8 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                   children: [
                     Text(
                       c.soCanHo,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: AppColors.textPrimary,
                         fontSize: 26,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 0.5,
@@ -291,7 +291,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                     const SizedBox(height: 2),
                     Text(
                       c.tenToaNha.isEmpty ? 'Căn hộ' : c.tenToaNha,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.textMuted,
                         fontSize: 13,
                       ),
@@ -330,8 +330,8 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: AppColors.textPrimary,
               fontSize: 18,
               fontWeight: FontWeight.w700,
             ),
@@ -342,7 +342,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
             maxLines: 2,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: AppColors.textMuted, fontSize: 12),
+            style: TextStyle(color: AppColors.textMuted, fontSize: 12),
           ),
         ],
       ),
@@ -419,8 +419,8 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                             nk.hoTen,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: AppColors.textPrimary,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 0.3,
@@ -457,7 +457,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                       phu,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.textMuted,
                         fontSize: 12.5,
                       ),
@@ -514,7 +514,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
   Widget _groupTitle(String text) {
     return Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         color: AppColors.textMuted,
         fontSize: 15,
         fontWeight: FontWeight.w600,
@@ -532,7 +532,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
-      child: const Text(
+      child: Text(
         'Chưa có nhân khẩu',
         textAlign: TextAlign.center,
         style: TextStyle(color: AppColors.textMuted, fontSize: 14),
@@ -549,7 +549,7 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (_) => Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.bgMid,
           borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
@@ -595,8 +595,8 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
                     children: [
                       Text(
                         nk.hoTen,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
                           fontSize: 19,
                           fontWeight: FontWeight.w700,
                         ),
@@ -662,15 +662,15 @@ class _NhanKhauScreenState extends State<NhanKhauScreen> {
         const SizedBox(width: 10),
         Text(
           '$label:',
-          style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+          style: TextStyle(color: AppColors.textMuted, fontSize: 13),
         ),
         const SizedBox(width: 6),
         Expanded(
           child: Text(
             value,
             textAlign: TextAlign.right,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: AppColors.textPrimary,
               fontSize: 13,
               fontWeight: FontWeight.w500,
             ),

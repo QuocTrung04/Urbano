@@ -114,8 +114,8 @@ class _ThongBaoTTCardState extends State<ThongBaoTTCard> {
                       ),
                       child: Text(
                         _soLuong > 9 ? '9+' : '$_soLuong',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
                           fontSize: 9,
                           fontWeight: FontWeight.w700,
                           height: 1.1,
@@ -128,8 +128,8 @@ class _ThongBaoTTCardState extends State<ThongBaoTTCard> {
             const SizedBox(height: 8),
             Text(
               title,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColors.textPrimary,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -137,7 +137,7 @@ class _ThongBaoTTCardState extends State<ThongBaoTTCard> {
               subtitle,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 12, color: AppColors.textMuted),
+              style: TextStyle(fontSize: 12, color: AppColors.textMuted),
             ),
           ],
         ),

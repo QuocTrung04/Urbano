@@ -72,7 +72,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
   void _snack(String msg, Color bg) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(msg, style: const TextStyle(color: Colors.white)),
+        content: Text(msg, style: TextStyle(color: AppColors.textPrimary)),
         behavior: SnackBarBehavior.floating,
         backgroundColor: bg,
       ),
@@ -121,16 +121,16 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -194,16 +194,16 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Sửa phương tiện',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -213,8 +213,8 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
 
   Widget _label(String t) => Text(
     t,
-    style: const TextStyle(
-      color: Colors.white,
+    style: TextStyle(
+      color: AppColors.textPrimary,
       fontSize: 15,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.5,
@@ -223,7 +223,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
 
   Widget _buildLoaiGrid() {
     if (_loadingLoai) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Center(
           child: CircularProgressIndicator(color: AppColors.tealPrimary),
@@ -231,7 +231,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
       );
     }
     if (_loaiList.isEmpty) {
-      return const Text(
+      return Text(
         'Chưa có loại phương tiện',
         style: TextStyle(color: AppColors.textMuted, fontSize: 13),
       );
@@ -273,7 +273,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: chon ? Colors.white : AppColors.textMuted,
+                      color: chon ? AppColors.textPrimary : AppColors.textMuted,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -298,10 +298,10 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
     return TextField(
       controller: c,
       textCapitalization: caps,
-      style: const TextStyle(color: Colors.white, fontSize: 15),
+      style: TextStyle(color: AppColors.textPrimary, fontSize: 15),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 14),
+        hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 14),
         prefixIcon: Icon(icon, color: AppColors.iconMuted, size: 20),
         filled: true,
         fillColor: AppColors.inputFill,
@@ -311,11 +311,11 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.borderButton),
+          borderSide: BorderSide(color: AppColors.borderButton),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.tealPrimary),
+          borderSide: BorderSide(color: AppColors.tealPrimary),
         ),
       ),
     );
@@ -336,7 +336,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
           decoration: BoxDecoration(
             gradient: _submitting
                 ? null
-                : const LinearGradient(
+                : LinearGradient(
                     colors: [AppColors.tealPrimary, AppColors.tealDark],
                   ),
             color: _submitting ? AppColors.inputFill : null,
@@ -344,20 +344,20 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
           ),
           child: Center(
             child: _submitting
-                ? const SizedBox(
+                ? SizedBox(
                     height: 22,
                     width: 22,
                     child: CircularProgressIndicator(
                       strokeWidth: 2.4,
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                     ),
                   )
-                : const Text(
+                : Text(
                     'Lưu thay đổi',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                     ),
                   ),
           ),

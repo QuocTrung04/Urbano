@@ -25,9 +25,9 @@ class _LichSuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final vm = context.watch<DatLichViewModel>();
@@ -36,7 +36,7 @@ class _LichSuView extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -75,16 +75,16 @@ class _LichSuView extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Lịch sử sử dụng',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -135,7 +135,7 @@ class _LichSuView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, DatLichViewModel vm) {
     if (vm.isLoading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -144,13 +144,13 @@ class _LichSuView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
+            Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
             const SizedBox(height: 12),
-            Text(vm.error!, style: const TextStyle(color: AppColors.textMuted)),
+            Text(vm.error!, style: TextStyle(color: AppColors.textMuted)),
             const SizedBox(height: 16),
             TextButton(
               onPressed: vm.loadData,
-              child: const Text(
+              child: Text(
                 'Thử lại',
                 style: TextStyle(color: AppColors.tealPrimary),
               ),
@@ -161,7 +161,7 @@ class _LichSuView extends StatelessWidget {
     }
     final ds = vm.danhSachLoc;
     if (ds.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -231,8 +231,8 @@ class _LichSuView extends StatelessWidget {
                       d.tenTienIch.isEmpty ? 'Tiện ích' : d.tenTienIch,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: AppColors.textPrimary,
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
                       ),
@@ -240,7 +240,7 @@ class _LichSuView extends StatelessWidget {
                     const SizedBox(height: 3),
                     Text(
                       d.maDatLich,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.textMuted,
                         fontSize: 11.5,
                       ),
@@ -266,7 +266,7 @@ class _LichSuView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          const Divider(height: 1, color: AppColors.borderButton),
+          Divider(height: 1, color: AppColors.borderButton),
           const SizedBox(height: 12),
           _row(Icons.calendar_today_rounded, _ngay(d.thoiGianBatDau)),
           const SizedBox(height: 8),
@@ -299,7 +299,7 @@ class _LichSuView extends StatelessWidget {
                     color: AppColors.red.withValues(alpha: 0.3),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Hủy đặt lịch',
                   style: TextStyle(
                     color: AppColors.red,
@@ -323,7 +323,7 @@ class _LichSuView extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: TextStyle(color: color ?? Colors.white, fontSize: 13),
+            style: TextStyle(color: color ?? AppColors.textPrimary, fontSize: 13),
           ),
         ),
       ],
@@ -341,39 +341,39 @@ class _LichSuView extends StatelessWidget {
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        title: const Text(
+        title: Text(
           'Hủy đặt lịch',
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: AppColors.textPrimary, fontSize: 18),
         ),
         content: TextField(
           controller: lyDoCtrl,
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: AppColors.textPrimary),
           decoration: InputDecoration(
             hintText: 'Lý do hủy (tùy chọn)',
-            hintStyle: const TextStyle(color: AppColors.textMuted),
+            hintStyle: TextStyle(color: AppColors.textMuted),
             filled: true,
             fillColor: AppColors.inputFill,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.borderButton),
+              borderSide: BorderSide(color: AppColors.borderButton),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.tealPrimary),
+              borderSide: BorderSide(color: AppColors.tealPrimary),
             ),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text(
+            child: Text(
               'Đóng',
               style: TextStyle(color: AppColors.textMuted),
             ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text(
+            child: Text(
               'Xác nhận hủy',
               style: TextStyle(color: AppColors.red),
             ),

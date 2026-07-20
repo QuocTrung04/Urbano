@@ -93,8 +93,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        title: const Text('Thành công', style: TextStyle(color: Colors.white)),
-        content: const Text(
+        title: Text('Thành công', style: TextStyle(color: AppColors.textPrimary)),
+        content: Text(
           'Mật khẩu đã được đặt lại. Vui lòng đăng nhập.',
           style: TextStyle(color: AppColors.textMuted),
         ),
@@ -108,7 +108,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 (r) => false,
               );
             },
-            child: const Text(
+            child: Text(
               'Đăng nhập',
               style: TextStyle(color: AppColors.tealPrimary),
             ),
@@ -121,9 +121,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
 
@@ -274,7 +274,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           style: TextStyle(
             fontSize: 26,
             letterSpacing: 1,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -359,7 +359,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
-        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+        child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
       ),
     );
   }

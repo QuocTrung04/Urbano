@@ -24,9 +24,9 @@ class _ThongBaoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final vm = context.watch<ThongBaoThanhToanViewModel>();
@@ -35,7 +35,7 @@ class _ThongBaoView extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -50,7 +50,7 @@ class _ThongBaoView extends StatelessWidget {
 
   Widget _body(BuildContext context, ThongBaoThanhToanViewModel vm) {
     if (vm.isLoading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -59,13 +59,13 @@ class _ThongBaoView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
+            Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
             const SizedBox(height: 12),
-            Text(vm.error!, style: const TextStyle(color: AppColors.textMuted)),
+            Text(vm.error!, style: TextStyle(color: AppColors.textMuted)),
             const SizedBox(height: 16),
             TextButton(
               onPressed: vm.loadData,
-              child: const Text(
+              child: Text(
                 'Thử lại',
                 style: TextStyle(color: AppColors.tealPrimary),
               ),
@@ -115,16 +115,16 @@ class _ThongBaoView extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Thông báo thanh toán',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -158,7 +158,7 @@ class _ThongBaoView extends StatelessWidget {
               color: AppColors.red.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.notifications_active_rounded,
               color: AppColors.red,
               size: 28,
@@ -171,8 +171,8 @@ class _ThongBaoView extends StatelessWidget {
               children: [
                 Text(
                   _tien(vm.tongConNo),
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: AppColors.textPrimary,
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                   ),
@@ -180,7 +180,7 @@ class _ThongBaoView extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'Cần thanh toán • ${vm.chuaThanhToan.length} hóa đơn',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.textMuted,
                     fontSize: 12.5,
                   ),
@@ -241,8 +241,8 @@ class _ThongBaoView extends StatelessWidget {
                     children: [
                       Text(
                         'Hóa đơn tháng ${h.thang}/${h.nam}',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
@@ -250,7 +250,7 @@ class _ThongBaoView extends StatelessWidget {
                       const SizedBox(height: 3),
                       Text(
                         _hanText(h.hanThanhToan),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.textMuted,
                           fontSize: 12,
                         ),
@@ -260,7 +260,7 @@ class _ThongBaoView extends StatelessWidget {
                 ),
                 Text(
                   _tien(con),
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.red,
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
@@ -290,7 +290,7 @@ class _ThongBaoView extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                const Text(
+                Text(
                   'Thanh toán',
                   style: TextStyle(
                     color: AppColors.tealPrimary,
@@ -298,7 +298,7 @@ class _ThongBaoView extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const Icon(
+                Icon(
                   Icons.chevron_right,
                   color: AppColors.tealPrimary,
                   size: 18,
@@ -320,7 +320,7 @@ class _ThongBaoView extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.borderButton),
       ),
-      child: const Column(
+      child: Column(
         children: [
           Icon(
             Icons.check_circle_rounded,
@@ -331,7 +331,7 @@ class _ThongBaoView extends StatelessWidget {
           Text(
             'Bạn đã thanh toán hết',
             style: TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -349,7 +349,7 @@ class _ThongBaoView extends StatelessWidget {
   Widget _groupTitle(String text) {
     return Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         color: AppColors.textMuted,
         fontSize: 15,
         fontWeight: FontWeight.w600,

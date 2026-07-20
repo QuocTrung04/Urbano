@@ -42,6 +42,7 @@ import 'package:urbano/Views/vehicle/phuong_tien_screen.dart';
 import 'package:urbano/features/invoice/ViewModels/hoa_don_detail_viewmodel.dart';
 import 'package:urbano/features/invoice/Views/hoa_don_detail_view.dart';
 import 'package:urbano/features/invoice/Views/hoa_don_view.dart';
+import 'package:urbano/ViewModels/theme_provider.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -80,27 +81,33 @@ class AppRoutes {
   static const String lichSuDatTienIch = '/lich-su-dat-tien-ich';
   static const String themNhanKhau = '/them-nhan-khau';
 
+  static WidgetBuilder _wrap(WidgetBuilder builder) {
+    return (context) => Consumer<ThemeProvider>(
+      builder: (context, theme, _) => builder(context),
+    );
+  }
+
   static Map<String, WidgetBuilder> get routes => {
-    splash: (_) => const SplashScreen(),
-    login: (_) => const LoginScreen(),
-    pending: (_) => const PendingScreen(),
-    forgotPassword: (_) => const ForgotPasswordScreen(),
-    home: (_) => const HomeScreen(),
-    resetPassword: (_) => const ResetPasswordScreen(),
-    changePassword: (_) => const ChangePasswordScreen(),
-    phuongTien: (_) => const PhuongTienScreen(),
-    contact: (_) => const ContactScreen(),
-    yeucau: (_) => const YeuCauScreen(),
-    bangTin: (_) => const BangTinScreen(),
-    dieuKhoan: (_) => const DieuKhoanScreen(),
-    trogiup: (_) => const TroGiupScreen(),
-    tienich: (_) => const TienIchScreen(),
-    addPhuongTien: (_) => const ThemPhuongTienScreen(),
-    nhanKhau: (_) => const NhanKhauScreen(),
-    lichSuThanhToan: (_) => const LichSuThanhToanScreen(),
-    thongBaoThanhToan: (_) => const ThongBaoThanhToanScreen(),
-    lichSuDatTienIch: (_) => const LichSuDatLichScreen(),
-    themNhanKhau: (_) => const ThemNhanKhauScreen(),
+    splash: _wrap((_) => const SplashScreen()),
+    login: _wrap((_) => const LoginScreen()),
+    pending: _wrap((_) => const PendingScreen()),
+    forgotPassword: _wrap((_) => const ForgotPasswordScreen()),
+    home: _wrap((_) => const HomeScreen()),
+    resetPassword: _wrap((_) => const ResetPasswordScreen()),
+    changePassword: _wrap((_) => const ChangePasswordScreen()),
+    phuongTien: _wrap((_) => const PhuongTienScreen()),
+    contact: _wrap((_) => const ContactScreen()),
+    yeucau: _wrap((_) => const YeuCauScreen()),
+    bangTin: _wrap((_) => const BangTinScreen()),
+    dieuKhoan: _wrap((_) => const DieuKhoanScreen()),
+    trogiup: _wrap((_) => const TroGiupScreen()),
+    tienich: _wrap((_) => const TienIchScreen()),
+    addPhuongTien: _wrap((_) => const ThemPhuongTienScreen()),
+    nhanKhau: _wrap((_) => const NhanKhauScreen()),
+    lichSuThanhToan: _wrap((_) => const LichSuThanhToanScreen()),
+    thongBaoThanhToan: _wrap((_) => const ThongBaoThanhToanScreen()),
+    lichSuDatTienIch: _wrap((_) => const LichSuDatLichScreen()),
+    themNhanKhau: _wrap((_) => const ThemNhanKhauScreen()),
   };
 
   static Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
@@ -109,79 +116,79 @@ class AppRoutes {
       case verifyOtp:
         final arg = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-          builder: (_) => VerifyOtpScreen(
+          builder: _wrap((_) => VerifyOtpScreen(
             contact: arg['contact'] as String,
             isSms: arg['_isSms'] as bool,
-          ),
+          )),
         );
       //man  setting
       case setting:
         final arg = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-          builder: (_) => SettingScreen(
+          builder: _wrap((_) => SettingScreen(
             cuDan: arg['cuDan'] as CuDan,
             canHoText: arg['canHoText'] as String,
             soCanHo: arg['soCanHo'] as String,
-          ),
+          )),
         );
       //man thong bao
       case notification:
         final list = settings.arguments as List<ThongBao>;
         return MaterialPageRoute(
-          builder: (_) => NotificationScreen(thongBaoList: list),
+          builder: _wrap((_) => NotificationScreen(thongBaoList: list)),
         );
       case notificationDetail:
         final tbList = settings.arguments as ThongBao;
         return MaterialPageRoute(
-          builder: (_) => NotificationDetailScreen(thongBao: tbList),
+          builder: _wrap((_) => NotificationDetailScreen(thongBao: tbList)),
         );
       case phuongTienDetail:
         final phuongTienList = settings.arguments as PhuongTien;
         return MaterialPageRoute(
-          builder: (_) => PhuongTienDetailScreen(phuongTien: phuongTienList),
+          builder: _wrap((_) => PhuongTienDetailScreen(phuongTien: phuongTienList)),
         );
       case accountInfo:
         final arg = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-          builder: (_) => AccountInfoScreen(
+          builder: _wrap((_) => AccountInfoScreen(
             cuDan: arg['cuDan'] as CuDan,
             soCanHo: arg['soCanHo'] as String,
-          ),
+          )),
         );
       case editProfile:
         final arg = settings.arguments as CuDan;
-        return MaterialPageRoute(builder: (_) => EditProfileScreen(cuDan: arg));
+        return MaterialPageRoute(builder: _wrap((_) => EditProfileScreen(cuDan: arg)));
       case invoiceDetail:
         final hoaDon = settings.arguments as HoaDonModel;
         return MaterialPageRoute(
-          builder: (_) => ChangeNotifierProvider(
+          builder: _wrap((_) => ChangeNotifierProvider(
             create: (_) => HoaDonDetailViewModel(
               services: HoaDonServices(),
               hoaDon: hoaDon,
             )..fetchDetail(),
             child: const HoaDonDetailView(),
-          ),
+          )),
         );
       case invoice:
         final canHoId = settings.arguments as int;
-        return MaterialPageRoute(builder: (_) => HoaDonView(canHoId: canHoId));
+        return MaterialPageRoute(builder: _wrap((_) => HoaDonView(canHoId: canHoId)));
       case bangTinDetail:
         final btList = settings.arguments as BangTin;
         return MaterialPageRoute(
-          builder: (_) => BangTinDetailScreen(bangTin: btList),
+          builder: _wrap((_) => BangTinDetailScreen(bangTin: btList)),
         );
       case yeuCauDetail:
         final yc = settings.arguments as YeuCauCuDan;
         return MaterialPageRoute(
-          builder: (_) => ChiTietYeuCauScreen(yeuCau: yc),
+          builder: _wrap((_) => ChiTietYeuCauScreen(yeuCau: yc)),
         );
       case thanhToan:
         final tt = settings.arguments as HoaDonModel;
-        return MaterialPageRoute(builder: (_) => ThanhToanQRScreen(hoaDon: tt));
+        return MaterialPageRoute(builder: _wrap((_) => ThanhToanQRScreen(hoaDon: tt)));
       case datLichTienIch:
         final datLich = settings.arguments as TienIch;
         return MaterialPageRoute(
-          builder: (_) => DatLichScreen(tienIch: datLich),
+          builder: _wrap((_) => DatLichScreen(tienIch: datLich)),
         );
       default:
         return null;

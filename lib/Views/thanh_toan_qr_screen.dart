@@ -115,30 +115,30 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'THANH TOÁN QR',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             size: 20,
           ),
           onPressed: () => Navigator.pop(context),
@@ -148,7 +148,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -165,7 +165,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
 
   Widget _buildBody() {
     if (_loadingConfig) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -176,11 +176,11 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline_rounded, color: AppColors.red, size: 64),
+            Icon(Icons.error_outline_rounded, color: AppColors.red, size: 64),
             const SizedBox(height: 16),
             Text(
               _error!,
-              style: const TextStyle(color: Colors.white, fontSize: 15),
+              style: TextStyle(color: AppColors.textPrimary, fontSize: 15),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -191,7 +191,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
                 onPressed: () => Navigator.pop(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.tealPrimary,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.textPrimary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -228,7 +228,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(
@@ -246,7 +246,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
                 height: 240,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
-                  return const SizedBox(
+                  return SizedBox(
                     width: 240,
                     height: 240,
                     child: Center(
@@ -292,21 +292,21 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildInfoRow('Ngân hàng', '${config.tenNhaCungCap} (${config.maNhanDien})'),
-                const Divider(color: AppColors.borderButton, height: 24),
+                Divider(color: AppColors.borderButton, height: 24),
                 _buildInfoRowWithCopy(
                   'Số tài khoản',
                   config.dinhDanhThuHuong,
                   () => _copyToClipboard(config.dinhDanhThuHuong, 'Số tài khoản'),
                 ),
-                const Divider(color: AppColors.borderButton, height: 24),
+                Divider(color: AppColors.borderButton, height: 24),
                 _buildInfoRow('Chủ tài khoản', config.tenChuTaiKhoan.toUpperCase()),
-                const Divider(color: AppColors.borderButton, height: 24),
+                Divider(color: AppColors.borderButton, height: 24),
                 _buildInfoRowWithCopy(
                   'Số tiền chuyển',
                   _formatPrice(conThieuVal),
                   () => _copyToClipboard(conThieuVal.toInt().toString(), 'Số tiền'),
                 ),
-                const Divider(color: AppColors.borderButton, height: 24),
+                Divider(color: AppColors.borderButton, height: 24),
                 _buildInfoRowWithCopy(
                   'Nội dung chuyển khoản',
                   addInfoText,
@@ -331,15 +331,15 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 12, color: AppColors.textMuted),
+          style: TextStyle(fontSize: 12, color: AppColors.textMuted),
         ),
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
       ],
@@ -356,15 +356,15 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
             children: [
               Text(
                 label,
-                style: const TextStyle(fontSize: 12, color: AppColors.textMuted),
+                style: TextStyle(fontSize: 12, color: AppColors.textMuted),
               ),
               const SizedBox(height: 4),
               Text(
                 value,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -372,7 +372,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
         ),
         IconButton(
           onPressed: onCopy,
-          icon: const Icon(Icons.copy_rounded, color: AppColors.tealPrimary, size: 20),
+          icon: Icon(Icons.copy_rounded, color: AppColors.tealPrimary, size: 20),
           splashRadius: 20,
         ),
       ],
@@ -384,7 +384,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
       return Column(
         children: [
           const SizedBox(height: 12),
-          const SizedBox(
+          SizedBox(
             width: 24,
             height: 24,
             child: CircularProgressIndicator(
@@ -393,7 +393,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          const Text(
+          Text(
             'Đang chờ xác nhận thanh toán...',
             style: TextStyle(
               color: AppColors.textMuted,
@@ -408,7 +408,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
     return Column(
       children: [
         const SizedBox(height: 12),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.check_circle_rounded, color: AppColors.tealPrimary, size: 28),
@@ -416,7 +416,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
             Text(
               'Thanh toán thành công!',
               style: TextStyle(
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -431,7 +431,7 @@ class _ThanhToanQRScreenState extends State<ThanhToanQRScreen> {
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.tealPrimary,
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.textPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),

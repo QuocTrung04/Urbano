@@ -80,9 +80,9 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final vm = context.watch<ChangePasswordViewmodel>();
@@ -121,7 +121,7 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.white,
+                                  color: AppColors.textPrimary,
                                   letterSpacing: 1,
                                 ),
                               ),
@@ -209,12 +209,12 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
       padding: const EdgeInsets.only(top: 6, left: 4),
       child: Row(
         children: [
-          const Icon(Icons.error_outline, size: 14, color: AppColors.red),
+          Icon(Icons.error_outline, size: 14, color: AppColors.red),
           const SizedBox(width: 5),
           Expanded(
             child: Text(
               loi,
-              style: const TextStyle(color: AppColors.red, fontSize: 12),
+              style: TextStyle(color: AppColors.red, fontSize: 12),
             ),
           ),
         ],
@@ -306,7 +306,7 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
           string,
           style: TextStyle(
             fontSize: 12,
-            color: check ? Colors.white : AppColors.textMuted,
+            color: check ? AppColors.textPrimary : AppColors.textMuted,
           ),
         ),
       ],
@@ -324,7 +324,7 @@ class _ChangePasswordViewState extends State<_ChangePasswordView> {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
-        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+        child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
       ),
     );
   }

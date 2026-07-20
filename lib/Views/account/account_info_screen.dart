@@ -43,7 +43,7 @@
 //     SystemChrome.setSystemUIOverlayStyle(
 //       SystemUiOverlayStyle(
 //         statusBarColor: Colors.transparent,
-//         statusBarIconBrightness: Brightness.light,
+//         statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
 //       ),
 //     );
 //     final vm = context.watch<AccountInfoViewmodel>();
@@ -83,7 +83,7 @@
 //         child: Column(
 //           mainAxisSize: MainAxisSize.min,
 //           children: [
-//             const Icon(
+//             Icon(
 //               Icons.error_outline,
 //               color: AppColors.textMuted,
 //               size: 48,
@@ -91,7 +91,7 @@
 //             const SizedBox(height: 12),
 //             Text(
 //               vm.error ?? 'Không tải được thông tin',
-//               style: const TextStyle(color: AppColors.textMuted),
+//               style: TextStyle(color: AppColors.textMuted),
 //             ),
 //             const SizedBox(height: 16),
 //             TextButton(
@@ -212,7 +212,7 @@
 //               borderRadius: BorderRadius.circular(8),
 //               border: Border.all(color: AppColors.borderButton),
 //             ),
-//             child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+//             child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
 //           ),
 //         ),
 //         SizedBox(width: 14),
@@ -222,7 +222,7 @@
 //             style: TextStyle(
 //               fontSize: 20,
 //               fontWeight: FontWeight.w600,
-//               color: Colors.white,
+//               color: AppColors.textPrimary,
 //               letterSpacing: 1,
 //             ),
 //           ),
@@ -290,7 +290,7 @@
 //             style: TextStyle(
 //               fontSize: 24,
 //               fontWeight: FontWeight.w700,
-//               color: Colors.white,
+//               color: AppColors.textPrimary,
 //               letterSpacing: 1,
 //             ),
 //           ),
@@ -396,7 +396,7 @@
 //                   value,
 //                   style: TextStyle(
 //                     fontSize: 15,
-//                     color: Colors.white,
+//                     color: AppColors.textPrimary,
 //                     fontWeight: FontWeight.w600,
 //                   ),
 //                 ),
@@ -411,7 +411,7 @@
 //                   SnackBar(
 //                     content: Text(
 //                       'Đã sao chép $title',
-//                       style: TextStyle(color: Colors.white),
+//                       style: TextStyle(color: AppColors.textPrimary),
 //                     ),
 //                     duration: const Duration(seconds: 1),
 //                     behavior: SnackBarBehavior.floating,
@@ -491,7 +491,7 @@ class _AccountInfoView extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final vm = context.watch<AccountInfoViewmodel>();
@@ -521,7 +521,7 @@ class _AccountInfoView extends StatelessWidget {
   ) {
     // Chưa có dữ liệu + đang tải -> vòng xoay
     if (cuDan == null && vm.isLoading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -531,7 +531,7 @@ class _AccountInfoView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+            Icon(
               Icons.error_outline,
               color: AppColors.textMuted,
               size: 48,
@@ -539,12 +539,12 @@ class _AccountInfoView extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               vm.error ?? 'Không tải được thông tin',
-              style: const TextStyle(color: AppColors.textMuted),
+              style: TextStyle(color: AppColors.textMuted),
             ),
             const SizedBox(height: 16),
             TextButton(
               onPressed: vm.refresh,
-              child: const Text(
+              child: Text(
                 'Thử lại',
                 style: TextStyle(color: AppColors.tealPrimary),
               ),
@@ -668,7 +668,7 @@ class _AccountInfoView extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         SizedBox(width: 14),
@@ -678,7 +678,7 @@ class _AccountInfoView extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: AppColors.textPrimary,
               letterSpacing: 1,
             ),
           ),
@@ -746,7 +746,7 @@ class _AccountInfoView extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: AppColors.textPrimary,
               letterSpacing: 1,
             ),
           ),
@@ -852,7 +852,7 @@ class _AccountInfoView extends StatelessWidget {
                   value,
                   style: TextStyle(
                     fontSize: 15,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -867,7 +867,7 @@ class _AccountInfoView extends StatelessWidget {
                   SnackBar(
                     content: Text(
                       'Đã sao chép $title',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: AppColors.textPrimary),
                     ),
                     duration: const Duration(seconds: 1),
                     behavior: SnackBarBehavior.floating,

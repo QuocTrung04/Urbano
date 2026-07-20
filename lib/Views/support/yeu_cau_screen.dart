@@ -72,7 +72,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final vm = context.watch<YeuCauViewModel>();
@@ -123,7 +123,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.borderButton),
               ),
-              child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+              child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
             ),
           ),
           SizedBox(width: 14),
@@ -133,7 +133,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 letterSpacing: 1,
               ),
             ),
@@ -234,7 +234,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
 
   Widget _buildBody(YeuCauViewModel vm) {
     if (vm.isLoading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -242,7 +242,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
       return Center(
         child: Text(
           vm.error!,
-          style: const TextStyle(color: AppColors.textMuted),
+          style: TextStyle(color: AppColors.textMuted),
         ),
       );
     }
@@ -253,7 +253,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(Icons.inbox_outlined, size: 48, color: AppColors.textMuted),
             SizedBox(height: 12),
             Text(
@@ -342,10 +342,10 @@ class _YeuVauViewState extends State<_YeuVauView> {
                       const SizedBox(height: 9),
                       Text(
                         yc.tieuDe,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       if (yc.noiDung != null) ...[
@@ -354,7 +354,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
                           yc.noiDung!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12.5,
                             color: AppColors.textMuted,
                             height: 1.5,
@@ -364,14 +364,14 @@ class _YeuVauViewState extends State<_YeuVauView> {
                       const SizedBox(height: 12),
                       Container(
                         padding: const EdgeInsets.only(top: 11),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           border: Border(
                             top: BorderSide(color: AppColors.borderButton),
                           ),
                         ),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.access_time,
                               size: 13,
                               color: AppColors.iconMuted,
@@ -379,7 +379,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
                             const SizedBox(width: 5),
                             Text(
                               _formatTime(yc.ngayGui ?? yc.createdAt),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 11,
                                 color: AppColors.textMuted,
                               ),

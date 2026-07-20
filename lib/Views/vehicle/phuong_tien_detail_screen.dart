@@ -18,9 +18,9 @@ class PhuongTienDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
 
@@ -31,7 +31,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -94,7 +94,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
   Widget _groupTitle(String text) {
     return Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         color: AppColors.textMuted,
         fontSize: 15,
         fontWeight: FontWeight.w600,
@@ -109,7 +109,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
       children.add(rows[i]);
       if (i < rows.length - 1) {
         children.add(
-          const Divider(
+          Divider(
             height: 1,
             thickness: 0.5,
             indent: 66,
@@ -150,7 +150,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.textMuted,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -159,9 +159,9 @@ class PhuongTienDetailScreen extends StatelessWidget {
                 const SizedBox(height: 3),
                 Text(
                   value,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
                   ),
@@ -187,16 +187,16 @@ class PhuongTienDetailScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Chi tiết phương tiện',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -240,8 +240,8 @@ class PhuongTienDetailScreen extends StatelessWidget {
             if (coBienSo) ...[
               Text(
                 xe.bienSo,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: AppColors.textPrimary,
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.5,
@@ -251,7 +251,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
             ],
             Text(
               xe.loaiPhuongTien.tenLoaiPhuongTien,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.textMuted,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
@@ -447,23 +447,23 @@ class PhuongTienDetailScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: Text(
           title,
-          style: const TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: AppColors.textPrimary, fontSize: 18),
         ),
         content: Text(
           msg,
-          style: const TextStyle(color: AppColors.textMuted, height: 1.4),
+          style: TextStyle(color: AppColors.textMuted, height: 1.4),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text(
+            child: Text(
               'Đóng',
               style: TextStyle(color: AppColors.textMuted),
             ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text(
+            child: Text(
               'Xác nhận',
               style: TextStyle(color: AppColors.red),
             ),
@@ -476,7 +476,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
   void _thongBao(BuildContext context, String msg, {bool loi = false}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(msg, style: const TextStyle(color: Colors.white)),
+        content: Text(msg, style: TextStyle(color: AppColors.textPrimary)),
         behavior: SnackBarBehavior.floating,
         backgroundColor: loi ? AppColors.red : AppColors.bgMid,
       ),

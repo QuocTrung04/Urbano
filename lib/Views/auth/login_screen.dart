@@ -49,9 +49,9 @@ class _LoginViewState extends State<_LoginView> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
@@ -124,7 +124,7 @@ class _LoginViewState extends State<_LoginView> {
       children: [
         Text(
           'Chào mừng trở lại 👋',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+          style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w500),
         ),
         Text(
           'Đăng nhập để quản lý căn hộ của bạn',
@@ -242,7 +242,7 @@ class _LoginViewState extends State<_LoginView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ListTile(
-                          leading: const Icon(Icons.email),
+                          leading: Icon(Icons.email),
                           title: const Text('Email'),
                           onTap: () {
                             _guiEmail('urbano.support@gmail.com');

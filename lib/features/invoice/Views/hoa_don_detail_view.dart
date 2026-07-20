@@ -13,8 +13,8 @@ class HoaDonDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.light,
+        statusBarColor: AppColors.textPrimary,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final vm = context.watch<HoaDonDetailViewModel>();
@@ -41,22 +41,22 @@ class HoaDonDetailView extends StatelessWidget {
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: const Text(
+            title: Text(
               'CHI TIẾT HÓA ĐƠN',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,
-                color: Colors.white,
+                color: AppColors.textPrimary,
               ),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back_ios_new_rounded,
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 size: 20,
               ),
               onPressed: () => Navigator.pop(context),
@@ -65,7 +65,7 @@ class HoaDonDetailView extends StatelessWidget {
           body: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -77,7 +77,7 @@ class HoaDonDetailView extends StatelessWidget {
                 stops: [0.0, 0.5, 1.0],
               ),
             ),
-            child: const Center(
+            child: Center(
               child: CircularProgressIndicator(color: AppColors.tealPrimary),
             ),
           ),
@@ -86,22 +86,22 @@ class HoaDonDetailView extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'CHI TIẾT HÓA ĐƠN',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             size: 20,
           ),
           onPressed: () => Navigator.pop(context),
@@ -109,7 +109,7 @@ class HoaDonDetailView extends StatelessWidget {
       ),
       extendBodyBehindAppBar: true,
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -133,7 +133,7 @@ class HoaDonDetailView extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // Detailed breakdown title
-                      const Text(
+                      Text(
                         'CHI TIẾT PHÍ DỊCH VỤ',
                         style: TextStyle(
                           fontSize: 14,
@@ -191,10 +191,10 @@ class HoaDonDetailView extends StatelessWidget {
             children: [
               Text(
                 item.kyThanhToan,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                 ),
               ),
               Container(
@@ -217,18 +217,18 @@ class HoaDonDetailView extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(color: AppColors.borderButton, height: 24),
-          const Text(
+          Divider(color: AppColors.borderButton, height: 24),
+          Text(
             'Tổng Tiền Thanh Toán',
             style: TextStyle(fontSize: 13, color: AppColors.textMuted),
           ),
           const SizedBox(height: 6),
           Text(
             item.tongTienHienThi,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w800,
-              color: Colors.white,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 16),
@@ -248,14 +248,14 @@ class HoaDonDetailView extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 13, color: AppColors.textMuted),
+          style: TextStyle(fontSize: 13, color: AppColors.textMuted),
         ),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
       ],
@@ -281,18 +281,18 @@ class HoaDonDetailView extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                 ),
               ),
               Text(
                 _formatPrice(detail.thanhTien),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -315,7 +315,7 @@ class HoaDonDetailView extends StatelessWidget {
             children: [
               Text(
                 'Số lượng: ${detail.soLuong.toInt()} x ${_formatPrice(detail.donGia)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   color: AppColors.textMuted,
                 ),
@@ -323,7 +323,7 @@ class HoaDonDetailView extends StatelessWidget {
               if (hasReadings)
                 Text(
                   'Tiêu thụ: ${(detail.soMoi! - detail.soCu!).toInt()}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: AppColors.tealPrimary,
@@ -346,7 +346,7 @@ class HoaDonDetailView extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 11, color: AppColors.textMuted),
+        style: TextStyle(fontSize: 11, color: AppColors.textMuted),
       ),
     );
   }
@@ -360,7 +360,7 @@ class HoaDonDetailView extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.borderButton),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
           'Không có chi tiết hóa đơn.',
           style: TextStyle(fontSize: 13, color: AppColors.textMuted),
@@ -401,7 +401,7 @@ class HoaDonDetailView extends StatelessWidget {
             isBold: false,
             valueColor: AppColors.tealPrimary,
           ),
-          const Divider(color: AppColors.borderButton, height: 16),
+          Divider(color: AppColors.borderButton, height: 16),
           _buildSummaryRow(
             'Còn lại cần thanh toán',
             _formatPrice(conLai),
@@ -427,7 +427,7 @@ class HoaDonDetailView extends StatelessWidget {
           style: TextStyle(
             fontSize: isBold ? 14 : 13,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-            color: isBold ? Colors.white : AppColors.textMuted,
+            color: isBold ? AppColors.textPrimary : AppColors.textMuted,
           ),
         ),
         Text(
@@ -435,7 +435,7 @@ class HoaDonDetailView extends StatelessWidget {
           style: TextStyle(
             fontSize: isBold ? 15 : 13,
             fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
-            color: valueColor ?? (isBold ? Colors.white : Colors.white),
+            color: valueColor ?? (isBold ? AppColors.textPrimary : AppColors.textPrimary),
           ),
         ),
       ],
@@ -473,7 +473,7 @@ class HoaDonDetailView extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.tealPrimary,
               disabledBackgroundColor: AppColors.inputFill,
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.textPrimary,
               disabledForegroundColor: AppColors.iconMuted,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -482,7 +482,7 @@ class HoaDonDetailView extends StatelessWidget {
             ),
             child: Text(
               isPaid ? 'ĐÃ HOÀN THÀNH THANH TOÁN' : 'THANH TOÁN NGAY',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.0,

@@ -10,8 +10,8 @@ class BangTinDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.light,
+        statusBarColor: AppColors.textPrimary,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
@@ -83,7 +83,7 @@ class BangTinDetailScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         SizedBox(width: 14),
@@ -92,7 +92,7 @@ class BangTinDetailScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -117,7 +117,7 @@ class BangTinDetailScreen extends StatelessWidget {
                         if (progress == null) return child;
                         return Container(
                           color: AppColors.inputFill,
-                          child: const Center(
+                          child: Center(
                             child: CircularProgressIndicator(
                               color: AppColors.tealPrimary,
                               strokeWidth: 2,
@@ -127,7 +127,7 @@ class BangTinDetailScreen extends StatelessWidget {
                       },
                       errorBuilder: (_, __, ___) => Container(
                         color: AppColors.inputFill,
-                        child: const Center(
+                        child: Center(
                           child: Icon(
                             Icons.broken_image_outlined,
                             color: AppColors.iconMuted,
@@ -150,7 +150,7 @@ class BangTinDetailScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: AppColors.textPrimary,
               letterSpacing: 1,
               height: 1.5,
             ),

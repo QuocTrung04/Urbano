@@ -99,7 +99,7 @@ void showTienIchDetail(BuildContext context, TienIch t) {
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
     builder: (_) => Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.bgMid,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -137,8 +137,8 @@ void showTienIchDetail(BuildContext context, TienIch t) {
                   children: [
                     Text(
                       t.tenTienIch,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: AppColors.textPrimary,
                         fontSize: 19,
                         fontWeight: FontWeight.w700,
                       ),
@@ -175,7 +175,7 @@ void showTienIchDetail(BuildContext context, TienIch t) {
             const SizedBox(height: 16),
             Text(
               t.moTa!,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.textMuted,
                 fontSize: 13,
                 height: 1.5,
@@ -197,14 +197,14 @@ Widget _infoRow(IconData icon, String label, String value) {
       const SizedBox(width: 10),
       Text(
         '$label:',
-        style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+        style: TextStyle(color: AppColors.textMuted, fontSize: 13),
       ),
       const SizedBox(width: 6),
       Expanded(
         child: Text(
           value,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: AppColors.textPrimary,
             fontSize: 13,
             fontWeight: FontWeight.w500,
           ),
@@ -226,7 +226,7 @@ Widget _nutDangKy(BuildContext context, TienIch t) {
         color: AppColors.inputFill,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
           'Tạm ngưng phục vụ',
           style: TextStyle(
@@ -249,7 +249,7 @@ Widget _nutDangKy(BuildContext context, TienIch t) {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.tealPrimary.withValues(alpha: 0.3)),
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
@@ -280,18 +280,18 @@ Widget _nutDangKy(BuildContext context, TienIch t) {
       width: double.infinity,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [AppColors.tealPrimary, AppColors.tealDark],
         ),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
           'Đăng ký đặt trước',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
       ),

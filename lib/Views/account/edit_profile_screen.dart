@@ -72,7 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       lastDate: DateTime.now(),
       builder: (context, child) => Theme(
         data: Theme.of(context).copyWith(
-          colorScheme: const ColorScheme.dark(
+          colorScheme: ColorScheme.dark(
             primary: AppColors.tealPrimary,
             surface: AppColors.bgMid,
           ),
@@ -142,7 +142,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         SnackBar(
           content: Text(
             'Cập nhật thành công',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: AppColors.textPrimary),
           ),
           behavior: SnackBarBehavior.floating,
           backgroundColor: AppColors.tealDark,
@@ -162,7 +162,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
@@ -252,7 +252,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         SizedBox(width: 14),
@@ -261,7 +261,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -395,12 +395,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Text(
               _formatTime(_ngaySinh),
               style: TextStyle(
-                color: _ngaySinh == null ? AppColors.textHint : Colors.white,
+                color: _ngaySinh == null ? AppColors.textHint : AppColors.textPrimary,
                 fontSize: 13,
               ),
             ),
             const Spacer(),
-            const Icon(
+            Icon(
               Icons.calendar_month_outlined,
               size: 18,
               color: AppColors.textHint,
@@ -454,25 +454,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         child: Center(
           child: _dangLuu
-              ? const SizedBox(
+              ? SizedBox(
                   width: 22,
                   height: 22,
                   child: CircularProgressIndicator(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     strokeWidth: 2.5,
                   ),
                 )
-              : const Row(
+              : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.save_outlined, size: 18, color: Colors.white),
+                    Icon(Icons.save_outlined, size: 18, color: AppColors.textPrimary),
                     SizedBox(width: 9),
                     Text(
                       'Lưu thay đổi',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -487,12 +487,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       margin: const EdgeInsets.only(top: 13),
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
-        color: const Color(0x08FFFFFF),
+        color: Color(0x08FFFFFF),
         borderRadius: BorderRadius.circular(1),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Icon(Icons.info_outline, size: 14, color: AppColors.textHint),
           SizedBox(width: 7),
           Expanded(

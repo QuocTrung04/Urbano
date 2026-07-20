@@ -8,6 +8,7 @@ import 'package:urbano/features/invoice/ViewModels/hoa_don_viewmodel.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:urbano/core/network/signalr_service.dart';
 import 'package:urbano/core/services/local_notification_service.dart';
+import 'package:urbano/ViewModels/theme_provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -30,9 +31,9 @@ void main() async {
   });
 
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
+    SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light, // Android
+      statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark, // Android
       statusBarBrightness: Brightness.dark, // iOS
     ),
   );
@@ -42,6 +43,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => HoaDonViewModel()),
         ChangeNotifierProvider(create: (_) => UserProvider()..loadFromPrefs()),
         ChangeNotifierProvider(create: (_) => SignalRService()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()..loadFromPrefs()),
       ],
       child: const MyApp(),
     ),
@@ -53,17 +55,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-      title: 'Urbano',
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.bgDark,
-        canvasColor: AppColors.bgDark,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.tealPrimary,
-          brightness: Brightness.dark,
-        ),
-      ),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          navigatorKey: navigatorKey,
+          title: 'Urbano',
+          theme: ThemeData(
+            scaffoldBackgroundColor: AppColors.bgDark,
+            canvasColor: AppColors.bgDark,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: AppColors.tealPrimary,
+              brightness: themeProvider.isDarkMode ? Brightness.dark : Brightness.light,
+            ),
+          ),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -75,6 +79,8 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.splash,
       routes: AppRoutes.routes,
       onGenerateRoute: AppRoutes.onGenerateRoutes,
+    );
+      },
     );
   }
 }

@@ -68,7 +68,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        title: const Row(
+        title: Row(
           children: [
             Icon(
               Icons.check_circle_rounded,
@@ -78,11 +78,11 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
             SizedBox(width: 10),
             Text(
               'Đã gửi yêu cầu',
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(color: AppColors.textPrimary, fontSize: 18),
             ),
           ],
         ),
-        content: const Text(
+        content: Text(
           'Yêu cầu thêm phương tiện đã được gửi. Ban quản lý sẽ duyệt trong thời gian sớm nhất.',
           style: TextStyle(color: AppColors.textMuted, height: 1.5),
         ),
@@ -92,7 +92,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
               Navigator.pop(ctx); // đóng dialog
               Navigator.pop(context, true); // đóng form, báo caller refresh
             },
-            child: const Text(
+            child: Text(
               'Xong',
               style: TextStyle(color: AppColors.tealPrimary),
             ),
@@ -105,7 +105,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
   void _snack(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(msg, style: const TextStyle(color: Colors.white)),
+        content: Text(msg, style: TextStyle(color: AppColors.textPrimary)),
         behavior: SnackBarBehavior.floating,
         backgroundColor: AppColors.bgMid,
       ),
@@ -115,9 +115,9 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
 
@@ -127,7 +127,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -167,7 +167,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
                   textCapitalization: TextCapitalization.characters,
                 ),
                 const SizedBox(height: 10),
-                const Text(
+                Text(
                   'Yêu cầu sẽ ở trạng thái "Chờ duyệt" cho đến khi ban quản lý xác nhận.',
                   style: TextStyle(
                     color: AppColors.textMuted,
@@ -189,8 +189,8 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
   Widget _label(String text) {
     return Text(
       text,
-      style: const TextStyle(
-        color: Colors.white,
+      style: TextStyle(
+        color: AppColors.textPrimary,
         fontSize: 15,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.5,
@@ -200,7 +200,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
 
   Widget _buildLoaiGrid(PhuongTienViewModel vm) {
     if (vm.loadingLoai) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Center(
           child: CircularProgressIndicator(color: AppColors.tealPrimary),
@@ -208,7 +208,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
       );
     }
     if (vm.loaiList.isEmpty) {
-      return const Text(
+      return Text(
         'Chưa có loại phương tiện',
         style: TextStyle(color: AppColors.textMuted, fontSize: 13),
       );
@@ -250,7 +250,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: chon ? Colors.white : AppColors.textMuted,
+                      color: chon ? AppColors.textPrimary : AppColors.textMuted,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -275,10 +275,10 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
     return TextField(
       controller: controller,
       textCapitalization: textCapitalization,
-      style: const TextStyle(color: Colors.white, fontSize: 15),
+      style: TextStyle(color: AppColors.textPrimary, fontSize: 15),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 14),
+        hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 14),
         prefixIcon: Icon(icon, color: AppColors.iconMuted, size: 20),
         filled: true,
         fillColor: AppColors.inputFill,
@@ -288,11 +288,11 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.borderButton),
+          borderSide: BorderSide(color: AppColors.borderButton),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.tealPrimary),
+          borderSide: BorderSide(color: AppColors.tealPrimary),
         ),
       ),
     );
@@ -307,7 +307,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
         decoration: BoxDecoration(
           gradient: submitting
               ? null
-              : const LinearGradient(
+              : LinearGradient(
                   colors: [AppColors.tealPrimary, AppColors.tealDark],
                 ),
           color: submitting ? AppColors.inputFill : null,
@@ -315,7 +315,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
         ),
         child: Center(
           child: submitting
-              ? const SizedBox(
+              ? SizedBox(
                   height: 22,
                   width: 22,
                   child: CircularProgressIndicator(
@@ -323,12 +323,12 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
                     color: AppColors.tealPrimary,
                   ),
                 )
-              : const Text(
+              : Text(
                   'Gửi yêu cầu',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -350,16 +350,16 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Thêm phương tiện',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),

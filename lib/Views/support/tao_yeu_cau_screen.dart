@@ -85,9 +85,9 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
 
@@ -96,7 +96,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -158,16 +158,16 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 19, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 19, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Tạo yêu cầu',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
       ],
@@ -179,7 +179,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         text,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
           color: AppColors.textMuted,
@@ -207,17 +207,17 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
         child: DropdownButton<int>(
           isExpanded: true,
           value: loaiChon?.id,
-          hint: const Text(
+          hint: Text(
             'Chọn loại yêu cầu',
             style: TextStyle(color: AppColors.textMuted, fontSize: 13),
           ),
-          icon: const Icon(
+          icon: Icon(
             Icons.keyboard_arrow_down_rounded,
             color: AppColors.textMuted,
           ),
           dropdownColor: AppColors.bgMid,
           borderRadius: BorderRadius.circular(8),
-          style: const TextStyle(color: Colors.white, fontSize: 13),
+          style: TextStyle(color: AppColors.textPrimary, fontSize: 13),
           items: LoaiYeuCau.danhSach.map((loai) {
             return DropdownMenuItem<int>(
               value: loai.id,
@@ -228,10 +228,10 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
                   const SizedBox(width: 8),
                   Text(
                     loai.name,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 ],
@@ -253,21 +253,21 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
   ) {
     return TextField(
       controller: ctrl,
-      style: const TextStyle(color: Colors.white, fontSize: 14),
+      style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: AppColors.textHint, fontSize: 13),
+        hintStyle: TextStyle(color: AppColors.textHint, fontSize: 13),
         prefixIcon: Icon(icon, size: 18, color: AppColors.iconMuted),
         filled: true,
         fillColor: AppColors.inputFill,
         contentPadding: const EdgeInsets.symmetric(vertical: 14),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.borderSide, width: 1.5),
+          borderSide: BorderSide(color: AppColors.borderSide, width: 1.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
+          borderSide: BorderSide(
             color: AppColors.tealPrimary,
             width: 1.5,
           ),
@@ -280,20 +280,20 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
     return TextField(
       controller: ctrl,
       maxLines: 5,
-      style: const TextStyle(color: Colors.white, fontSize: 14),
+      style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: AppColors.textHint, fontSize: 13),
+        hintStyle: TextStyle(color: AppColors.textHint, fontSize: 13),
         filled: true,
         fillColor: AppColors.inputFill,
         contentPadding: const EdgeInsets.all(14),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.borderSide, width: 1.5),
+          borderSide: BorderSide(color: AppColors.borderSide, width: 1.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
+          borderSide: BorderSide(
             color: AppColors.tealPrimary,
             width: 1.5,
           ),
@@ -363,7 +363,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             colors: [AppColors.tealPrimary, AppColors.tealDark],
           ),
           borderRadius: BorderRadius.circular(8),
@@ -377,25 +377,25 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
         ),
         child: Center(
           child: _dangGui
-              ? const SizedBox(
+              ? SizedBox(
                   width: 22,
                   height: 22,
                   child: CircularProgressIndicator(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     strokeWidth: 2.5,
                   ),
                 )
-              : const Row(
+              : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.send, size: 18, color: Colors.white),
+                    Icon(Icons.send, size: 18, color: AppColors.textPrimary),
                     SizedBox(width: 9),
                     Text(
                       'Gửi yêu cầu',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ],

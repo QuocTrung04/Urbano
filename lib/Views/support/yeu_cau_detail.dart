@@ -53,9 +53,9 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
     }
 
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final loai = LoaiYeuCau.timTheoId(_yc.loaiYeuCau);
@@ -65,7 +65,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -119,16 +119,16 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Chi tiết yêu cầu',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -185,8 +185,8 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
           const SizedBox(height: 14),
           Text(
             _yc.tieuDe,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: AppColors.textPrimary,
               fontSize: 19,
               fontWeight: FontWeight.w700,
               height: 1.3,
@@ -250,7 +250,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
                 child: Icon(
                   done ? Icons.check : Icons.circle,
                   size: done ? 16 : 8,
-                  color: done ? Colors.white : AppColors.textMuted,
+                  color: done ? AppColors.textPrimary : AppColors.textMuted,
                 ),
               ),
               const SizedBox(height: 6),
@@ -263,7 +263,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
                     fontSize: 10.5,
                     color: isCurrent
                         ? AppColors.tealPrimary
-                        : (done ? Colors.white : AppColors.textMuted),
+                        : (done ? AppColors.textPrimary : AppColors.textMuted),
                     fontWeight: isCurrent ? FontWeight.w700 : FontWeight.w500,
                   ),
                 ),
@@ -278,14 +278,14 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
   Widget _bannerTuChoi() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(14),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppColors.red.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.red.withValues(alpha: 0.3)),
       ),
       child: Row(
-        children: const [
+        children: [
           Icon(Icons.cancel_outlined, color: AppColors.red, size: 20),
           SizedBox(width: 10),
           Expanded(
@@ -315,7 +315,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       ),
       child: Text(
         noiDung.isEmpty ? 'Không có nội dung' : noiDung,
-        style: const TextStyle(color: Colors.white, fontSize: 14, height: 1.6),
+        style: TextStyle(color: AppColors.textPrimary, fontSize: 14, height: 1.6),
       ),
     );
   }
@@ -350,7 +350,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       children.add(rows[i]);
       if (i < rows.length - 1) {
         children.add(
-          const Divider(
+          Divider(
             height: 1,
             thickness: 0.5,
             indent: 46,
@@ -380,15 +380,15 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
           Expanded(
             child: Text(
               label,
-              style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+              style: TextStyle(color: AppColors.textMuted, fontSize: 13),
             ),
           ),
           Expanded(
             child: Text(
               value,
               textAlign: TextAlign.right,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColors.textPrimary,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
@@ -430,7 +430,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
   Widget _groupTitle(String text) {
     return Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         color: AppColors.textMuted,
         fontSize: 15,
         fontWeight: FontWeight.w600,
@@ -550,23 +550,23 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: Text(
           title,
-          style: const TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: AppColors.textPrimary, fontSize: 18),
         ),
         content: Text(
           msg,
-          style: const TextStyle(color: AppColors.textMuted, height: 1.4),
+          style: TextStyle(color: AppColors.textMuted, height: 1.4),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text(
+            child: Text(
               'Đóng',
               style: TextStyle(color: AppColors.textMuted),
             ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text(
+            child: Text(
               'Xác nhận',
               style: TextStyle(color: AppColors.red),
             ),
@@ -579,7 +579,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
   void _thongBao(BuildContext context, String msg, {bool loi = false}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(msg, style: const TextStyle(color: Colors.white)),
+        content: Text(msg, style: TextStyle(color: AppColors.textPrimary)),
         behavior: SnackBarBehavior.floating,
         backgroundColor: loi ? AppColors.red : AppColors.bgMid,
       ),

@@ -113,9 +113,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
@@ -214,7 +214,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           style: TextStyle(
             fontSize: 26,
             letterSpacing: 1,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -275,8 +275,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             maxLength: 1,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: AppColors.textPrimary,
               fontSize: 22,
               fontWeight: FontWeight.w500,
             ),
@@ -383,7 +383,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.borderButton),
         ),
-        child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+        child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
       ),
     );
   }

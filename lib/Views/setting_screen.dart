@@ -8,6 +8,7 @@ import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/Models/cudan_model.dart';
 import 'package:urbano/core/network/signalr_service.dart';
+import 'package:urbano/ViewModels/theme_provider.dart';
 
 class SettingScreen extends StatelessWidget {
   final CuDan cuDan;
@@ -23,9 +24,9 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
@@ -77,6 +78,21 @@ class SettingScreen extends StatelessWidget {
                   ),
                 ]),
                 SizedBox(height: 24),
+                _groupTitle('Giao diện'),
+                SizedBox(height: 14),
+                _card([
+                  _toggleRow(
+                    context: context,
+                    icon: Icons.dark_mode_rounded,
+                    title: 'Chế độ ban đêm',
+                    colors: AppColors.tealPrimary,
+                    value: context.watch<ThemeProvider>().isDarkMode,
+                    onChanged: (val) {
+                      context.read<ThemeProvider>().toggleTheme();
+                    },
+                  ),
+                ]),
+                SizedBox(height: 24),
                 _groupTitle('Hỗ trợ'),
                 SizedBox(height: 14),
                 _card([
@@ -120,7 +136,7 @@ class SettingScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.isDarkMode ? AppColors.textPrimary : Colors.black87),
           ),
         ),
         SizedBox(width: 14),
@@ -129,7 +145,7 @@ class SettingScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.isDarkMode ? AppColors.textPrimary : Colors.black87,
             letterSpacing: 1,
           ),
         ),
@@ -179,7 +195,7 @@ class SettingScreen extends StatelessWidget {
                     context.watch<UserProvider>().cuDan?.hoTen ?? cuDan.hoTen,
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.white,
+                      color: AppColors.isDarkMode ? AppColors.textPrimary : Colors.black87,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 1,
                     ),
@@ -227,7 +243,7 @@ class SettingScreen extends StatelessWidget {
   Widget _groupTitle(String string) {
     return Text(
       string.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
         color: AppColors.textMuted,
@@ -279,7 +295,7 @@ class SettingScreen extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white,
+                      color: AppColors.isDarkMode ? AppColors.textPrimary : Colors.black87,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 1,
                     ),
@@ -315,7 +331,7 @@ class SettingScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.red.withValues(alpha: 0.25)),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.logout, color: AppColors.red, size: 18),
@@ -350,15 +366,15 @@ class SettingScreen extends StatelessWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
-        title: const Text('Đăng xuất', style: TextStyle(color: Colors.white)),
-        content: const Text(
+        title: Text('Đăng xuất', style: TextStyle(color: AppColors.isDarkMode ? AppColors.textPrimary : Colors.black87)),
+        content: Text(
           'Bạn có chắc muốn đăng xuất?',
           style: TextStyle(color: AppColors.textMuted),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text(
+            child: Text(
               'Hủy',
               style: TextStyle(color: AppColors.textMuted),
             ),
@@ -368,7 +384,7 @@ class SettingScreen extends StatelessWidget {
               Navigator.pop(ctx);
               await logout(context);
             },
-            child: const Text(
+            child: Text(
               'Đăng xuất',
               style: TextStyle(color: AppColors.red),
             ),
@@ -388,6 +404,41 @@ class SettingScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(icon, color: color),
+    );
+  }
+
+  Widget _toggleRow({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required Color colors,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+      child: Row(
+        children: [
+          _iconBox(icon, colors),
+          SizedBox(width: 13),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 15,
+                color: AppColors.isDarkMode ? AppColors.textPrimary : Colors.black87,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 1,
+              ),
+            ),
+          ),
+          Switch(
+            value: value,
+            onChanged: onChanged,
+            activeColor: AppColors.tealPrimary,
+          ),
+        ],
+      ),
     );
   }
 }

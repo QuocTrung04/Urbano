@@ -40,7 +40,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
   void _snack(String msg, Color bg) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(msg, style: const TextStyle(color: Colors.white)),
+        content: Text(msg, style: TextStyle(color: AppColors.textPrimary)),
         behavior: SnackBarBehavior.floating,
         backgroundColor: bg,
       ),
@@ -56,12 +56,12 @@ class _DatLichScreenState extends State<DatLichScreen> {
       lastDate: now.add(const Duration(days: 60)),
       builder: (ctx, child) => Theme(
         data: Theme.of(ctx).copyWith(
-          colorScheme: const ColorScheme.dark(
+          colorScheme: ColorScheme.dark(
             primary: AppColors.tealPrimary,
             surface: AppColors.bgMid,
-            onSurface: Colors.white,
+            onSurface: AppColors.textPrimary,
           ),
-          dialogTheme: const DialogThemeData(backgroundColor: AppColors.bgMid),
+          dialogTheme: DialogThemeData(backgroundColor: AppColors.bgMid),
         ),
         child: child!,
       ),
@@ -77,10 +77,10 @@ class _DatLichScreenState extends State<DatLichScreen> {
           const TimeOfDay(hour: 8, minute: 0),
       builder: (ctx, child) => Theme(
         data: Theme.of(ctx).copyWith(
-          colorScheme: const ColorScheme.dark(
+          colorScheme: ColorScheme.dark(
             primary: AppColors.tealPrimary,
             surface: AppColors.bgMid,
-            onSurface: Colors.white,
+            onSurface: AppColors.textPrimary,
           ),
         ),
         child: child!,
@@ -151,7 +151,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.bgMid,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        title: const Row(
+        title: Row(
           children: [
             Icon(
               Icons.check_circle_rounded,
@@ -161,11 +161,11 @@ class _DatLichScreenState extends State<DatLichScreen> {
             SizedBox(width: 10),
             Text(
               'Đã gửi đăng ký',
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(color: AppColors.textPrimary, fontSize: 18),
             ),
           ],
         ),
-        content: const Text(
+        content: Text(
           'Yêu cầu đặt lịch đã được gửi. Ban quản lý sẽ duyệt trong thời gian sớm nhất.',
           style: TextStyle(color: AppColors.textMuted, height: 1.5),
         ),
@@ -175,7 +175,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
               Navigator.pop(ctx);
               Navigator.pop(context, true);
             },
-            child: const Text(
+            child: Text(
               'Xong',
               style: TextStyle(color: AppColors.tealPrimary),
             ),
@@ -188,16 +188,16 @@ class _DatLichScreenState extends State<DatLichScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -287,16 +287,16 @@ class _DatLichScreenState extends State<DatLichScreen> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Đặt lịch',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -332,7 +332,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
               color: AppColors.tealPrimary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.event_available_rounded,
               color: AppColors.tealPrimary,
               size: 26,
@@ -345,8 +345,8 @@ class _DatLichScreenState extends State<DatLichScreen> {
               children: [
                 Text(
                   t.tenTienIch,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: AppColors.textPrimary,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                   ),
@@ -354,7 +354,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
                 const SizedBox(height: 4),
                 Text(
                   '${t.gioText}${t.sucChua != null ? '  •  Tối đa ${t.sucChua} người' : ''}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.textMuted,
                     fontSize: 12,
                   ),
@@ -369,8 +369,8 @@ class _DatLichScreenState extends State<DatLichScreen> {
 
   Widget _label(String text) => Text(
     text,
-    style: const TextStyle(
-      color: Colors.white,
+    style: TextStyle(
+      color: AppColors.textPrimary,
       fontSize: 14,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.3,
@@ -403,7 +403,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: active ? Colors.white : AppColors.textMuted,
+                  color: active ? AppColors.textPrimary : AppColors.textMuted,
                   fontSize: 14,
                   fontWeight: active ? FontWeight.w600 : FontWeight.w400,
                 ),
@@ -425,15 +425,15 @@ class _DatLichScreenState extends State<DatLichScreen> {
       ),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.groups_outlined,
             size: 18,
             color: AppColors.iconMuted,
           ),
           const SizedBox(width: 10),
-          const Text(
+          Text(
             'Số người',
-            style: TextStyle(color: Colors.white, fontSize: 14),
+            style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
           ),
           const Spacer(),
           _nutTron(Icons.remove, () {
@@ -443,8 +443,8 @@ class _DatLichScreenState extends State<DatLichScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 14),
             child: Text(
               '$_soNguoi',
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColors.textPrimary,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
@@ -483,20 +483,20 @@ class _DatLichScreenState extends State<DatLichScreen> {
     return TextField(
       controller: _ghiChuCtrl,
       maxLines: 3,
-      style: const TextStyle(color: Colors.white, fontSize: 14),
+      style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
       decoration: InputDecoration(
         hintText: 'Nhập ghi chú nếu có...',
-        hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+        hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 13),
         filled: true,
         fillColor: AppColors.inputFill,
         contentPadding: const EdgeInsets.all(14),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.borderButton),
+          borderSide: BorderSide(color: AppColors.borderButton),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.tealPrimary),
+          borderSide: BorderSide(color: AppColors.tealPrimary),
         ),
       ),
     );
@@ -516,14 +516,14 @@ class _DatLichScreenState extends State<DatLichScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Phí sử dụng',
                 style: TextStyle(color: AppColors.textMuted, fontSize: 13),
               ),
               Text(
                 phiText,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: AppColors.textPrimary,
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                 ),
@@ -539,7 +539,7 @@ class _DatLichScreenState extends State<DatLichScreen> {
               decoration: BoxDecoration(
                 gradient: _dangGui
                     ? null
-                    : const LinearGradient(
+                    : LinearGradient(
                         colors: [AppColors.tealPrimary, AppColors.tealDark],
                       ),
                 color: _dangGui ? AppColors.inputFill : null,
@@ -547,20 +547,20 @@ class _DatLichScreenState extends State<DatLichScreen> {
               ),
               child: Center(
                 child: _dangGui
-                    ? const SizedBox(
+                    ? SizedBox(
                         height: 22,
                         width: 22,
                         child: CircularProgressIndicator(
                           strokeWidth: 2.4,
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                         ),
                       )
-                    : const Text(
+                    : Text(
                         'Gửi đăng ký',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                         ),
                       ),
               ),

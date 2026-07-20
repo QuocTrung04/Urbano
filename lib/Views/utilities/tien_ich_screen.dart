@@ -139,16 +139,16 @@ class _TienIchScreenState extends State<TienIchScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.bgDark, AppColors.bgMid, AppColors.bgDarkest],
             begin: Alignment.topRight,
@@ -163,7 +163,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
 
   Widget _buildBody() {
     if (_loading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -172,13 +172,13 @@ class _TienIchScreenState extends State<TienIchScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
+            Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
             const SizedBox(height: 12),
-            Text(_error!, style: const TextStyle(color: AppColors.textMuted)),
+            Text(_error!, style: TextStyle(color: AppColors.textMuted)),
             const SizedBox(height: 16),
             TextButton(
               onPressed: _loadData,
-              child: const Text(
+              child: Text(
                 'Thử lại',
                 style: TextStyle(color: AppColors.tealPrimary),
               ),
@@ -210,7 +210,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
             ),
           ),
           if (_loc.isEmpty)
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(16, 40, 16, 16),
                 child: Center(
@@ -255,16 +255,16 @@ class _TienIchScreenState extends State<TienIchScreen> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         const SizedBox(width: 14),
-        const Text(
+        Text(
           'Tiện ích tòa nhà',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -282,7 +282,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.history_rounded,
               color: AppColors.tealPrimary,
               size: 22,
@@ -318,21 +318,21 @@ class _TienIchScreenState extends State<TienIchScreen> {
               color: AppColors.tealPrimary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.apartment_rounded,
               color: AppColors.tealPrimary,
               size: 28,
             ),
           ),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Đặt chỗ tiện ích',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                   ),
@@ -431,8 +431,8 @@ class _TienIchScreenState extends State<TienIchScreen> {
               t.tenTienIch,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColors.textPrimary,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
@@ -442,7 +442,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
               const SizedBox(height: 4),
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.location_on_outlined,
                     size: 13,
                     color: AppColors.iconMuted,
@@ -453,7 +453,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
                       viTri,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11.5,
                         color: AppColors.textMuted,
                       ),
@@ -465,7 +465,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
             const SizedBox(height: 6),
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.access_time_rounded,
                   size: 13,
                   color: AppColors.iconMuted,
@@ -473,7 +473,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
                 const SizedBox(width: 5),
                 Text(
                   t.gioText,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
                     color: AppColors.textMuted,
                   ),
@@ -511,7 +511,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (_) => Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.bgMid,
           borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
@@ -549,8 +549,8 @@ class _TienIchScreenState extends State<TienIchScreen> {
                     children: [
                       Text(
                         t.tenTienIch,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
                           fontSize: 19,
                           fontWeight: FontWeight.w700,
                         ),
@@ -584,7 +584,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
               const SizedBox(height: 16),
               Text(
                 t.moTa!,
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.textMuted,
                   fontSize: 13,
                   height: 1.5,
@@ -606,14 +606,14 @@ class _TienIchScreenState extends State<TienIchScreen> {
         const SizedBox(width: 10),
         Text(
           '$label:',
-          style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+          style: TextStyle(color: AppColors.textMuted, fontSize: 13),
         ),
         const SizedBox(width: 6),
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: AppColors.textPrimary,
               fontSize: 13,
               fontWeight: FontWeight.w500,
             ),
@@ -635,7 +635,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
           color: AppColors.inputFill,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
             'Tạm ngưng phục vụ',
             style: TextStyle(
@@ -660,7 +660,7 @@ class _TienIchScreenState extends State<TienIchScreen> {
             color: AppColors.tealPrimary.withValues(alpha: 0.3),
           ),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
@@ -691,18 +691,18 @@ class _TienIchScreenState extends State<TienIchScreen> {
         width: double.infinity,
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             colors: [AppColors.tealPrimary, AppColors.tealDark],
           ),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
             'Đăng ký đặt trước',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: AppColors.textPrimary,
             ),
           ),
         ),

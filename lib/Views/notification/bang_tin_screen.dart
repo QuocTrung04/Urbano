@@ -26,7 +26,7 @@ class _BangTinView extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     final vm = context.watch<BangTinViewModel>();
@@ -84,7 +84,7 @@ class _BangTinView extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         SizedBox(width: 14),
@@ -93,7 +93,7 @@ class _BangTinView extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -103,7 +103,7 @@ class _BangTinView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, BangTinViewModel vm) {
     if (vm.isLoading) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: AppColors.tealPrimary),
       );
     }
@@ -124,7 +124,7 @@ class _BangTinView extends StatelessWidget {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(Icons.feed_outlined, size: 48, color: AppColors.textMuted),
             SizedBox(height: 12),
             Text(
@@ -184,7 +184,7 @@ class _BangTinView extends StatelessWidget {
                         if (progress == null) return child;
                         return Container(
                           color: AppColors.inputFill,
-                          child: const Center(
+                          child: Center(
                             child: CircularProgressIndicator(
                               color: AppColors.tealPrimary,
                               strokeWidth: 2,
@@ -194,7 +194,7 @@ class _BangTinView extends StatelessWidget {
                       },
                       errorBuilder: (_, __, ___) => Container(
                         color: AppColors.inputFill,
-                        child: const Center(
+                        child: Center(
                           child: Icon(
                             Icons.broken_image_outlined,
                             color: AppColors.iconMuted,
@@ -227,7 +227,7 @@ class _BangTinView extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
             height: 1.5,
           ),
@@ -295,7 +295,7 @@ class _BangTinView extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children: [
           Icon(Icons.circle, size: 7, color: AppColors.tealPrimary),
           SizedBox(width: 5),
           Text(

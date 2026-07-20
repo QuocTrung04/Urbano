@@ -42,10 +42,10 @@ class AppTextField extends StatelessWidget {
           controller: controller,
           keyboardType: keyboardType,
           obscureText: obscureText,
-          style: TextStyle(fontSize: 13, color: Colors.white),
+          style: TextStyle(fontSize: 13, color: AppColors.textPrimary),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: const TextStyle(fontSize: 13, color: AppColors.textHint),
+            hintStyle: TextStyle(fontSize: 13, color: AppColors.textHint),
             prefixIcon: Icon(prefixIcon, size: 18, color: AppColors.iconMuted),
             suffixIcon: suffixIcon,
             filled: true,

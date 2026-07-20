@@ -7,7 +7,7 @@ import 'package:flutter/gestures.dart';
 class DieuKhoanScreen extends StatelessWidget {
   const DieuKhoanScreen({super.key});
 
-  static const _bodyStyle = TextStyle(
+  static final _bodyStyle = TextStyle(
     color: AppColors.textMuted,
     fontWeight: FontWeight.w400,
     height: 1.5,
@@ -26,7 +26,7 @@ class DieuKhoanScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
 
@@ -56,7 +56,7 @@ class DieuKhoanScreen extends StatelessWidget {
                   _seletion(
                     1,
                     'Giới thiệu',
-                    const Text(
+                    Text(
                       'Ứng dụng Urbano hỗ trợ cư dân quản lý các dịch vụ trong tòa nhà. Khi sử dụng ứng dụng, bạn đồng ý với các điều khoản dưới đây.',
                       style: _bodyStyle,
                     ),
@@ -79,7 +79,7 @@ class DieuKhoanScreen extends StatelessWidget {
                   _seletion(
                     3,
                     "Chính sách bảo mật",
-                    const Text(
+                    Text(
                       'Thông tin cá nhân của bạn được bảo mật và chỉ được sử dụng cho mục đích quản lý cư dân. '
                       'Chúng tôi cam kết không chia sẻ dữ liệu với bên thứ 3 khi chưa có sự cho phép của bạn.',
                       style: _bodyStyle,
@@ -88,7 +88,7 @@ class DieuKhoanScreen extends StatelessWidget {
                   _seletion(
                     4,
                     'Thay đổi điều khoản',
-                    const Text(
+                    Text(
                       'Ban quản lý có thể cập nhật điều khoản theo thời gian. '
                       'Các thay đổi sẽ được thông báo qua ứng dụng. Việc tiếp tục sử dụng đồng nghĩa bạn chấp nhận điều khoản mới',
                       style: _bodyStyle,
@@ -145,7 +145,7 @@ class DieuKhoanScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: Icon(Icons.arrow_back, size: 20, color: Colors.white),
+            child: Icon(Icons.arrow_back, size: 20, color: AppColors.textPrimary),
           ),
         ),
         SizedBox(width: 14),
@@ -154,7 +154,7 @@ class DieuKhoanScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             letterSpacing: 1,
           ),
         ),
@@ -181,7 +181,7 @@ class DieuKhoanScreen extends StatelessWidget {
               color: AppColors.tealPrimary.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.live_help_sharp,
               size: 30,
               color: AppColors.tealPrimary,
@@ -196,7 +196,7 @@ class DieuKhoanScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   letterSpacing: 1,
                 ),
               ),
@@ -239,7 +239,7 @@ class DieuKhoanScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 ),
@@ -251,7 +251,7 @@ class DieuKhoanScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     letterSpacing: 1,
                   ),
                 ),
@@ -271,7 +271,7 @@ class DieuKhoanScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 6),
             child: Icon(Icons.circle, size: 6, color: AppColors.tealPrimary),
           ),

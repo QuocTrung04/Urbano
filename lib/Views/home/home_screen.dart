@@ -12,6 +12,8 @@ import 'dart:async';
 import 'package:urbano/Models/notification_model.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/core/network/signalr_service.dart';
+import 'package:urbano/ViewModels/theme_provider.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -79,11 +81,12 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<HomeViewModel>();
+    context.watch<ThemeProvider>();
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: AppColors.isDarkMode ? Brightness.light : Brightness.dark,
       ),
     );
     return Scaffold(
@@ -126,9 +129,9 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                   color: Colors.red.withOpacity(0.8),
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   alignment: Alignment.center,
-                  child: const Text(
+                  child: Text(
                     'Mất kết nối',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: TextStyle(color: AppColors.textPrimary, fontSize: 12),
                   ),
                 ),
               );
@@ -196,13 +199,13 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
+          Icon(Icons.cloud_off, color: AppColors.textMuted, size: 48),
           const SizedBox(height: 12),
-          Text(vm.error!, style: const TextStyle(color: AppColors.textMuted)),
+          Text(vm.error!, style: TextStyle(color: AppColors.textMuted)),
           const SizedBox(height: 16),
           TextButton(
             onPressed: vm.loadData,
-            child: const Text(
+            child: Text(
               'Thử lại',
               style: TextStyle(color: AppColors.tealPrimary),
             ),
@@ -241,7 +244,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                           data.cuDan.hoTen,
                       style: TextStyle(
                         fontSize: 18,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1,
                       ),
@@ -310,11 +313,11 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: Color(0x14FFFFFF),
+              color: AppColors.inputFill,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.borderButton),
             ),
-            child: Icon(icon, color: Color(0xB3FFFFFF), size: 18),
+            child: Icon(icon, color: AppColors.textPrimary70, size: 18),
           ),
           if (hasdot)
             Positioned(
@@ -369,7 +372,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                     maxLines: 2,
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       letterSpacing: 1,
                       fontWeight: FontWeight.w500,
                     ),
@@ -378,7 +381,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                     const SizedBox(height: 2),
                     Text(
                       'Diện tích: ${canHo.dienTich} m²',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
                         color: AppColors.textMuted,
                       ),
@@ -502,7 +505,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
         decoration: BoxDecoration(
           color: AppColors.nenContainer,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Color(0x14FFFFFF)),
+          border: Border.all(color: AppColors.borderButton),
         ),
         child: Column(
           children: [
@@ -544,7 +547,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
       children: [
         Text(
           title.toUpperCase(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.textMuted,
@@ -558,7 +561,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             onTap: onTap,
             child: Text(
               action,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 color: AppColors.tealPrimary,
                 fontWeight: FontWeight.w500,
@@ -648,7 +651,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 Container(
@@ -717,7 +720,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
             Text(
               string,
               style: TextStyle(
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -791,7 +794,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                     Text(
                       bt.tieuDe ?? 'Bảng tin',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1,
                       ),

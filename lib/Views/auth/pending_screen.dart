@@ -17,23 +17,23 @@ class PendingScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
+              Icon(
                 Icons.hourglass_empty_rounded,
                 color: AppColors.warning,
                 size: 80,
               ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'Tài khoản đang chờ duyệt',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Ban quản lý đang tiến hành xác minh thông tin đăng ký của bạn. Vui lòng quay lại sau.',
                 style: TextStyle(
                   color: AppColors.textMuted,
@@ -48,10 +48,10 @@ class PendingScreen extends StatelessWidget {
                   context.read<UserProvider>().logout();
                   Navigator.pushReplacementNamed(context, AppRoutes.login);
                 },
-                icon: const Icon(Icons.logout_rounded, color: Colors.white),
-                label: const Text(
+                icon: Icon(Icons.logout_rounded, color: AppColors.textPrimary),
+                label: Text(
                   'Đăng xuất',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: AppColors.textPrimary, fontSize: 16),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.surface,

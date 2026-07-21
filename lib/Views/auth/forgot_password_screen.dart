@@ -6,6 +6,7 @@ import 'package:urbano/core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:urbano/core/routes/app_routes.dart';
 import 'package:urbano/Services/auth_services.dart';
+import 'package:urbano/core/utils/app_validators.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -16,9 +17,10 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   final _controller = TextEditingController();
+  final AuthServices _auth = AuthServices();
   bool _isSms = true;
-  final _auth = AuthServices();
   bool _sending = false;
+  String? _errorText;
   @override
   void dispose() {
     _controller.dispose();
@@ -77,6 +79,10 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                             inputFormatters: _isSms
                                 ? [FilteringTextInputFormatter.digitsOnly]
                                 : null,
+                            errorText: _errorText,
+                            onChanged: (_) {
+                              if (_errorText != null) setState(() => _errorText = null);
+                            },
                             prefixIcon: _isSms
                                 ? Icons.phone_callback
                                 : Icons.mail_rounded,
@@ -87,16 +93,11 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                             label: 'Gửi mã xác nhận',
                             onPressed: () async {
                               final contact = _controller.text.trim();
-                              if (contact.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      _isSms
-                                          ? 'Vui lòng nhập số điện thoại'
-                                          : 'Vui lòng nhập email',
-                                    ),
-                                  ),
-                                );
+                              final err = _isSms
+                                  ? AppValidators.validatePhone(contact)
+                                  : AppValidators.validateEmail(contact);
+                              if (err != null) {
+                                setState(() => _errorText = err);
                                 return;
                               }
 

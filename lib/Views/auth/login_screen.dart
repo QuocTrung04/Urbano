@@ -8,6 +8,7 @@ import 'package:urbano/core/Widgets/app_button.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/Views/auth/forgot_password_screen.dart';
 import 'package:urbano/core/routes/app_routes.dart';
+import 'package:urbano/core/utils/app_validators.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -38,6 +39,8 @@ class _LoginViewState extends State<_LoginView> {
   final _accountController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  String? _accountError;
+  String? _passwordError;
 
   @override
   void dispose() {
@@ -146,6 +149,10 @@ class _LoginViewState extends State<_LoginView> {
       controller: _accountController,
       prefixIcon: Icons.person_3_rounded,
       keyboardType: TextInputType.text,
+      errorText: _accountError,
+      onChanged: (_) {
+        if (_accountError != null) setState(() => _accountError = null);
+      },
     );
   }
 
@@ -156,6 +163,10 @@ class _LoginViewState extends State<_LoginView> {
       controller: _passwordController,
       prefixIcon: Icons.lock_outline_rounded,
       obscureText: _obscurePassword,
+      errorText: _passwordError,
+      onChanged: (_) {
+        if (_passwordError != null) setState(() => _passwordError = null);
+      },
       suffixIcon: GestureDetector(
         onTap: () => setState(() => _obscurePassword = !_obscurePassword),
         child: Icon(
@@ -199,9 +210,20 @@ class _LoginViewState extends State<_LoginView> {
       onPressed: isLoading
           ? null
           : () async {
+              final accountErr = AppValidators.validatePhoneOrEmail(_accountController.text);
+              final passErr = AppValidators.validatePassword(_passwordController.text);
+
+              if (accountErr != null || passErr != null) {
+                setState(() {
+                  _accountError = accountErr;
+                  _passwordError = passErr;
+                });
+                return;
+              }
+
               final vm = context.read<LoginViewmodel>();
               final result = await vm.login(
-                _accountController.text,
+                _accountController.text.trim(),
                 _passwordController.text,
               );
               if (!mounted) return;

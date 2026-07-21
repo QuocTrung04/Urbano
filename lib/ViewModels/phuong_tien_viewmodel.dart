@@ -69,6 +69,15 @@ class PhuongTienViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get isSelectedXeDap {
+    if (loaiId == null) return false;
+    final selected = loaiList.firstWhere(
+      (x) => x.id == loaiId,
+      orElse: () => LoaiPhuongTien(id: 0, tenLoaiPhuongTien: ''),
+    );
+    return selected.tenLoaiPhuongTien.toLowerCase().contains('đạp') || selected.id == 3;
+  }
+
   // ============ THÊM XE ============
   /// Trả về true nếu gửi thành công. false -> xem [error].
   Future<bool> submit({required String ten, required String bienSo}) async {
@@ -84,7 +93,12 @@ class PhuongTienViewModel extends ChangeNotifier {
       notifyListeners();
       return false;
     }
-    if (bienSo.trim().isEmpty) {
+
+    final String finalBienSo = bienSo.trim().isEmpty && isSelectedXeDap
+        ? 'Không có'
+        : bienSo.trim();
+
+    if (finalBienSo.isEmpty) {
       error = 'Vui lòng nhập biển số';
       notifyListeners();
       return false;
@@ -109,7 +123,7 @@ class PhuongTienViewModel extends ChangeNotifier {
         canHoId: canHoId,
         cuDanId: cuDanId,
         tenPhuongTien: ten.trim(),
-        bienSo: bienSo.trim(),
+        bienSo: finalBienSo,
         loaiPhuongTienId: loaiId!,
       );
 

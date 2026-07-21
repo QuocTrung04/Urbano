@@ -13,6 +13,9 @@ class AppTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
 
+  final String? errorText;
+  final ValueChanged<String>? onChanged;
+
   const AppTextField({
     super.key,
     this.label,
@@ -24,6 +27,8 @@ class AppTextField extends StatelessWidget {
     this.suffixIcon,
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.none,
+    this.errorText,
+    this.onChanged,
   });
 
   @override
@@ -49,18 +54,33 @@ class AppTextField extends StatelessWidget {
           obscureText: obscureText,
           inputFormatters: inputFormatters,
           textCapitalization: textCapitalization,
+          onChanged: onChanged,
           style: TextStyle(fontSize: 13, color: AppColors.textPrimary),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(fontSize: 13, color: AppColors.textHint),
+            errorText: errorText,
+            errorStyle: TextStyle(fontSize: 12, color: AppColors.red),
             prefixIcon: Icon(prefixIcon, size: 18, color: AppColors.iconMuted),
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: AppColors.inputFill,
-            contentPadding: EdgeInsets.symmetric(vertical: 14),
+            contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 12),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: AppColors.borderSide, width: 1.5),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: AppColors.tealPrimary, width: 2),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: AppColors.red, width: 1.5),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: AppColors.red, width: 2),
             ),
           ),
         ),

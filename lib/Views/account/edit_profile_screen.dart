@@ -9,6 +9,7 @@ import 'package:urbano/Services/account_services.dart';
 import 'package:urbano/ViewModels/auth/user_provider.dart';
 import 'package:urbano/core/Widgets/app_text_field.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/utils/app_validators.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final CuDan cuDan;
@@ -28,6 +29,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late int _gioiTinh;
   DateTime? _ngaySinh;
   bool _dangLuu = false;
+
+  String? _sdtErr;
+  String? _emailErr;
+  String? _hoTenDemErr;
+  String? _tenErr;
 
   @override
   void initState() {
@@ -99,21 +105,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final sdt = _sdtCtrl.text.trim();
     final email = _emailCtrl.text.trim();
 
-    if (hoTenDem.isEmpty) {
-      _baoLoi('Họ và tên đệm không được để trống');
-      return;
-    }
-    if (ten.isEmpty) {
-      _baoLoi('Tên không được để trống');
-      return;
-    }
-    if (sdt.isNotEmpty && !RegExp(r'^0\d{9}$').hasMatch(sdt)) {
-      _baoLoi('Số điện thoại không hợp lệ');
-      return;
-    }
-    if (email.isNotEmpty &&
-        !RegExp(r'^[\w.\-]+@[\w\-]+\.[\w.\-]+$').hasMatch(email)) {
-      _baoLoi('Email không hợp lệ');
+    final hoTenDemErr = AppValidators.validateRequired(hoTenDem, 'Họ và tên đệm');
+    final tenErr = AppValidators.validateRequired(ten, 'Tên');
+    final sdtErr = AppValidators.validatePhone(sdt, isRequired: false);
+    final emailErr = AppValidators.validateEmail(email, isRequired: false);
+
+    if (hoTenDemErr != null || tenErr != null || sdtErr != null || emailErr != null) {
+      setState(() {
+        _hoTenDemErr = hoTenDemErr;
+        _tenErr = tenErr;
+        _sdtErr = sdtErr;
+        _emailErr = emailErr;
+      });
+      if (sdtErr != null) {
+        _baoLoi(sdtErr);
+      } else if (emailErr != null) {
+        _baoLoi(emailErr);
+      } else if (hoTenDemErr != null) {
+        _baoLoi(hoTenDemErr);
+      } else if (tenErr != null) {
+        _baoLoi(tenErr);
+      }
       return;
     }
     setState(() => _dangLuu = true);
@@ -194,6 +206,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   controller: _sdtCtrl,
                   keyboardType: TextInputType.phone,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  errorText: _sdtErr,
+                  onChanged: (_) {
+                    if (_sdtErr != null) setState(() => _sdtErr = null);
+                  },
                   prefixIcon: Icons.phone_outlined,
                 ),
                 SizedBox(height: 14),
@@ -202,6 +218,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   hint: 'vidu@gmail.com',
                   controller: _emailCtrl,
                   keyboardType: TextInputType.emailAddress,
+                  errorText: _emailErr,
+                  onChanged: (_) {
+                    if (_emailErr != null) setState(() => _emailErr = null);
+                  },
                   prefixIcon: Icons.email_outlined,
                 ),
 
@@ -212,6 +232,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   hint: 'VD: Nguyễn Văn',
                   controller: _hoTenDemCtrl,
                   textCapitalization: TextCapitalization.words,
+                  errorText: _hoTenDemErr,
+                  onChanged: (_) {
+                    if (_hoTenDemErr != null) setState(() => _hoTenDemErr = null);
+                  },
                   prefixIcon: Icons.person,
                 ),
                 SizedBox(height: 14),
@@ -220,6 +244,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   hint: 'VD: An',
                   controller: _tenCtrl,
                   textCapitalization: TextCapitalization.words,
+                  errorText: _tenErr,
+                  onChanged: (_) {
+                    if (_tenErr != null) setState(() => _tenErr = null);
+                  },
                   prefixIcon: Icons.person_outline,
                 ),
                 SizedBox(height: 14),

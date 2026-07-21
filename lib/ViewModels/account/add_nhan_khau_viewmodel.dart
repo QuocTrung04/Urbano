@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Services/cu_dan_services.dart';
 import 'package:urbano/Services/yeu_cau_services.dart';
+import 'package:urbano/core/utils/app_validators.dart';
 
 /// Gửi yêu cầu THÊM NHÂN KHẨU (loại 5) cho BQL duyệt.
 /// Không tạo nhân khẩu thật ở client — BQL duyệt rồi mới thêm.
@@ -38,6 +39,24 @@ class ThemNhanKhauViewModel extends ChangeNotifier {
     }
     if (gioiTinh == null) {
       error = 'Vui lòng chọn giới tính';
+      notifyListeners();
+      return false;
+    }
+    final cccdErr = AppValidators.validateCccd(cccd, isRequired: false);
+    if (cccdErr != null) {
+      error = cccdErr;
+      notifyListeners();
+      return false;
+    }
+    final sdtErr = AppValidators.validatePhone(sdt, isRequired: false);
+    if (sdtErr != null) {
+      error = sdtErr;
+      notifyListeners();
+      return false;
+    }
+    final emailErr = AppValidators.validateEmail(email, isRequired: false);
+    if (emailErr != null) {
+      error = emailErr;
       notifyListeners();
       return false;
     }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/ViewModels/phuong_tien_viewmodel.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/utils/app_validators.dart';
 
 /// Màn yêu cầu thêm phương tiện mới (chỉ UI).
 /// Logic nằm ở ThemPhuongTienViewModel, gọi API qua PhuongTienServices.
@@ -53,6 +54,17 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
 
   Future<void> _onSubmit() async {
     final vm = context.read<PhuongTienViewModel>();
+
+    final tenErr = AppValidators.validateRequired(_tenCtrl.text, 'tên phương tiện');
+    final bienSoErr = vm.isSelectedXeDap
+        ? null
+        : AppValidators.validateLicensePlate(_bienSoCtrl.text);
+
+    if (tenErr != null || bienSoErr != null) {
+      _snack(tenErr ?? bienSoErr!);
+      return;
+    }
+
     final ok = await vm.submit(ten: _tenCtrl.text, bienSo: _bienSoCtrl.text);
     if (!mounted) return;
     if (ok) {
@@ -159,11 +171,11 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
                 ),
                 const SizedBox(height: 20),
 
-                _label('Biển số'),
+                _label(vm.isSelectedXeDap ? 'Biển số (Không bắt buộc với xe đạp)' : 'Biển số'),
                 const SizedBox(height: 10),
                 _buildTextField(
                   controller: _bienSoCtrl,
-                  hint: 'VD: 30A-123.45 (Biển số xe)',
+                  hint: vm.isSelectedXeDap ? 'Không có (Xe đạp)' : 'VD: 30A-123.45 (Biển số xe)',
                   icon: Icons.confirmation_number_outlined,
                   textCapitalization: TextCapitalization.characters,
                 ),

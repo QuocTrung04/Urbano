@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Models/phuong_tien_model.dart';
 import 'package:urbano/Services/phuong_tien_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
+import 'package:urbano/core/utils/app_validators.dart';
 
 /// Sửa thông tin xe (chỉ dùng cho xe Chờ duyệt) — cập nhật trực tiếp.
 class SuaPhuongTienScreen extends StatefulWidget {
@@ -84,14 +85,25 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
       _snack('Vui lòng chọn loại phương tiện', AppColors.red);
       return;
     }
-    if (_tenCtrl.text.trim().isEmpty) {
-      _snack('Vui lòng nhập tên phương tiện', AppColors.red);
+    final selectedLoai = _loaiList.firstWhere(
+      (x) => x.id == _loaiId,
+      orElse: () => LoaiPhuongTien(id: 0, tenLoaiPhuongTien: ''),
+    );
+    final isXeDap = selectedLoai.tenLoaiPhuongTien.toLowerCase().contains('đạp') || _loaiId == 3;
+
+    final tenErr = AppValidators.validateRequired(_tenCtrl.text, 'tên phương tiện');
+    final bienSoErr = isXeDap
+        ? null
+        : AppValidators.validateLicensePlate(_bienSoCtrl.text);
+
+    if (tenErr != null || bienSoErr != null) {
+      _snack(tenErr ?? bienSoErr!, AppColors.red);
       return;
     }
-    if (_bienSoCtrl.text.trim().isEmpty) {
-      _snack('Vui lòng nhập biển số', AppColors.red);
-      return;
-    }
+
+    final String finalBienSo = _bienSoCtrl.text.trim().isEmpty && isXeDap
+        ? 'Không có'
+        : _bienSoCtrl.text.trim();
 
     setState(() => _submitting = true);
     try {
@@ -101,7 +113,7 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
       await _services.capNhatPhuongTien(
         id: widget.xe.id,
         tenPhuongTien: _tenCtrl.text.trim(),
-        bienSo: _bienSoCtrl.text.trim(),
+        bienSo: finalBienSo,
         loaiPhuongTienId: _loaiId!,
         canHoId: widget.xe.canHoId,
         nguoiCapNhatId: cuDanId,

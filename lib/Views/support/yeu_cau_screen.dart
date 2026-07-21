@@ -173,7 +173,7 @@ class _YeuVauViewState extends State<_YeuVauView> {
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 16),
         itemCount: _tabs.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 7),
+        separatorBuilder: (_, _) => const SizedBox(width: 7),
         itemBuilder: (_, i) {
           final chon = vm.tab == i;
           return GestureDetector(

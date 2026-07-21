@@ -122,11 +122,11 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
       child: CustomScrollView(
         slivers: [
           Consumer<SignalRService>(
-            builder: (_, signalR, __) {
+            builder: (_, signalR, _) {
               if (signalR.isConnected) return const SliverToBoxAdapter(child: SizedBox.shrink());
               return SliverToBoxAdapter(
                 child: Container(
-                  color: Colors.red.withOpacity(0.8),
+                  color: Colors.red.withValues(alpha: 0.8),
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   alignment: Alignment.center,
                   child: Text(
@@ -253,7 +253,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                 ),
               ),
               Consumer<SignalRService>(
-                builder: (_, signalR, __) {
+                builder: (_, signalR, _) {
                   final displayCount = unreadThongBaoCount + (signalR.unreadCounts['thongBao'] ?? 0);
                   return Badge(
                     isLabelVisible: displayCount > 0,
@@ -743,7 +743,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: btList.length,
-        separatorBuilder: (_, __) => SizedBox(width: 10),
+        separatorBuilder: (_, _) => SizedBox(width: 10),
         itemBuilder: (context, index) => _bulletinCard(context, btList[index]),
       ),
     );
@@ -772,7 +772,7 @@ class _HomeviewState extends State<_Homeview> with WidgetsBindingObserver {
                     width: double.infinity,
                     height: 130,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Image.asset(
+                    errorBuilder: (_, _, _) => Image.asset(
                       'assets/images/logo_urbano.png',
                       width: double.infinity,
                       height: 100,

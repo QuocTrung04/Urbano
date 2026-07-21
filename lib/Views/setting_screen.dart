@@ -356,8 +356,10 @@ class SettingScreen extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
+    if (!context.mounted) return;
     context.read<UserProvider>().clear();
 
+    if (!context.mounted) return;
     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (_) => false);
   }
 
@@ -435,7 +437,7 @@ class SettingScreen extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: AppColors.tealPrimary,
+            activeThumbColor: AppColors.tealPrimary,
           ),
         ],
       ),

@@ -192,7 +192,7 @@ class _BangTinView extends StatelessWidget {
                           ),
                         );
                       },
-                      errorBuilder: (_, __, ___) => Container(
+                      errorBuilder: (_, _, _) => Container(
                         color: AppColors.inputFill,
                         child: Center(
                           child: Icon(

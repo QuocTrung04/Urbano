@@ -400,6 +400,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
       'Gửi yêu cầu hủy phương tiện này tới ban quản lý?',
     );
     if (dong != true) return;
+    if (!context.mounted) return;
     await _guiYeuCau(
       context,
       xe,

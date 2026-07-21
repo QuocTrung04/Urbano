@@ -467,8 +467,9 @@ class HoaDonDetailView extends StatelessWidget {
                       AppRoutes.thanhToan,
                       arguments: item,
                     );
-                    if (ok == true)
+                    if (ok == true && context.mounted) {
                       context.read<HoaDonDetailViewModel>().fetchDetail();
+                    }
                   },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.tealPrimary,

@@ -106,6 +106,8 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                                 return;
                               }
                               if (_sending) return;
+                              final nav = Navigator.of(context);
+                              final messenger = ScaffoldMessenger.of(context);
                               setState(() => _sending = true);
                               try {
                                 await _auth.forgotPassword(
@@ -113,8 +115,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                                 ); // <-- GỬI OTP
                                 if (!mounted) return;
                                 setState(() => _sending = false);
-                                Navigator.pushNamed(
-                                  context,
+                                nav.pushNamed(
                                   AppRoutes.verifyOtp,
                                   arguments: {
                                     'contact': contact,
@@ -124,7 +125,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                               } catch (e) {
                                 if (!mounted) return;
                                 setState(() => _sending = false);
-                                ScaffoldMessenger.of(context).showSnackBar(
+                                messenger.showSnackBar(
                                   SnackBar(
                                     content: Text(
                                       e.toString().replaceFirst(

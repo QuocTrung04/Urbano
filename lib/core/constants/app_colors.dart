@@ -34,4 +34,5 @@ class AppColors {
   static Color get red => const Color(0xFFE06363);
   static Color get warning => const Color(0xFFEF9F27);
   static Color get surface => isDarkMode ? const Color(0xFF1A3147) : const Color(0xFFFFFFFF);
+  static Color get deepOrange => const Color(0xFFFF8A65);
 }

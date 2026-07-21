@@ -125,7 +125,7 @@ class BangTinDetailScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      errorBuilder: (_, __, ___) => Container(
+                      errorBuilder: (_, _, _) => Container(
                         color: AppColors.inputFill,
                         child: Center(
                           child: Icon(
@@ -178,12 +178,12 @@ class BangTinDetailScreen extends StatelessWidget {
     );
   }
 
-  String _formatTime(DateTime _time) {
-    final d = _time.day.toString().padLeft(2, '0');
-    final m = _time.month.toString().padLeft(2, '0');
-    final y = _time.year.toString();
-    final h = _time.hour.toString().padLeft(2, '0');
-    final min = _time.minute.toString().padLeft(2, '0');
+  String _formatTime(DateTime time) {
+    final d = time.day.toString().padLeft(2, '0');
+    final m = time.month.toString().padLeft(2, '0');
+    final y = time.year.toString();
+    final h = time.hour.toString().padLeft(2, '0');
+    final min = time.minute.toString().padLeft(2, '0');
 
     return '$d/$m/$y • $h:$min';
   }

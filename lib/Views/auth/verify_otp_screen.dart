@@ -157,6 +157,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       return;
                     }
                     if (_verifying) return;
+                    final nav = Navigator.of(context);
                     setState(() => _verifying = true);
                     try {
                       await _auth.verifyOtp(
@@ -165,8 +166,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       ); // <-- KIỂM OTP
                       if (!mounted) return;
                       setState(() => _verifying = false);
-                      Navigator.pushNamed(
-                        context,
+                      nav.pushNamed(
                         AppRoutes.resetPassword,
                         arguments: {'email': widget.contact, 'otp': _otp},
                       );

@@ -17,7 +17,6 @@ class ChiTietYeuCauScreen extends StatefulWidget {
 
 class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
   late YeuCauCuDan _yc;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -26,14 +25,11 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
   }
 
   Future<void> _fetchDetail() async {
-    setState(() => _isLoading = true);
     try {
       final updated = await YeuCauServices().fetchById(_yc.id);
       if (mounted) setState(() => _yc = updated);
     } catch (e) {
       debugPrint('Error fetching yeu cau detail: $e');
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -474,13 +470,13 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
     return '$dd/$mm/${d.year} • $hh:$mi';
   }
 
-  Widget _buildHanhDong(BuildContext context, YeuCauCuDan _yc) {
-    if (_yc.trangThai == 1) {
+  Widget _buildHanhDong(BuildContext context, YeuCauCuDan yc) {
+    if (yc.trangThai == 1) {
       return _actionBtn(
         'Hủy đăng ký',
         Icons.close_rounded,
         AppColors.red,
-        () => _huyTrucTiep(context, _yc),
+        () => _huyTrucTiep(context, yc),
       );
     }
     return const SizedBox.shrink();
@@ -522,7 +518,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
     );
   }
 
-  Future<void> _huyTrucTiep(BuildContext context, YeuCauCuDan _yc) async {
+  Future<void> _huyTrucTiep(BuildContext context, YeuCauCuDan yc) async {
     final dong = await _confirm(
       context,
       'Hủy đăng ký',
@@ -532,7 +528,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
     try {
 
 
-      await YeuCauServices().huyYeuCau(_yc.id);
+      await YeuCauServices().huyYeuCau(yc.id);
       if (!context.mounted) return;
       _thongBao(context, 'Đã hủy đăng ký');
       Navigator.pop(context, true);

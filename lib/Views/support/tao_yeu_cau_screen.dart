@@ -21,6 +21,33 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
   int _uuTienChon = 1;
   bool _dangGui = false;
 
+  List<LoaiYeuCau> _danhSachLoai = [];
+  bool _dangTaiLoai = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _taiDanhSachLoai();
+  }
+
+  Future<void> _taiDanhSachLoai() async {
+    try {
+      final list = await _services.fetchLoaiYeuCau();
+      if (!mounted) return;
+      setState(() {
+        _danhSachLoai = list;
+        _dangTaiLoai = false;
+        if (list.isNotEmpty) {
+          _loaiChon = list.first.id;
+        }
+      });
+    } catch (e) {
+      debugPrint('Lỗi tải danh sách loại yêu cầu: $e');
+      if (!mounted) return;
+      setState(() => _dangTaiLoai = false);
+    }
+  }
+
   @override
   void dispose() {
     _tieuDeCtrl.dispose();
@@ -190,8 +217,30 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
   }
 
   Widget _buildLoai() {
+    if (_dangTaiLoai) {
+      return Container(
+        height: 48,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: AppColors.inputFill,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: AppColors.borderSide),
+        ),
+        child: Center(
+          child: SizedBox(
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(
+              color: AppColors.tealPrimary,
+              strokeWidth: 2,
+            ),
+          ),
+        ),
+      );
+    }
+
     // tìm loại đang chọn (null nếu chưa chọn)
-    final loaiChon = LoaiYeuCau.danhSach
+    final loaiChon = _danhSachLoai
         .where((e) => e.id == _loaiChon)
         .cast<LoaiYeuCau?>()
         .firstOrNull;
@@ -218,7 +267,7 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
           dropdownColor: AppColors.bgMid,
           borderRadius: BorderRadius.circular(8),
           style: TextStyle(color: AppColors.textPrimary, fontSize: 13),
-          items: LoaiYeuCau.danhSach.map((loai) {
+          items: _danhSachLoai.map((loai) {
             return DropdownMenuItem<int>(
               value: loai.id,
               child: Row(

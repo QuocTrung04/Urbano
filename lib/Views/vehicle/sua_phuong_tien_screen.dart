@@ -157,15 +157,16 @@ class _SuaPhuongTienScreenState extends State<SuaPhuongTienScreen> {
                       const SizedBox(height: 10),
                       _textField(
                         _tenCtrl,
-                        'VD: Honda Wave...',
+                        'VD: Honda Vision, Toyota Vios...',
                         Icons.directions_car_filled_outlined,
+                        caps: TextCapitalization.words,
                       ),
                       const SizedBox(height: 20),
                       _label('Biển số'),
                       const SizedBox(height: 10),
                       _textField(
                         _bienSoCtrl,
-                        'VD: 51A-123.45',
+                        'VD: 30A-123.45 (Biển số xe)',
                         Icons.confirmation_number_outlined,
                         caps: TextCapitalization.characters,
                       ),

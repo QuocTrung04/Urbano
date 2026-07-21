@@ -142,7 +142,7 @@ class _LoginViewState extends State<_LoginView> {
   Widget _buildEmailField() {
     return AppTextField(
       label: 'Số điện thoại / Email',
-      hint: 'Nhập Email hoặc SĐT',
+      hint: 'SĐT (+84) 0912... hoặc vidu@gmail.com',
       controller: _accountController,
       prefixIcon: Icons.person_3_rounded,
       keyboardType: TextInputType.text,
@@ -152,7 +152,7 @@ class _LoginViewState extends State<_LoginView> {
   Widget _buildPassword() {
     return AppTextField(
       label: 'Mật khẩu',
-      hint: 'Nhập mật khẩu',
+      hint: '••••••••',
       controller: _passwordController,
       prefixIcon: Icons.lock_outline_rounded,
       obscureText: _obscurePassword,

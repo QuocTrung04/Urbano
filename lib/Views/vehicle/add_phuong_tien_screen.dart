@@ -153,8 +153,9 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
                 const SizedBox(height: 10),
                 _buildTextField(
                   controller: _tenCtrl,
-                  hint: 'VD: Toyota Vios, Honda Wave...',
+                  hint: 'VD: Honda Vision, Toyota Vios...',
                   icon: Icons.directions_car_filled_outlined,
+                  textCapitalization: TextCapitalization.words,
                 ),
                 const SizedBox(height: 20),
 
@@ -162,7 +163,7 @@ class _ThemPhuongTienViewState extends State<_ThemPhuongTienView> {
                 const SizedBox(height: 10),
                 _buildTextField(
                   controller: _bienSoCtrl,
-                  hint: 'VD: 51A-123.45',
+                  hint: 'VD: 30A-123.45 (Biển số xe)',
                   icon: Icons.confirmation_number_outlined,
                   textCapitalization: TextCapitalization.characters,
                 ),

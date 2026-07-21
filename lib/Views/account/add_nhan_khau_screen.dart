@@ -180,8 +180,9 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
                       const SizedBox(height: 10),
                       _textField(
                         _hoTenCtrl,
-                        'Nhập họ tên đầy đủ',
+                        'VD: Nguyễn Văn A',
                         Icons.person_outline_rounded,
+                        caps: TextCapitalization.words,
                       ),
                       const SizedBox(height: 20),
                       _label('Ngày sinh'),
@@ -203,25 +204,30 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
                       const SizedBox(height: 10),
                       _textField(
                         _cccdCtrl,
-                        'Số CCCD',
+                        '012345678901 (12 số CCCD)',
                         Icons.badge_outlined,
                         keyboardType: TextInputType.number,
+                        formatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(12),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       _label('SĐT (nếu có)'),
                       const SizedBox(height: 10),
                       _textField(
                         _sdtCtrl,
-                        'Số điện thoại',
+                        '(+84) 0912 345 678',
                         Icons.phone_rounded,
                         keyboardType: TextInputType.phone,
+                        formatters: [FilteringTextInputFormatter.digitsOnly],
                       ),
                       const SizedBox(height: 20),
                       _label('Email (nếu có)'),
                       const SizedBox(height: 10),
                       _textField(
                         _emailCtrl,
-                        'Địa chỉ email',
+                        'vidu@gmail.com',
                         Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -234,7 +240,7 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
                       const SizedBox(height: 10),
                       _textField(
                         _diaChiCtrl,
-                        'Nhập địa chỉ hoặc quê quán',
+                        'VD: Số 123 Đường ABC, Quận XYZ',
                         Icons.home_outlined,
                       ),
                     ],
@@ -294,10 +300,14 @@ class _ThemNhanKhauViewState extends State<_ThemNhanKhauView> {
     String hint,
     IconData icon, {
     TextInputType keyboardType = TextInputType.text,
+    List<TextInputFormatter>? formatters,
+    TextCapitalization caps = TextCapitalization.none,
   }) {
     return TextField(
       controller: c,
       keyboardType: keyboardType,
+      inputFormatters: formatters,
+      textCapitalization: caps,
       style: TextStyle(color: AppColors.textPrimary, fontSize: 15),
       decoration: InputDecoration(
         hintText: hint,

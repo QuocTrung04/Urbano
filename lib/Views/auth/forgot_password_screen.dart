@@ -69,8 +69,14 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                           SizedBox(height: 24),
                           AppTextField(
                             label: _isSms ? 'Số điện thoại' : 'Email',
-                            hint: _isSms ? 'nhập số điện thoại' : 'Nhập Email',
+                            hint: _isSms ? '(+84) 0912 345 678' : 'vidu@gmail.com',
                             controller: _controller,
+                            keyboardType: _isSms
+                                ? TextInputType.phone
+                                : TextInputType.emailAddress,
+                            inputFormatters: _isSms
+                                ? [FilteringTextInputFormatter.digitsOnly]
+                                : null,
                             prefixIcon: _isSms
                                 ? Icons.phone_callback
                                 : Icons.mail_rounded,

@@ -9,7 +9,7 @@ class ThemNhanKhauViewModel extends ChangeNotifier {
   final YeuCauServices _yeuCauServices = YeuCauServices();
   final CuDanServices _cuDanServices = CuDanServices();
 
-  static const int _loaiThemNhanKhau = 5; // loai_yeu_cau: Thêm nhân khẩu
+  static const int _loaiThemNhanKhau = 6; // loai_yeu_cau: Yêu cầu xác thực cư dân
 
   bool submitting = false;
   String? error;

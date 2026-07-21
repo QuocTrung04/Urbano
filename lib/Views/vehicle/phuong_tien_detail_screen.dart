@@ -403,7 +403,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
     await _guiYeuCau(
       context,
       xe,
-      loai: 6,
+      loai: 5,
       tieuDe: 'Yêu cầu hủy đăng ký phương tiện',
     );
   }

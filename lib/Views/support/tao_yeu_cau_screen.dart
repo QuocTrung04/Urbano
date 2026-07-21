@@ -35,10 +35,10 @@ class _TaoYeuCauScreenState extends State<TaoYeuCauScreen> {
       final list = await _services.fetchLoaiYeuCau();
       if (!mounted) return;
       setState(() {
-        _danhSachLoai = list;
+        _danhSachLoai = list.where((e) => e.id != 4 && e.id != 5 && e.id != 6).toList();
         _dangTaiLoai = false;
-        if (list.isNotEmpty) {
-          _loaiChon = list.first.id;
+        if (_danhSachLoai.isNotEmpty) {
+          _loaiChon = _danhSachLoai.first.id;
         }
       });
     } catch (e) {

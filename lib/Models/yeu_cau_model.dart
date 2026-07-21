@@ -107,9 +107,11 @@ class LoaiYeuCau {
       case 3:
         return Icons.help_outline; // Hỏi đáp
       case 4:
-        return Icons.directions_car;
+        return Icons.directions_car; // Đăng ký phương tiện
       case 5:
-        return Icons.person_add_alt_1;
+        return Icons.car_crash_outlined; // Hủy phương tiện
+      case 6:
+        return Icons.person_add_alt_1; // Yêu cầu xác thực cư dân
       default:
         return Icons.build_outlined; // Sửa chữa
     }
@@ -124,6 +126,8 @@ class LoaiYeuCau {
       case 4:
         return AppColors.amber;
       case 5:
+        return AppColors.deepOrange;
+      case 6:
         return AppColors.pink;
       default:
         return AppColors.tealPrimary;
@@ -134,8 +138,9 @@ class LoaiYeuCau {
     LoaiYeuCau(id: 1, name: 'Sửa chữa'),
     LoaiYeuCau(id: 2, name: 'Khiếu nại'),
     LoaiYeuCau(id: 3, name: 'Hỏi đáp'),
-    LoaiYeuCau(id: 4, name: 'Đăng ký nhân khẩu'),
-    LoaiYeuCau(id: 5, name: 'Đăng ký phương tiện'),
+    LoaiYeuCau(id: 4, name: 'Đăng ký phương tiện'),
+    LoaiYeuCau(id: 5, name: 'Hủy phương tiện'),
+    LoaiYeuCau(id: 6, name: 'Yêu cầu xác thực cư dân'),
   ];
 
   static LoaiYeuCau timTheoId(int? id) {

@@ -520,7 +520,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       margin: const EdgeInsets.only(top: 13),
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
-        color: Color(0x08FFFFFF),
+        color: AppColors.nenContainer,
         borderRadius: BorderRadius.circular(1),
       ),
       child: Row(

@@ -253,10 +253,10 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
           decoration: BoxDecoration(
             color: selected
                 ? AppColors.tealPrimary.withValues(alpha: 0.2)
-                : Color(0x0DFFFFFF),
+                : AppColors.nenContainer,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color: selected ? AppColors.borderSide : Color(0x1AFFFFFF),
+              color: selected ? AppColors.borderSide : AppColors.borderButton,
               width: 1.5,
             ),
           ),

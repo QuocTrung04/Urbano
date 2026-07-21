@@ -317,7 +317,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
-            color: Color(0x66FFFFFF),
+            color: AppColors.textMuted,
             letterSpacing: 0.5,
           ),
         ),
@@ -386,7 +386,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           fontWeight: FontWeight.w500,
                           color: chuaDoc
                               ? AppColors.tealPrimary
-                              : AppColors.textMuted,
+                              : AppColors.textPrimary,
                           letterSpacing: 1,
                         ),
                       ),

@@ -300,7 +300,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 decoration: BoxDecoration(
                   color: i < _strength
                       ? _strengthColor
-                      : const Color(0x1AFFFFFF),
+                      : AppColors.borderButton,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),

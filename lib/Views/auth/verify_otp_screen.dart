@@ -269,38 +269,51 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         return SizedBox(
           width: 45,
           height: 60,
-          child: TextField(
-            controller: _controller[i],
-            focusNode: _focusNode[i],
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.number,
-            maxLength: 1,
-            style: TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 22,
-              fontWeight: FontWeight.w500,
-            ),
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            decoration: InputDecoration(
-              counterText: '',
-              filled: true,
-              fillColor: filled
-                  ? AppColors.tealPrimary.withValues(alpha: 0.15)
-                  : AppColors.inputFill,
-              contentPadding: EdgeInsets.zero,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(
-                  color: filled ? AppColors.tealPrimary : AppColors.inputFill,
-                  width: 1.5,
+          child: Focus(
+            onKeyEvent: (node, event) {
+              if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.backspace) {
+                if (_controller[i].text.isEmpty && i > 0) {
+                  _focusNode[i - 1].requestFocus();
+                  _controller[i - 1].clear();
+                  setState(() {});
+                  return KeyEventResult.handled;
+                }
+              }
+              return KeyEventResult.ignored;
+            },
+            child: TextField(
+              controller: _controller[i],
+              focusNode: _focusNode[i],
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              maxLength: 1,
+              style: TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+              ),
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: InputDecoration(
+                counterText: '',
+                filled: true,
+                fillColor: filled
+                    ? AppColors.tealPrimary.withValues(alpha: 0.15)
+                    : AppColors.inputFill,
+                contentPadding: EdgeInsets.zero,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: filled ? AppColors.tealPrimary : AppColors.inputFill,
+                    width: 1.5,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: AppColors.tealPrimary, width: 2),
                 ),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: AppColors.tealPrimary, width: 2),
-              ),
+              onChanged: (v) => _onChanged(i, v),
             ),
-            onChanged: (v) => _onChanged(i, v),
           ),
         );
       }),

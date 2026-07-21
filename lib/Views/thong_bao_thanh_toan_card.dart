@@ -3,7 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urbano/Services/hoa_don_services.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:urbano/core/routes/app_routes.dart';
-
+import 'package:provider/provider.dart';
+import 'package:urbano/ViewModels/theme_provider.dart';
 /// Card "Thông báo TT" ở Home — tự đếm số hóa đơn chưa thanh toán.
 class ThongBaoTTCard extends StatefulWidget {
   const ThongBaoTTCard({super.key});
@@ -49,6 +50,7 @@ class _ThongBaoTTCardState extends State<ThongBaoTTCard> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
     final subtitle = !_loaded
         ? 'Đang tải...'
         : (_soLuong == 0

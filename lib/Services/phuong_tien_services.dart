@@ -8,7 +8,7 @@ class PhuongTienServices {
 
   Future<List<PhuongTien>> fetchPhuongTien(int canHoId) async {
     final decoded = await AuthHttp.get('$baseUrl/phuongtien/canho/$canHoId');
-    final List data = decoded is List ? decoded : [];
+    final data = _asList(decoded);
     return data
         .map((e) => PhuongTien.fromJson(e as Map<String, dynamic>))
         .toList();

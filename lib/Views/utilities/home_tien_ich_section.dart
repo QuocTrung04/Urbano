@@ -5,7 +5,7 @@ import 'package:urbano/Views/utilities/tien_ich_ui.dart';
 import 'package:urbano/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:urbano/core/network/signalr_service.dart';
-
+import 'package:urbano/ViewModels/theme_provider.dart';
 /// Mục "tiện ích khác" ở Home: lấy 4 tiện ích đầu từ API,
 /// bấm vào mở đúng bottom sheet chi tiết (dùng chung với màn Tiện ích).
 class HomeTienIchSection extends StatefulWidget {
@@ -42,6 +42,7 @@ class _HomeTienIchSectionState extends State<HomeTienIchSection> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
     if (_loading) {
       return Column(
         children: [

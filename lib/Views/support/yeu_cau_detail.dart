@@ -55,7 +55,7 @@ class _ChiTietYeuCauScreenState extends State<ChiTietYeuCauScreen> {
       ),
     );
     final loai = LoaiYeuCau.timTheoId(_yc.loaiYeuCau);
-    final tenLoai = _yc.tenLoaiYeuCau.isNotEmpty ? _yc.tenLoaiYeuCau : loai.name;
+    final tenLoai = loai.name.isNotEmpty ? loai.name : _yc.tenLoaiYeuCau;
 
     return Scaffold(
       body: Container(

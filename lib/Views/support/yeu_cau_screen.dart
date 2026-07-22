@@ -312,9 +312,9 @@ class _YeuVauViewState extends State<_YeuVauView> {
                         children: [
                           _chip(
                             loai.icon,
-                            yc.tenLoaiYeuCau.isNotEmpty
-                                ? yc.tenLoaiYeuCau
-                                : loai.name, // ưu tiên tên API
+                            loai.name.isNotEmpty
+                                ? loai.name
+                                : yc.tenLoaiYeuCau,
                             loai.color,
                             loai.color.withValues(alpha: 0.15),
                           ),

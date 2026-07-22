@@ -116,27 +116,31 @@ class ThemNhanKhauViewModel extends ChangeNotifier {
         );
 
         // Tạo cư dân với trạng thái 1 (Chưa xác thực)
-        final parts = hoTen.trim().split(RegExp(r'\s+'));
-        String ten = parts.isNotEmpty ? parts.last : '';
-        String hoTenDem = parts.length > 1 ? parts.sublist(0, parts.length - 1).join(' ') : '';
-        
-        int? backendGioiTinh;
-        if (gioiTinh == 1) {
-          backendGioiTinh = 0; // Nam
-        } else if (gioiTinh == 2) {
-          backendGioiTinh = 1; // Nữ
-        }
+        try {
+          final parts = hoTen.trim().split(RegExp(r'\s+'));
+          String ten = parts.isNotEmpty ? parts.last : '';
+          String hoTenDem = parts.length > 1 ? parts.sublist(0, parts.length - 1).join(' ') : '';
+          
+          int? backendGioiTinh;
+          if (gioiTinh == 1) {
+            backendGioiTinh = 0; // Nam
+          } else if (gioiTinh == 2) {
+            backendGioiTinh = 1; // Nữ
+          }
 
-        await _cuDanServices.createCuDan(
-          hoTenDem: hoTenDem,
-          ten: ten,
-          sdt: sdt.trim(),
-          email: email.trim(),
-          cccd: cccd.trim(),
-          ngaySinh: ngaySinh,
-          gioiTinh: backendGioiTinh,
-          diaChi: diaChi.trim(),
-        );
+          await _cuDanServices.createCuDan(
+            hoTenDem: hoTenDem,
+            ten: ten,
+            sdt: sdt.trim(),
+            email: email.trim(),
+            cccd: cccd.trim(),
+            ngaySinh: ngaySinh,
+            gioiTinh: backendGioiTinh,
+            diaChi: diaChi.trim(),
+          );
+        } catch (e) {
+          debugPrint('Tạo hồ sơ cư dân chưa xác thực không thành công: $e');
+        }
       }
 
       submitting = false;

@@ -392,7 +392,7 @@ class PhuongTienDetailScreen extends StatelessWidget {
     }
   }
 
-  // --- Đã duyệt: yêu cầu hủy (loại 6) ---
+  // --- Đã duyệt: yêu cầu hủy (loại 5) ---
   Future<void> _yeuCauHuy(BuildContext context, PhuongTien xe) async {
     final dong = await _confirm(
       context,

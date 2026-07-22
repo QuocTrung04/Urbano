@@ -4,7 +4,7 @@ import 'package:urbano/Services/cu_dan_services.dart';
 import 'package:urbano/Services/yeu_cau_services.dart';
 import 'package:urbano/core/utils/app_validators.dart';
 
-/// Gửi yêu cầu THÊM NHÂN KHẨU (loại 5) cho BQL duyệt.
+/// Gửi yêu cầu THÊM NHÂN KHẨU (loại 6 - Yêu cầu xác thực cư dân) cho BQL duyệt.
 /// Không tạo nhân khẩu thật ở client — BQL duyệt rồi mới thêm.
 class ThemNhanKhauViewModel extends ChangeNotifier {
   final YeuCauServices _yeuCauServices = YeuCauServices();
